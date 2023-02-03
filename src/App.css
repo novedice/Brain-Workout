@@ -15,7 +15,7 @@
 html,
 body {
   font-family: var(--font-primary);
-  background-color: rgb(100 100 100);
+  /* background-color: rgb(100 100 100); */
 }
 
 .bg-gray {
