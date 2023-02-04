@@ -3,11 +3,11 @@ Api for Rolling Scopes School task "RS Clone".
 ***
 > ## Invalid token
 > *If token is no longer valid api always return this error* <br />
->  **Code:** 403 FORBIDDEN <br />
+>  **Code:** 401 UNAUTHORIZED <br />
 >   **Content:** 
 >   ```json
 >      {
->       "message": "Token is no longer valid!"
+>       "message": "User is not authorized!"
 >      }
 >   ```
 **User registration**
