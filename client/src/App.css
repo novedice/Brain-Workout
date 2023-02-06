@@ -13,8 +13,12 @@
 html,
 body {
   font-family: var(--font-primary);
+
 }
 
 .calendar {
   border: solid 1px black;
 }
+
+}
+
