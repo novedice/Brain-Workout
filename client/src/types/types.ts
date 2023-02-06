@@ -1,5 +1,9 @@
 export interface ImodalState {
-  openModal: boolean;
+  openLogInModal: boolean;
+}
+
+export interface ImodalSignUpState {
+  openSignUpModal: boolean;
 }
   
 export interface ImodalAction {

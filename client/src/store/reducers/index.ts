@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import { modalReducer } from "./modalReducer";
+import { LogInReducer} from "./LogInReducer";
+import { SignUpReducer } from "./SignUpReducer";
 
 export const rootReducer = combineReducers({
-  openModal: modalReducer 
+  logInModal: LogInReducer,
+  signUpModal: SignUpReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
