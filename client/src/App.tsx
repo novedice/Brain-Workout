@@ -6,6 +6,8 @@ import { Navigation } from './components/Navigation';
 import { StatisticPage } from './pages/StatisticPage';
 import { Footer } from './components/Footer';
 import { AccounSettingsPage } from './pages/AccounSettingsPage';
+import LogInWindow from './components/modal/LogInWindow';
+import SignUpModal from './components/modal/SignUPModal';
 
 export function App() {
   return (
@@ -19,6 +21,8 @@ export function App() {
         <Route path="/account_settings" element={<AccounSettingsPage />} />
       </Routes>
       <Footer />
+      <LogInWindow />
+      <SignUpModal />
     </div>
   );
 }
