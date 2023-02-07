@@ -1,18 +1,24 @@
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { BaseUrl, users } from './constants';
+import { useCookies } from 'react-cookie';
+import { authorization, BaseUrl, users } from './constants';
+import { useJwt } from 'react-jwt';
 
 interface IDataUser {
   email: string;
-  userName: string;
+  password: string;
 }
 
-export const getUser = (id: number) => {
+const [cookie, setCookie] = useCookies(['token']);
+
+export const getUser = () => {
   const [user, setUser] = useState();
   const [error, setError] = useState('');
   const getUs = async () => {
     try {
-      const response = await axios.get(`${BaseUrl}/${users}/${id}`);
+      const response = await axios.get(`${BaseUrl}/${users}/${cookie}`, {
+        withCredentials: true,
+      });
       if (response) {
         setUser(response.data);
       }
@@ -27,26 +33,83 @@ export const getUser = (id: number) => {
   return { user, error };
 };
 
-export const updateUser = async (id: number, data: IDataUser) => {
+export const updateUser = async (data: IDataUser) => {
   try {
-    await axios.put(`${BaseUrl}/${users}/${id}`, data);
+    await axios.put(`${BaseUrl}/${users}/${cookie}`, data, {
+      withCredentials: true,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
-export const deleteUser = async (id: number) => {
+export const deleteUser = async () => {
   try {
-    await axios.delete(`${BaseUrl}/${users}/${id}`);
+    await axios.delete(`${BaseUrl}/${users}/${users}/${cookie}`, {
+      withCredentials: true,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
-export const createUser = async (id: number, data: IDataUser) => {
+export const registrAuthUser = async (
+  data: IDataUser,
+  action: 'registration' | 'login'
+) => {
+  const [token, setToken] = useState();
+  const [error, setError] = useState('');
+  const { reEvaluateToken } = useJwt('');
   try {
-    await axios.post(`${BaseUrl}/${users}/${id}`, data);
+    const response = await axios.post(`${BaseUrl}/${users}/${action}`, data, {
+      withCredentials: true,
+    });
+    if (response) {
+      setToken(response.data);
+      setCookie('token', response.data);
+      reEvaluateToken(response.data);
+    }
   } catch (e) {
-    console.log(e);
+    if (e) {
+      setError((e as AxiosError).message);
+      return error;
+    }
   }
+  return token;
+};
+
+// export const authorizateUser = async (data: IDataUser) => {
+//   const [token, setToken] = useState();
+//   const [error, setError] = useState('');
+//   try {
+//     const response = await axios.post(`${BaseUrl}/${users}/${login}`, data);
+//     if (response) {
+//       setToken(response.data);
+//     }
+//   } catch (e) {
+//     if (e) {
+//       setError((e as AxiosError).message);
+//       return error;
+//     }
+//   }
+//   return token;
+// };
+
+export const refreshToken = async () => {
+  const [newToken, setNewToken] = useState();
+  const [error, setError] = useState('');
+  try {
+    const response = await axios.get(
+      `${BaseUrl}/${users}/${authorization}/${cookie}`,
+      { withCredentials: true }
+    );
+    if (response) {
+      setNewToken(response.data);
+      setCookie('token', response.data);
+    }
+  } catch (e) {
+    setError((e as AxiosError).message);
+    return error;
+  }
+  return newToken;
 };

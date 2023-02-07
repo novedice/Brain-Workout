@@ -38,3 +38,8 @@ export interface IResults {
   valueType: string;
   result: IResult[];
 }
+
+export interface IResData {
+  gameID: number;
+  value: number;
+}

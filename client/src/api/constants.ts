@@ -1,5 +1,10 @@
-export const BaseUrl = '';
+export const BaseUrl = 'api';
 export const users = 'users';
 export const winners = 'winners';
-export const games = 'games';
+export const game = 'game';
 export const results = 'results';
+export const registration = 'registration';
+export const login = 'login';
+export const authorization = 'auth';
+export const categories = 'categories';
+export const leaders = 'leaders';
