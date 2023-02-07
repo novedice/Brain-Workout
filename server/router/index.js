@@ -1,9 +1,11 @@
 const { Router } = require("express");
+const userRouter = require('./userRouter');
+const leadersRouter = require('./leadersRouter');
 
 const router = new Router();
 
-router.get('/', (req, res) => {
-  res.json(req.cookies.auth);
-});
+router.use('/users', userRouter);
+
+router.use('/game/:id', leadersRouter);
 
 module.exports = router;
