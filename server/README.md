@@ -196,12 +196,7 @@ Return new authorization token for the current user
 
 * **Data Params**
 
-    ```typescript
-      {
-        email: string,
-        password: string
-      }
-    ```
+    None
 
 * **Success Response:**
 
