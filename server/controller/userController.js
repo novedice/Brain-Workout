@@ -30,15 +30,42 @@ class UserController {
   }
 
   async login(req, res, next) {
-
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return next(ApiError.badRequest('Invalid email or password!'));
+    }
+    const user = await User.findOne({where: {email}});
+    if (!user) {
+      return next(ApiError.notFound('User with this email not found!'));
+    }
+    const comparePassword = bcrypt.compareSync(password, user.password);
+    if (!comparePassword) {
+      return next(ApiError.badRequest('Wrong password!'));
+    }
+    const token = generateJWT(user.id, user.nickname, user.email);
+    return res.json({token});
   }
 
   async check(req, res, next) {
-
+    const token = generateJWT(req.user.id, req.user.nickname, req.user.email);
+    return res.json({token});
   }
 
   async delete(req, res, next) {
-
+    const { password } = req.body;
+    if (!password) {
+      return next(ApiError.badRequest('Invalid password!'));
+    }
+    const user = User.findByPk(req.user.id);
+    if (!user) {
+      return next(ApiError.notFound('User not found!'));
+    }
+    const comparePassword = bcrypt.compareSync(password, user.password);
+    if (!comparePassword) {
+      return next(ApiError.badRequest('Wrong password!'));
+    }
+    await user.destroy();
+    res.json({message: 'User deleted successfully!'});
   }
 }
 
