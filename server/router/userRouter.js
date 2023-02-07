@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const userController = require("../controller/userController");
+const authMiddleware = require("../middleware/authMiddleware");
 const categoryRouter = require('./categoryRouter');
 const resultRouter = require('./resultRouter');
 
@@ -9,12 +10,12 @@ router.post('/registration', userController.registration);
 
 router.post('/login', userController.login);
 
-router.get('/auth', userController.check);
+router.get('/auth', authMiddleware, userController.check);
 
-router.delete('/', userController.delete);
+router.delete('/', authMiddleware, userController.delete);
 
-router.use('/categories', categoryRouter)
+router.use('/categories', authMiddleware, categoryRouter)
 
-router.use('/results', resultRouter)
+router.use('/results', authMiddleware, resultRouter)
 
 module.exports = router;

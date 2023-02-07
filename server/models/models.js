@@ -5,8 +5,7 @@ const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     nickname: {type: DataTypes.STRING},
     email: {type: DataTypes.STRING, unique: true},
-    password: {type: DataTypes.STRING},
-    language: {type: DataTypes.STRING}
+    password: {type: DataTypes.STRING}
 });
 
 const Category = sequelize.define('category', {
@@ -30,3 +29,11 @@ const Game = sequelize.define('game', {
   valueType: {type: DataTypes.STRING, allowNull: true},
   category: {type: DataTypes.STRING}
 })
+
+module.exports = {
+  User,
+  Game,
+  Result,
+  Session,
+  Category
+};
