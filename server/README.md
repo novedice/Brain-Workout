@@ -695,49 +695,49 @@ Return results for the current user
     ```json
       [ // НАЧАЛО ОБЪЕКТА
         {
-          "gameId": 1,
+          "id": 1,
           "name": "Reaction Time",
           "valueType": "ms",
-          "result": [
+          "results": [
             {
               "id": 1,
               "value": 200,
-              "createdDate (ТУТ ЕЩЁ НЕ ТОЧНОЕ НАЗВАНИЕ)": "дата и время"
+              "createdAt": "2023-02-08T15:57:23.626Z"
             },
             {
               "id": 2,
               "value": 196,
-              "createdDate (ТУТ ЕЩЁ НЕ ТОЧНОЕ НАЗВАНИЕ)": "дата и время"
+              "createdAt": "2023-02-08T15:57:23.626Z"
             },
             {
               "id": 3,
               "value": 230,
-              "createdDate (ТУТ ЕЩЁ НЕ ТОЧНОЕ НАЗВАНИЕ)": "дата и время"
+              "createdAt": "2023-02-08T15:57:23.626Z"
             }
           ]
         },
         {
-          "gameId": 2,
+          "id": 2,
           "name": "Game 2",
           "valueType": "ms",
-          "result": [
+          "results": [
             {
               "id": 1,
               "value": 200,
-              "createdDate (ТУТ ЕЩЁ НЕ ТОЧНОЕ НАЗВАНИЕ)": "дата и время"
+              "createdAt": "2023-02-08T15:57:23.626Z"
             },
             {
               "id": 2,
               "value": 196,
-              "createdDate (ТУТ ЕЩЁ НЕ ТОЧНОЕ НАЗВАНИЕ)": "дата и время"
+              "createdAt": "2023-02-08T15:57:23.626Z"
             },
             {
               "id": 3,
               "value": 230,
-              "createdDate (ТУТ ЕЩЁ НЕ ТОЧНОЕ НАЗВАНИЕ)": "дата и время"
+              "createdAt": "2023-02-08T15:57:23.626Z"
             }
           ]
-        }
+        },
       ]
     ```
     **Headers:**
