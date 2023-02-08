@@ -40,10 +40,10 @@ class UserController {
     if (!user) {
       return next(ApiError.notFound('User with this email not found!'));
     }
-    // const comparePassword = bcrypt.compareSync(password, user.password);
-    // if (!comparePassword) {
-    //   return next(ApiError.badRequest('Wrong password!'));
-    // }
+    const comparePassword = bcrypt.compareSync(password, user.password);
+    if (!comparePassword) {
+      return next(ApiError.badRequest('Wrong password!'));
+    }
     const token = generateJWT(user.id, user.nickname, user.email);
     return res.json({token});
   }
