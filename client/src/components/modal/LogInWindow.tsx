@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { HIDE_MODAL } from '../../constants';
+import { HIDE_MODAL, SHOW_SIGNUP } from '../../constants';
 import { useTypeSelector } from '../../hooks/useTypeSelector';
 import './ModalWindow.css';
 
@@ -10,6 +10,10 @@ const LogInWindow = () => {
 
   const modalHide = () => {
     dispatch({ type: HIDE_MODAL });
+  };
+
+  const signUpModalShow = () => {
+    dispatch({ type: SHOW_SIGNUP });
   };
 
   return (
@@ -28,9 +32,16 @@ const LogInWindow = () => {
         <h1 className="caption_login mb-2">Log in</h1>
         <p className="mb-2">
           Need an account?
-          <Link to="/signup" className="link__signup">
+          <span
+            // to="/signup"
+            className="link__signup"
+            onClick={() => {
+              modalHide();
+              signUpModalShow();
+            }}
+          >
             Sign Up
-          </Link>
+          </span>
         </p>
         <label className="label__signup">
           Name

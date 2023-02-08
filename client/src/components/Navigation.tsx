@@ -1,24 +1,22 @@
 import { Link } from 'react-router-dom';
 import '../assets/Logo.png';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { SHOW_MODAL } from '../constants';
+import { CHANGE_LANGUAGE, SHOW_MODAL, SHOW_SIGNUP } from '../constants';
+import { useTypeSelector } from '../hooks/useTypeSelector';
+import { useState } from 'react';
 // import { useTypeSelector } from '../hooks/useTypeSelector';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Navigation() {
-  const [lang, setLang] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const user = useTypeSelector((state) => state.userInfo);
+  const [, setLang] = useState(user.language);
   const dispatch = useDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const { openModal } = useTypeSelector((state) => state.openModal);
 
   const modalShow = () => {
     dispatch({ type: SHOW_MODAL });
   };
 
-  const signUpModallHide = () => {
-    dispatch({ type: 'SHOW_SIGNUP' });
+  const signUpModalShow = () => {
+    dispatch({ type: SHOW_SIGNUP });
   };
   // const [modalActive, setModalActive] = useState(false);
   return (
@@ -39,32 +37,43 @@ export function Navigation() {
         <Link to="/statistic" className="mr-5 hover:text-red-200">
           STATISTIC
         </Link>
-        <Link to="/account_settings" className="mr-5 hover:text-red-200">
-          ACCOUNT SETTINGS
-        </Link>
       </div>
-      <div>
-        <Link
-          to="/login"
-          className="mr-5 hover:text-red-200"
-          onClick={() => modalShow()}
-        >
-          LOG IN
-        </Link>
-        <Link
-          to="/signup"
-          className="mr-12 hover:text-red-200"
-          onClick={() => signUpModallHide()}
-        >
-          SIGN UP
-        </Link>
-        <button
-          onClick={() => setLang((prev) => !prev)}
-          className="w-16 rounded-full border p-2 hover:bg-red-200"
-        >
-          {lang ? 'EN' : 'RU'}
-        </button>
-      </div>
+      {!user.loggedIn && (
+        <div>
+          <span
+            // to="/login"
+            className="mr-5 hover:text-red-200"
+            onClick={() => modalShow()}
+          >
+            LOG IN
+          </span>
+          <span
+            // to="/signup"
+            className="mr-12 hover:text-red-200"
+            onClick={() => signUpModalShow()}
+          >
+            SIGN UP
+          </span>
+          <button
+            onClick={() => {
+              dispatch({ type: CHANGE_LANGUAGE });
+              setLang(user.language);
+              // console.log(lang);
+            }}
+            className="w-16 rounded-full border p-2 hover:bg-red-200"
+          >
+            {user.language}
+          </button>
+        </div>
+      )}
+      {user.loggedIn && (
+        <>
+          <Link to="/account_settings" className="mr-5 hover:text-red-200">
+            ACCOUNT SETTINGS
+          </Link>
+          <span>{user.nickName}</span>
+        </>
+      )}
     </nav>
   );
 }
