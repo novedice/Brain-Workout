@@ -30,6 +30,18 @@ const Game = sequelize.define('game', {
   category: {type: DataTypes.STRING}
 })
 
+User.hasMany(Result);
+Result.belongsTo(User);
+
+User.hasMany(Category);
+Category.belongsTo(User);
+
+Game.hasMany(Result);
+Result.belongsTo(Game);
+
+User.hasMany(Session);
+Session.belongsTo(User);
+
 module.exports = {
   User,
   Game,
