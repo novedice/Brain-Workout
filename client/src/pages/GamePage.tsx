@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
+// import { Template } from '../components/Template';
 import { allGames } from '../game-content/allGames';
 
-// import { Route, Routes } from 'react-router-dom';
 export function GamePage() {
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category');
@@ -15,6 +15,7 @@ export function GamePage() {
     }
     return filtGames;
   };
+
   return (
     <>
       <div className="m-3 flex h-full ">
@@ -22,6 +23,7 @@ export function GamePage() {
           <GameCategories />
         </aside>
         <main className="flex w-[80%] justify-around">
+          {/* <Template /> */}
           {filteredGames().map((game) => {
             return (
               <React.Fragment key={game.name}>
