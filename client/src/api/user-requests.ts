@@ -9,9 +9,8 @@ interface IDataUser {
   password: string;
 }
 
-const [cookie, setCookie] = useCookies(['token']);
-
 export const getUser = () => {
+  const [cookie] = useCookies(['token']);
   const [user, setUser] = useState();
   const [error, setError] = useState('');
   const getUs = async () => {
@@ -34,6 +33,7 @@ export const getUser = () => {
 };
 
 export const updateUser = async (data: IDataUser) => {
+  const [cookie] = useCookies(['token']);
   try {
     await axios.put(`${BaseUrl}/${users}/${cookie}`, data, {
       withCredentials: true,
@@ -44,6 +44,7 @@ export const updateUser = async (data: IDataUser) => {
 };
 
 export const deleteUser = async () => {
+  const [cookie] = useCookies(['token']);
   try {
     await axios.delete(`${BaseUrl}/${users}/${users}/${cookie}`, {
       withCredentials: true,
@@ -60,6 +61,8 @@ export const registrAuthUser = async (
   const [token, setToken] = useState();
   const [error, setError] = useState('');
   const { reEvaluateToken } = useJwt('');
+  const [, setCookie] = useCookies(['token']);
+
   try {
     const response = await axios.post(`${BaseUrl}/${users}/${action}`, data, {
       withCredentials: true,
@@ -94,22 +97,31 @@ export const registrAuthUser = async (
 //   }
 //   return token;
 // };
+interface ICookie {
+  token?: string;
+}
 
-export const refreshToken = async () => {
-  const [newToken, setNewToken] = useState();
-  const [error, setError] = useState('');
+export const refreshToken = async (cookie: ICookie) => {
+  // const [newToken, setNewToken] = useState();
+  // const [error, setError] = useState('');
+  // const [cookie, setCookie] = useCookies(['token']);
+  let response;
+  let error;
   try {
-    const response = await axios.get(
+    response = await axios.get(
       `${BaseUrl}/${users}/${authorization}/${cookie}`,
       { withCredentials: true }
     );
-    if (response) {
-      setNewToken(response.data);
-      setCookie('token', response.data);
-    }
+    console.log('response', response);
+    // if (response) {
+
+    //   // setNewToken(response.data);
+    //   // setCookie('token', response.data);
+    // }
   } catch (e) {
-    setError((e as AxiosError).message);
+    error = (e as AxiosError).message;
+    console.log(error);
     return error;
   }
-  return newToken;
+  return response.data;
 };

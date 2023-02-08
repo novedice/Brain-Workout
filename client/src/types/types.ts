@@ -1,3 +1,5 @@
+import { store } from '../store';
+
 export interface ImodalState {
   openLogInModal: boolean;
 }
@@ -5,8 +7,10 @@ export interface ImodalState {
 export interface ImodalSignUpState {
   openSignUpModal: boolean;
 }
-  
+
 export interface ImodalAction {
-   type: string;
-    // payload? : any;
+  type: string;
+  // payload? : any;
 }
+
+export type AppDispatch = typeof store.dispatch;

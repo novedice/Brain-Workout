@@ -7,9 +7,12 @@ export interface ISession {
 export interface IUser {
   id: number;
   nickName: string;
-  email: string;
-  password: string;
   language: 'en' | 'rus';
+  loggedIn: boolean;
+}
+
+export interface IToken {
+  token: string;
 }
 
 export interface IGame {

@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
 import { allGames } from '../game-content/allGames';
 
-// import { Route, Routes } from 'react-router-dom';
 export function GamePage() {
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category');
@@ -15,6 +14,7 @@ export function GamePage() {
     }
     return filtGames;
   };
+
   return (
     <>
       <div className="m-3 flex h-full ">
