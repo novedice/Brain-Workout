@@ -46,3 +46,8 @@ export interface IResData {
   gameID: number;
   value: number;
 }
+
+export interface IColorMeaning {
+  color: string;
+  meaning: string;
+}

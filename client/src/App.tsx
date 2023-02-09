@@ -8,6 +8,7 @@ import { Footer } from './components/Footer';
 import { AccounSettingsPage } from './pages/AccounSettingsPage';
 import LogInWindow from './components/modal/LogInWindow';
 import SignUpModal from './components/modal/SignUPModal';
+import { CurrentGamePage } from './pages/CurrentGamePage';
 
 export function App() {
   return (
@@ -16,7 +17,8 @@ export function App() {
 
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/game" element={<GamePage />} />
+        <Route path="/game/" element={<GamePage />} />
+        <Route path={`/game/:CurrentGame`} element={<CurrentGamePage />} />
         <Route path="/statistic" element={<StatisticPage />} />
         <Route path="/account_settings" element={<AccounSettingsPage />} />
       </Routes>
