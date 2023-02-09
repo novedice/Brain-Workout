@@ -14,7 +14,7 @@ export const Template = () => {
 
   const newUser: IUser = {
     id: 1,
-    nickName: 'HNB',
+    nickname: 'HNB',
     language: 'en',
     loggedIn: true,
   };

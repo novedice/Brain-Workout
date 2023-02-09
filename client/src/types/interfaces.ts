@@ -5,8 +5,8 @@ export interface ISession {
 }
 
 export interface IUser {
-  id: number;
-  nickName: string;
+  id?: number;
+  nickname: string;
   language: 'en' | 'rus';
   loggedIn: boolean;
 }

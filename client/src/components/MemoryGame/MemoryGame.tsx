@@ -32,8 +32,8 @@ export function MemoryGame() {
   const [cards, setCards] = useState<ICards[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [turns, setTurns] = useState(0);
-  const [selectOne, selectOne] = useState(null);
-  const [selectTwo, selectTwo] = useState(null);
+  // const [selectOne, selectOne] = useState(null);
+  // const [selectTwo, selectTwo] = useState(null);
 
   const shuffleCards = () => {
     const shuffledCards = [...CARD_IMAGES, ...CARD_IMAGES]
