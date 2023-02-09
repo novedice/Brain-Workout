@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { BaseUrl, games } from './constants';
+import { BaseUrl, game } from './constants';
 
 interface IGameData {
   gameName: string;
@@ -13,7 +13,7 @@ export const getGames = () => {
 
   const fetchGames = async () => {
     try {
-      const response = await axios.get(`${BaseUrl}/${games}`);
+      const response = await axios.get(`${BaseUrl}/${game}`);
       setAllGames(response.data);
     } catch (e) {
       setGamesEr((e as AxiosError).message);
@@ -28,7 +28,7 @@ export const getGames = () => {
 
 export const updateGames = async (gameData: IGameData) => {
   try {
-    await axios.put(`${BaseUrl}/${games}`, gameData);
+    await axios.put(`${BaseUrl}/${game}`, gameData);
   } catch (e) {
     console.log(e);
   }
@@ -36,7 +36,7 @@ export const updateGames = async (gameData: IGameData) => {
 
 export const deleteGame = async (gameName: string) => {
   try {
-    await axios.delete(`${BaseUrl}/${games}/${gameName}`);
+    await axios.delete(`${BaseUrl}/${game}/${gameName}`);
   } catch (e) {
     console.log(e);
   }
@@ -44,7 +44,7 @@ export const deleteGame = async (gameName: string) => {
 
 export const createGame = async (gameData: IGameData) => {
   try {
-    await axios.post(`${BaseUrl}/${games}`, gameData);
+    await axios.post(`${BaseUrl}/${game}`, gameData);
   } catch (e) {
     console.log(e);
   }
