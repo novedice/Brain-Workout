@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
+import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { allGames } from '../game-content/allGames';
 
 // import { Route, Routes } from 'react-router-dom';
@@ -17,21 +18,26 @@ export function GamePage() {
   };
   return (
     <>
-      <div className="m-3 flex h-full ">
+      <div className="wrap m-3 flex h-full">
         <aside className="width-[20%] mr-5 border">
           <GameCategories />
         </aside>
-        <main className="flex w-[80%] justify-around">
-          {filteredGames().map((game) => {
-            return (
-              <React.Fragment key={game.name}>
-                <div>
-                  <p>{game.name}</p>
-                  <p>{game.category}</p>
-                </div>
-              </React.Fragment>
-            );
-          })}
+        <main>
+          <div className="flex w-[145%] justify-around">
+            {filteredGames().map((game) => {
+              return (
+                <React.Fragment key={game.name}>
+                  <div>
+                    <p>{game.name}</p>
+                    <p>{game.category}</p>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+          <div>
+            <MemoryGame />
+          </div>
         </main>
       </div>
     </>

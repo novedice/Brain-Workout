@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './MemoryGame.css';
+
 // import { SS } from '../../assets/memory-game/s';
 // import { CARD_IMAGES } from '../../constants/memory-game-const';
 import '../../assets/memory-game/circle.png';
@@ -16,23 +18,53 @@ const CARD_IMAGES = [
   { src: 'diamond.png' },
   { src: 'parallelogram.png' },
   { src: 'pentagon.png' },
-  { src: 'question.png' },
   { src: 'rectangle.png' },
   { src: 'square.png' },
   { src: 'trapezoid.png' },
   { src: 'triangle.png' },
 ];
-
+interface ICards {
+  src: string;
+  id: number;
+}
 export function MemoryGame() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cards, setCards] = useState<ICards[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [turns, setTurns] = useState(0);
+
+  const shuffleCards = () => {
+    const shuffledCards = [...CARD_IMAGES, ...CARD_IMAGES]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
+    console.log(shuffledCards);
+    setCards(shuffledCards);
+    setTurns(0);
+    // console.log(card.src)
+  };
+
   return (
-    <>
-      <div className="h-32 w-32">
-        Memory game{' '}
-        <img src={`${CARD_IMAGES[0].src}`} alt="" className="h-20 w-20" />
-        <img src={`${CARD_IMAGES[1].src}`} alt="" className="h-20 w-20" />
-        <img src={`${CARD_IMAGES[2].src}`} alt="" className="h-20 w-20" />
-        {/* <img src="circle.png" alt="122" /> */}
+    <div className="game-wrapper">
+      <button className="border" onClick={shuffleCards}>
+        Shuffle Cards
+      </button>
+      Memory game
+      <div className="grid-cards">
+        {cards.map((card) => (
+          <div key={card.id}>
+            <img
+              src={card.src}
+              alt="front-card"
+              className="front-card w-20 first-line:h-20"
+            />
+            <img
+              src="question.png"
+              alt="back-card"
+              className="back-card w-40 first-line:h-20"
+            />
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
