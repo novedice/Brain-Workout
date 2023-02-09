@@ -5,6 +5,27 @@
 .card img {
     width: 65%;
     display: block;
-    border: 2px solid rgb(147 197 253);
-    border-radius: 5px;
+    /* border: 2px solid rgb(147 197 253);
+    border-radius: 5px; */
+}
+
+.card .front-card{
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+
+.flipped .front-card {
+  transform: rotateX(0deg); 
+  transition-delay: 0.2s;
+}
+
+.card .back-card {
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+}
+
+.flipped .back-card {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
 }

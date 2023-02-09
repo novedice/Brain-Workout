@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// import React, { useState } from 'react';
 import './MemoryGame.css';
 import '../../assets/memory-game/circle.png';
 import '../../assets/memory-game/diamond.png';
@@ -12,30 +13,31 @@ import '../../assets/memory-game/triangle.png';
 import SingleCard from './SingleCard';
 
 const CARD_IMAGES = [
-  { src: 'circle.png' },
-  { src: 'diamond.png' },
-  { src: 'parallelogram.png' },
-  { src: 'pentagon.png' },
-  { src: 'rectangle.png' },
-  { src: 'square.png' },
-  { src: 'trapezoid.png' },
-  { src: 'triangle.png' },
+  { src: 'circle.png', matched: false },
+  { src: 'diamond.png', matched: false },
+  { src: 'parallelogram.png', matched: false },
+  { src: 'pentagon.png', matched: false },
+  { src: 'rectangle.png', matched: false },
+  { src: 'square.png', matched: false },
+  { src: 'trapezoid.png', matched: false },
+  { src: 'triangle.png', matched: false },
 ];
 export interface ICards {
   src: string;
   id: number;
+  matched: boolean | undefined;
 }
 
-interface ICard {
-  src: string | null;
-}
+// interface ICard {
+//   src: string | null;
+// }
 export function MemoryGame() {
   const [cards, setCards] = useState<ICards[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [turns, setTurns] = useState(0);
-  const [selectOne, setSelectOne] = useState(null);
+  const [selectOne, setSelectOne] = useState<ICards | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectTwo, setSelectTwo] = useState(null);
+  const [selectTwo, setSelectTwo] = useState<ICards | null>(null);
 
   const shuffleCards = () => {
     const shuffledCards = [...CARD_IMAGES, ...CARD_IMAGES]
@@ -47,9 +49,10 @@ export function MemoryGame() {
     // console.log(card.src)
   };
 
-  const handleSelect = (card: any) => {
+  const handleSelect = (card: ICards) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     selectOne ? setSelectTwo(card) : setSelectOne(card);
+    console.log(card);
   };
 
   const resetTurn = () => {
@@ -61,14 +64,21 @@ export function MemoryGame() {
   useEffect(() => {
     if (selectOne && selectTwo) {
       if (selectOne.src === selectTwo.src) {
-        console.log('match');
+        setCards((prewCards) => {
+          return prewCards.map((card) => {
+            if (card.src === selectOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
         resetTurn();
       } else {
-        console.log('not match');
-        resetTurn();
+        setTimeout(() => resetTurn(), 1000);
       }
     }
-  }, []);
+  }, [selectOne, selectTwo]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -80,7 +90,12 @@ export function MemoryGame() {
       Memory game
       <div className="grid-cards">
         {cards.map((card) => (
-          <SingleCard card={card} key={card.id} handleSelect={handleSelect} />
+          <SingleCard
+            card={card}
+            key={card.id}
+            handleSelect={handleSelect}
+            flip={card === selectOne || card === selectTwo || card.matched}
+          />
         ))}
       </div>
     </div>
