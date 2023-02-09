@@ -12,7 +12,7 @@ class LeaderController {
     page = page || 1;
     sort = sort || 'ASC';
     const offset = limit * page - limit;
-    let results = await Result.findAll({
+    let { count, rows: results } = await Result.findAndCountAll({
       where: {gameId: id},
       limit,
       offset,
@@ -27,6 +27,7 @@ class LeaderController {
         value: el.value
       }
     });
+    res.setHeader('x-total-count', count);
     res.json(results);
   }
 }

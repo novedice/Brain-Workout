@@ -25,28 +25,29 @@ class ResultController {
     let results;
     if (gameId) {
       if (!page && limit) {
-        results = await Result.findAll({where: {gameId}, limit});
+        results = await Result.findAndCountAll({where: {gameId}, limit});
       }
       if (!page && !limit) {
-        results = await Result.findAll({where: {gameId}});
+        results = await Result.findAndCountAll({where: {gameId}});
       }
       if (page && limit) {
         const offset = limit * page - limit;
-        results = await Result.findAll({where: {gameId}, limit, offset});
+        results = await Result.findAndCountAll({where: {gameId}, limit, offset});
       }
     } else {
       if (!page && limit) {
-        results = await Result.findAll({limit});
+        results = await Result.findAndCountAll({limit});
       }
       if (!page && !limit) {
-        results = await Result.findAll();
+        results = await Result.findAndCountAll();
       }
       if (page && limit) {
         const offset = limit * page - limit;
-        results = await Result.findAll({limit, offset});
+        results = await Result.findAndCountAll({limit, offset});
       }
     }
-    res.json(results);
+    res.setHeader('x-total-count', results.count);
+    res.json(results.rows);
   }
 }
 
