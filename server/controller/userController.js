@@ -16,7 +16,7 @@ class UserController {
   async registration(req, res, next) {
     const { nickname, password, email } = req.body;
     if (!nickname && !password && !email) {
-      return next(ApiError.badRequest('Invalid email or password!'));
+      return next(ApiError.badRequest('Invalid email, nickname or password!'));
     }
     const candidate = await User.findOne({where: {email}});
     if (candidate) {
@@ -31,8 +31,6 @@ class UserController {
 
   async login(req, res, next) {
     const { email, password } = req.body;
-    console.log(email);
-    console.log(password);
     if (!email || !password) {
       return next(ApiError.badRequest('Invalid email or password!'));
     }

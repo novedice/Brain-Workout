@@ -1,4 +1,5 @@
 const { User, Result, Game } = require("../models/models");
+const sequelize = require('../db');
 const ApiError = require("c:/users/windows 10/desktop/практика приложение/journey/server/error/apierror");
 
 class ResultController {
@@ -21,65 +22,31 @@ class ResultController {
     if (page && !limit) {
       return next(ApiError.badRequest('Page without specified limit!'))
     }
-    let games;
+    let results;
     if (gameId) {
-      const game = await Game.findByPk(gameId);
-      if (!game) {
-        return next(ApiError.badRequest('Game with this id not found!'));
+      if (!page && limit) {
+        results = await Result.findAll({where: {gameId}, limit});
       }
-      if (limit && page) {
+      if (!page && !limit) {
+        results = await Result.findAll({where: {gameId}});
+      }
+      if (page && limit) {
         const offset = limit * page - limit;
-        games = await Game.findAll(
-          {
-            attributes: ['id', 'name', 'valueType'],
-            where: {id: gameId}, include: {model: Result, attributes: ['id', 'value', 'createdAt'], limit, offset, where: {userId: req.user.id}}
-          }
-        );
-      }
-      if (limit && !page) {
-        games = await Game.findAll(
-          {
-            attributes: ['id', 'name', 'valueType'],
-            where: {id: gameId}, include: {model: Result, attributes: ['id', 'value', 'createdAt'], limit, where: {userId: req.user.id}}
-          }
-        );
-      }
-      if (!limit && !page) {
-        games = await Game.findAll(
-          {
-            attributes: ['id', 'name', 'valueType'],
-            where: {id: gameId}, include: {model: Result, attributes: ['id', 'value', 'createdAt'], where: {userId: req.user.id}}
-          }
-        );
+        results = await Result.findAll({where: {gameId}, limit, offset});
       }
     } else {
-      if (limit && page) {
+      if (!page && limit) {
+        results = await Result.findAll({limit});
+      }
+      if (!page && !limit) {
+        results = await Result.findAll();
+      }
+      if (page && limit) {
         const offset = limit * page - limit;
-        games = await Game.findAll(
-          {
-            attributes: ['id', 'name', 'valueType'],
-            include: {model: Result, attributes: ['id', 'value', 'createdAt'], limit, offset, where: {userId: req.user.id}}
-          }
-        );
-      }
-      if (limit && !page) {
-        games = await Game.findAll(
-          {
-            attributes: ['id', 'name', 'valueType'],
-            include: {model: Result, attributes: ['id', 'value', 'createdAt'], limit, where: {userId: req.user.id}}
-          }
-        );
-      }
-      if (!limit && !page) {
-        games = await Game.findAll(
-          {
-            attributes: ['id', 'name', 'valueType'],
-            include: {model: Result, attributes: ['id', 'value', 'createdAt'], where: {userId: req.user.id}}
-          }
-        );
+        results = await Result.findAll({limit, offset});
       }
     }
-    res.json(games);
+    res.json(results);
   }
 }
 
