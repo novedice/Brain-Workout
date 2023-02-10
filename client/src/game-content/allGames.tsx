@@ -1,4 +1,4 @@
-import { MeaningColorGame } from '../components/Games/meaningColor';
+import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
 import { IGameList } from '../types/interfaces';
 
 export const allGames: IGameList[] = [

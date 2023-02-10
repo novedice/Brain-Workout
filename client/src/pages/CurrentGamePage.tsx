@@ -10,11 +10,9 @@ export const CurrentGamePage = () => {
     return <></>;
   };
   const { CurrentGame } = useParams<QParam>();
-  // const [GameNow, setGameNow] = useState<() => JSX.Element>(MeaningColorGame);
   for (let i = 0; i < allGames.length; i++) {
     if (allGames[i].path === CurrentGame) {
       GameNow = allGames[i].game;
-      console.log('gamelis i ', allGames[i].path);
       break;
     }
   }
