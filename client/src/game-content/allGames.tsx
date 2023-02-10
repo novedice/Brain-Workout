@@ -1,4 +1,5 @@
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
+import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList } from '../types/interfaces';
 
 export const allGames: IGameList[] = [
@@ -80,5 +81,11 @@ export const allGames: IGameList[] = [
     path: 'color-match',
     category: 'Flexibility',
     game: MeaningColorGame,
+  },
+  {
+    name: 'Memory Game',
+    path: 'memory-game',
+    category: 'Memory',
+    game: MemoryGame,
   },
 ];
