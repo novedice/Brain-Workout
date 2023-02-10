@@ -71,15 +71,17 @@ export const MeaningColorGame = () => {
 
   return (
     <>
-      <div className={`game-wrapper flex h-full w-full flex-col `}>
+      <div
+        className={`game-wrap mr-auto ml-auto flex h-full w-[90%] flex-col align-middle `}
+      >
         {howToPlay && (
           <ColorDemo howToPlay={howToPlay} setHowToPlay={setHowToPlay} />
         )}
         {!howToPlay && (
           <>
-            <div className="head-game flex self-end">
+            <div className="head-game width-[100%] flex self-end">
               <button
-                className="m-5"
+                className="mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-blue-300"
                 onClick={() => {
                   if (!started) {
                     startGame();
@@ -90,7 +92,10 @@ export const MeaningColorGame = () => {
               >
                 {started ? 'STOP' : 'START'}
               </button>
-              <button className="m-5" onClick={() => setPaused(!paused)}>
+              <button
+                className="mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-blue-300"
+                onClick={() => setPaused(!paused)}
+              >
                 {paused ? 'PLAY' : 'PAUSE'}
               </button>
               <div className="m-5">
@@ -106,10 +111,10 @@ export const MeaningColorGame = () => {
               </div>
               <p className="m-5">SCORE: {score}</p>
             </div>
-            <div className="inside-wrap flex h-full flex-col justify-around">
-              <div className="flex justify-center">
+            <div className="inside-wrap flex h-full flex-col justify-center">
+              <div className="mb-10 flex justify-center">
                 <div
-                  className={`left-part mr-5 flex h-[100px] w-[35%] justify-center border-2 ${colors[leftColor].border} align-middle `}
+                  className={`left-part mr-5 flex h-[100px] w-[45%] justify-center border-4 ${colors[leftColor].border} align-middle `}
                 >
                   <p
                     className={`flex  items-center justify-center text-center text-5xl uppercase ${colors[leftColor].color}`}
@@ -118,7 +123,7 @@ export const MeaningColorGame = () => {
                   </p>
                 </div>
                 <div
-                  className={`left-part border- flex h-[100px] w-[35%] justify-center border-2  ${colors[rightColor].border} align-middle `}
+                  className={`left-part  flex h-[100px] w-[45%] justify-center border-4  ${colors[rightColor].border} align-middle `}
                 >
                   <p
                     className={`flex items-center justify-center text-center text-5xl uppercase ${colors[rightColor].color}`}
@@ -127,22 +132,22 @@ export const MeaningColorGame = () => {
                   </p>
                 </div>
               </div>
-            </div>
-            <div className="buttons flex w-[100%] justify-center">
-              <button
-                className="mr-3 h-[50px] w-[80px] rounded-lg border bg-blue-400"
-                onClick={noAnswer}
-                disabled={!started}
-              >
-                NO
-              </button>
-              <button
-                className="h-[50px] w-[80px] rounded-lg border bg-blue-400"
-                onClick={yesAnswer}
-                disabled={!started}
-              >
-                YES
-              </button>
+              <div className="buttons flex w-[100%] justify-center">
+                <button
+                  className="mr-3 h-[50px] w-[80px] rounded-lg border bg-blue-400"
+                  onClick={noAnswer}
+                  disabled={!started}
+                >
+                  NO
+                </button>
+                <button
+                  className="h-[50px] w-[80px] rounded-lg border bg-blue-400"
+                  onClick={yesAnswer}
+                  disabled={!started}
+                >
+                  YES
+                </button>
+              </div>
             </div>
           </>
         )}

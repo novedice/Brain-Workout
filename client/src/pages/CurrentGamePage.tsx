@@ -23,7 +23,7 @@ export const CurrentGamePage = () => {
         <Link to="/games" className="mb-5 w-fit rounded bg-blue-300 p-4">
           ALL GAMES
         </Link>
-        <div className="game h-2/4 border-8 border-sky-800 p-[3%]">
+        <div className="game mb-8  h-full border-8 border-sky-800 p-[3%]">
           {GameNow && <GameNow />}
         </div>
       </div>

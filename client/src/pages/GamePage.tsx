@@ -1,10 +1,6 @@
 import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
-
-import { MemoryGame } from '../components/MemoryGame/MemoryGame';
-// import { MeaningColorGame } from '../components/Games/meaningColor';
-// import { Template } from '../components/Template';
 import { allGames } from '../game-content/allGames';
 
 export function GamePage() {
@@ -26,40 +22,25 @@ export function GamePage() {
           <GameCategories />
         </aside>
 
-        <main>
-          <div className="flex w-[145%] justify-around">
-            {filteredGames().map((game) => {
-              return (
-                <React.Fragment key={game.name}>
-                  <div>
-                    <p>{game.name}</p>
-                    <p>{game.category}</p>
-
         <main className="flex w-[80%] flex-col justify-around">
           <div className="flex flex-wrap justify-around">
             {/* <Template /> */}
             {filteredGames().map((game) => {
               return (
                 <React.Fragment key={game.name}>
-                  <div className="all-games-wrap">
-                    <Link to={`/games/${game.path}`}>
-                      <p>{game.name}</p>
-                      <p>{game.category}</p>
-                    </Link>
-
+                  <div className="m-5 flex items-center justify-center border p-3">
+                    <div className="all-games-wrap">
+                      <Link to={`/games/${game.path}`}>
+                        <p>{game.name}</p>
+                        <p>{game.category}</p>
+                      </Link>
+                    </div>
                   </div>
                 </React.Fragment>
               );
             })}
           </div>
-
-          <div>
-            <MemoryGame />
-          </div>
-
-          <Link to="/games/MeaningColorGame">Game!</Link>
           {/* <MeaningColorGame /> */}
-
         </main>
       </div>
     </>
