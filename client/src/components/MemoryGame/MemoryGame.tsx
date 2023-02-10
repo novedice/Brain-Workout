@@ -10,29 +10,13 @@ export function MemoryGame() {
   const [selectOne, setSelectOne] = useState<ICards | null>(null);
   const [selectTwo, setSelectTwo] = useState<ICards | null>(null);
   const [disabledCard, setDisabledCard] = useState(false);
-  // const [bestScore, setBestScore] = useState<number>(
-  //   parseInt(localStorage.getItem('bestScore') || '0') ||
-  //     Number.MAX_SAFE_INTEGER
-  // );
-
-  // const [bestScore, setBestScore] = useState<number>(0);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   let solvedArray = cards
     .map((elem) => elem.matched)
     .filter((elem) => elem === false);
 
-  // const gameFinish = () => {
-  //   const newBestScore = turns < bestScore ? turns : bestScore;
-
-  //   setBestScore(newBestScore);
-  //   // console.log('you win');
-  //   // localStorage.setItem('bestScore', newBestStore.toString());
-  //   // localStorage.setItem('bestScore', JSON.stringify(newBestScore));
-  //   localStorage.setItem('bestScore', '' + newBestScore);
-  //   console.log('new store');
-  // };
+  // localStorage.setItem('bestScore', newBestStore.toString());
+  // localStorage.setItem('bestScore', JSON.stringify(newBestScore));
 
   const [bestScore, setBestScore] = useState<number>(
     parseInt(localStorage.getItem('bestScore') || '0') ||
@@ -70,7 +54,7 @@ export function MemoryGame() {
   };
 
   const handleSelect = (card: ICards) => {
-    // if (card.id === selectOne?.id) return;
+    if (card.id === selectOne?.id) return; // commit this for easy find card
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     selectOne ? setSelectTwo(card) : setSelectOne(card);
   };
@@ -127,12 +111,12 @@ export function MemoryGame() {
         ))}
       </div>
       <p>Moves : {turns}</p>
-      {/* <p>Best Score : {bestScore}</p> */}
-      {localStorage.getItem('bestScore') && (
+      <p>Best Score : {bestScore}</p>
+      {/* {localStorage.getItem('bestScore') && (
         <div>
           <span>Best score:</span> {bestScore}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
