@@ -1,6 +1,5 @@
 .game-wrapper {
     width: 40vw;
-    /* height: 90vh; */
     margin: 0 auto;
 }
 
@@ -8,5 +7,5 @@
     margin-top: 30px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 20px;
+    grid-gap: 10px;
 }

@@ -1,68 +1,90 @@
-import React, { useEffect, useState } from 'react';
-// import React, { useState } from 'react';
-import './MemoryGame.css';
-import '../../assets/memory-game/circle.png';
-import '../../assets/memory-game/diamond.png';
-import '../../assets/memory-game/parallelogram.png';
-import '../../assets/memory-game/pentagon.png';
-import '../../assets/memory-game/question.png';
-import '../../assets/memory-game/rectangle.png';
-import '../../assets/memory-game/square.png';
-import '../../assets/memory-game/trapezoid.png';
-import '../../assets/memory-game/triangle.png';
+import { useEffect, useState } from 'react';
+import { CARD_IMAGES } from './constants';
 import SingleCard from './SingleCard';
+import { ICards } from './types';
+import './MemoryGame.css';
 
-const CARD_IMAGES = [
-  { src: 'circle.png', matched: false },
-  { src: 'diamond.png', matched: false },
-  { src: 'parallelogram.png', matched: false },
-  { src: 'pentagon.png', matched: false },
-  { src: 'rectangle.png', matched: false },
-  { src: 'square.png', matched: false },
-  { src: 'trapezoid.png', matched: false },
-  { src: 'triangle.png', matched: false },
-];
-export interface ICards {
-  src: string;
-  id: number;
-  matched: boolean | undefined;
-}
-
-// interface ICard {
-//   src: string | null;
-// }
 export function MemoryGame() {
   const [cards, setCards] = useState<ICards[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [turns, setTurns] = useState(0);
+  const [turns, setTurns] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<ICards | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectTwo, setSelectTwo] = useState<ICards | null>(null);
+  const [disabledCard, setDisabledCard] = useState(false);
+  // const [bestScore, setBestScore] = useState<number>(
+  //   parseInt(localStorage.getItem('bestScore') || '0') ||
+  //     Number.MAX_SAFE_INTEGER
+  // );
+
+  // const [bestScore, setBestScore] = useState<number>(0);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  let solvedArray = cards
+    .map((elem) => elem.matched)
+    .filter((elem) => elem === false);
+
+  // const gameFinish = () => {
+  //   const newBestScore = turns < bestScore ? turns : bestScore;
+
+  //   setBestScore(newBestScore);
+  //   // console.log('you win');
+  //   // localStorage.setItem('bestScore', newBestStore.toString());
+  //   // localStorage.setItem('bestScore', JSON.stringify(newBestScore));
+  //   localStorage.setItem('bestScore', '' + newBestScore);
+  //   console.log('new store');
+  // };
+
+  const [bestScore, setBestScore] = useState<number>(
+    parseInt(localStorage.getItem('bestScore') || '0') ||
+      Number.MAX_SAFE_INTEGER
+  );
+  const gameFinish = () => {
+    const newBestScore = turns > bestScore ? bestScore : turns;
+    if (newBestScore === 0) {
+      setBestScore(turns);
+      localStorage.setItem('bestScore', '' + turns);
+    } else {
+      setBestScore(newBestScore);
+      localStorage.setItem('bestScore', '' + newBestScore);
+    }
+  };
+
+  const checkCompletion = () => {
+    if (solvedArray.length === 0) {
+      gameFinish();
+      console.log('you win');
+    }
+  };
+
+  useEffect(() => checkCompletion(), [cards]);
 
   const shuffleCards = () => {
     const shuffledCards = [...CARD_IMAGES, ...CARD_IMAGES]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
-    console.log(shuffledCards);
+
+    setSelectOne(null);
+    setSelectTwo(null);
     setCards(shuffledCards);
     setTurns(0);
-    // console.log(card.src)
   };
 
   const handleSelect = (card: ICards) => {
+    // if (card.id === selectOne?.id) return;
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     selectOne ? setSelectTwo(card) : setSelectOne(card);
-    console.log(card);
   };
 
   const resetTurn = () => {
     setSelectOne(null);
     setSelectTwo(null);
     setTurns((prev) => prev + 1);
+    setDisabledCard(false);
   };
 
   useEffect(() => {
     if (selectOne && selectTwo) {
+      setDisabledCard(true);
       if (selectOne.src === selectTwo.src) {
         setCards((prewCards) => {
           return prewCards.map((card) => {
@@ -80,24 +102,37 @@ export function MemoryGame() {
     }
   }, [selectOne, selectTwo]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   return (
-    <div className="game-wrapper">
-      <button className="border" onClick={shuffleCards}>
-        Shuffle Cards
-      </button>
+    <div className="game-wrapper flex flex-col items-center">
       Memory game
-      <div className="grid-cards">
+      <button
+        className="mt-2 w-28 rounded-full border p-1 hover:bg-red-200"
+        onClick={shuffleCards}
+      >
+        New Game
+      </button>
+      <div className="grid-cards mb-4">
         {cards.map((card) => (
           <SingleCard
             card={card}
             key={card.id}
             handleSelect={handleSelect}
             flip={card === selectOne || card === selectTwo || card.matched}
+            disabled={disabledCard}
           />
         ))}
       </div>
+      <p>Moves : {turns}</p>
+      {/* <p>Best Score : {bestScore}</p> */}
+      {localStorage.getItem('bestScore') && (
+        <div>
+          <span>Best score:</span> {bestScore}
+        </div>
+      )}
     </div>
   );
 }
