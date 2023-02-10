@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CATEGORIES } from '../constants/game-categories';
+import CATEGORIES from '../game-content/game-categories';
 import { useCategory } from '../hooks/ChooseCategory';
 
 export function GameCategories() {
