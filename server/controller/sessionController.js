@@ -2,32 +2,33 @@ const { Session } = require("../models/models");
 
 class SessionController {
   async create(user, token) {
-    if (!user || !token) return;
-    await Session.create({userId: user.id, token});
-    return true;
+    if (!user) return;
+    return await Session.create({userId: user.id});;
   }
   
-  async get(user, id) {
-    if (!id) return null;
-    const session = await Session.findOne({where: {userId: user.id, id}});
+  async get(id) {
+    const session = await Session.findOne({where: {id}});
     if (!session) return null;
     return session;
   }
 
-  async update(user, token) {
-    if (!user.id) return false;
-    const session = await Session.findOne({where: {userId: user.id}});
+  async update(id, token) {
+    const session = await Session.findOne({where: {id}});
     if (!session) return false;
     await session.update({token: token});
     return true;
   }
 
-  async delete(user, id) {
-    if (!id) return false;
-    const session = await Session.findOne({where: {userId: user.id, id}});
-    if (!session) return true;
-    await session.destroy();
-    return true;
+  async check(user) {
+    const sessions = await Session.findAndCountAll({where: {userId: user.id}});
+    if (sessions.count < 0) return;
+    sessions.rows.forEach((el) => {
+      try {
+        jwt.verify(el.token, process.env.SECRET_KEY);
+      } catch (e) {
+        el.destroy();
+      }
+    }); 
   }
 }
 
