@@ -4,8 +4,14 @@ import SingleCard from './SingleCard';
 import { ICards } from './types';
 import './MemoryGame.css';
 
+const shuffleCards = () => {
+  return [...CARD_IMAGES, ...CARD_IMAGES]
+    .sort(() => Math.random() - 0.5)
+    .map((card) => ({ ...card, id: Math.random() }));
+};
+
 export function MemoryGame() {
-  const [cards, setCards] = useState<ICards[]>([]);
+  const [cards, setCards] = useState<ICards[]>(shuffleCards());
   const [turns, setTurns] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<ICards | null>(null);
   const [selectTwo, setSelectTwo] = useState<ICards | null>(null);
@@ -41,15 +47,10 @@ export function MemoryGame() {
   };
 
   useEffect(() => checkCompletion(), [cards]);
-
-  const shuffleCards = () => {
-    const shuffledCards = [...CARD_IMAGES, ...CARD_IMAGES]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
-
+  const resetGame = () => {
     setSelectOne(null);
     setSelectTwo(null);
-    setCards(shuffledCards);
+    setCards(shuffleCards());
     setTurns(0);
   };
 
@@ -86,16 +87,16 @@ export function MemoryGame() {
     }
   }, [selectOne, selectTwo]);
 
-  useEffect(() => {
-    shuffleCards();
-  }, []);
+  // useEffect(() => {
+  //   resetGame();
+  // }, []);
 
   return (
     <div className="game-wrapper flex flex-col items-center">
       Memory game
       <button
         className="mt-2 w-28 rounded-full border p-1 hover:bg-red-200"
-        onClick={shuffleCards}
+        onClick={resetGame}
       >
         New Game
       </button>
