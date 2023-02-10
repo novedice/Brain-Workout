@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { LoggedInReducer } from './LoggedInReducer';
 import { LogInReducer } from './LogInReducer';
 import { SignUpReducer } from './SignUpReducer';
 import { TokenReducer } from './TokenReducer';
@@ -9,6 +10,7 @@ export const rootReducer = combineReducers({
   signUpModal: SignUpReducer,
   userInfo: UserReducer,
   tokenInfo: TokenReducer,
+  loggedInInfo: LoggedInReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { IUser } from '../../types/interfaces';
-// import { ImodalAction } from '../../types/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { CHANGE_LANGUAGE, UPDATE_USER } from '../../constants';
 
 const initialState = {
   id: 0,
-  nickName: '',
+  nickname: '',
   language: 'en',
   loggedIn: false,
 };
-// (state= initialState, action: ImodalAction)
 export const UserReducer = (
   state = initialState,
   action: PayloadAction<IUser>
@@ -21,6 +19,10 @@ export const UserReducer = (
     }
     case CHANGE_LANGUAGE: {
       state.language = state.language === 'en' ? 'rus' : 'en';
+      return state;
+    }
+    case 'LOGGINUSER': {
+      state.loggedIn = true;
       return state;
     }
   }

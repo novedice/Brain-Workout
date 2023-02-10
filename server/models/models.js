@@ -20,19 +20,21 @@ const Session = sequelize.define('session', {
 
 const Result = sequelize.define('result', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  value: {type: DataTypes.INTEGER}
+  value: {type: DataTypes.INTEGER},
+  gameId: {type: DataTypes.INTEGER}
 });
 
-const Game = sequelize.define('game', {
-  id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  name: {type: DataTypes.STRING},
-  valueType: {type: DataTypes.STRING, allowNull: true},
-  category: {type: DataTypes.STRING}
-})
+User.hasMany(Result);
+Result.belongsTo(User);
+
+User.hasMany(Category);
+Category.belongsTo(User);
+
+User.hasMany(Session);
+Session.belongsTo(User);
 
 module.exports = {
   User,
-  Game,
   Result,
   Session,
   Category

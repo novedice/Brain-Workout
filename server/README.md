@@ -40,6 +40,7 @@ Create user and return authorization token
 
     ```typescript
       {
+        nickname: string,
         email: string,
         password: string
       }
@@ -693,52 +694,32 @@ Return results for the current user
   * **Code:** 201 CREATED <br />
     **Content:** 
     ```json
-      [ // НАЧАЛО ОБЪЕКТА
-        {
-          "id": 1,
-          "name": "Reaction Time",
-          "valueType": "ms",
-          "results": [
+        [
             {
-              "id": 1,
-              "value": 200,
-              "createdAt": "2023-02-08T15:57:23.626Z"
+                "id": 1,
+                "value": 200,
+                "gameId": 1,
+                "createdAt": "2023-02-08T19:10:36.828Z",
+                "updatedAt": "2023-02-08T19:10:36.837Z",
+                "userId": 1
             },
             {
-              "id": 2,
-              "value": 196,
-              "createdAt": "2023-02-08T15:57:23.626Z"
+                "id": 2,
+                "value": 200,
+                "gameId": 1,
+                "createdAt": "2023-02-08T19:10:48.017Z",
+                "updatedAt": "2023-02-08T19:10:48.031Z",
+                "userId": 1
             },
             {
-              "id": 3,
-              "value": 230,
-              "createdAt": "2023-02-08T15:57:23.626Z"
+                "id": 3,
+                "value": 200,
+                "gameId": 1,
+                "createdAt": "2023-02-08T19:11:03.276Z",
+                "updatedAt": "2023-02-08T19:11:03.284Z",
+                "userId": 1
             }
-          ]
-        },
-        {
-          "id": 2,
-          "name": "Game 2",
-          "valueType": "ms",
-          "results": [
-            {
-              "id": 1,
-              "value": 200,
-              "createdAt": "2023-02-08T15:57:23.626Z"
-            },
-            {
-              "id": 2,
-              "value": 196,
-              "createdAt": "2023-02-08T15:57:23.626Z"
-            },
-            {
-              "id": 3,
-              "value": 230,
-              "createdAt": "2023-02-08T15:57:23.626Z"
-            }
-          ]
-        },
-      ]
+        ]
     ```
     **Headers:**
       
