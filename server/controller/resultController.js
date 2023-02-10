@@ -1,6 +1,6 @@
 const { User, Result, Game } = require("../models/models");
 const sequelize = require('../db');
-const ApiError = require("c:/users/windows 10/desktop/практика приложение/journey/server/error/apierror");
+const ApiError = require('../error/ApiError');
 
 class ResultController {
   async create(req, res, next) {
