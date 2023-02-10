@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
+// import { MeaningColorGame } from '../components/Games/meaningColor';
 // import { Template } from '../components/Template';
 import { allGames } from '../game-content/allGames';
 
@@ -22,18 +23,24 @@ export function GamePage() {
         <aside className="width-[20%] mr-5 border">
           <GameCategories />
         </aside>
-        <main className="flex w-[80%] justify-around">
-          {/* <Template /> */}
-          {filteredGames().map((game) => {
-            return (
-              <React.Fragment key={game.name}>
-                <div>
-                  <p>{game.name}</p>
-                  <p>{game.category}</p>
-                </div>
-              </React.Fragment>
-            );
-          })}
+        <main className="flex w-[80%] flex-col justify-around">
+          <div className="flex flex-wrap justify-around">
+            {/* <Template /> */}
+            {filteredGames().map((game) => {
+              return (
+                <React.Fragment key={game.name}>
+                  <div className="all-games-wrap">
+                    <Link to={`/games/${game.path}`}>
+                      <p>{game.name}</p>
+                      <p>{game.category}</p>
+                    </Link>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+          <Link to="/games/MeaningColorGame">Game!</Link>
+          {/* <MeaningColorGame /> */}
         </main>
       </div>
     </>
