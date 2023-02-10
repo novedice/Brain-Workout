@@ -1,17 +1,42 @@
 import './SingleCard.css';
-export default function SingleCard({ card }: any) {
+import { ICards } from './types';
+
+interface ISingleCardProp {
+  card: ICards;
+  handleSelect: (card: ICards) => void;
+  flip: boolean | undefined;
+  disabled: boolean;
+}
+
+export default function SingleCard({
+  card,
+  handleSelect,
+  flip,
+  disabled,
+}: ISingleCardProp) {
+  const handleClick = () => {
+    if (!disabled) {
+      handleSelect(card);
+    }
+  };
   return (
     <div className="card">
-      <div>
+      <div className={flip ? 'flipped' : 'shake'}>
         <img
           src={card.src}
           alt="front-card"
-          className="card front-card w-20 first-line:h-20"
+          className="front-card w-20 first-line:h-20"
         />
         <img
           src="question.png"
           alt="back-card"
-          className="card back-card w-40 first-line:h-20"
+          className="back-card w-20 first-line:h-20"
+          // className={
+          //   flip
+          //     ? 'back-card w-20 first-line:h-20'
+          //     : 'back-card shake w-20 first-line:h-20'
+          // }
+          onClick={handleClick}
         />
       </div>
     </div>
