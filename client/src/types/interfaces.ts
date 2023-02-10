@@ -50,4 +50,16 @@ export interface IResData {
 export interface IColorMeaning {
   color: string;
   meaning: string;
+  border: string;
+}
+
+export type QParam = {
+  CurrentGame: string;
+};
+
+export interface IGameList {
+  name: string;
+  path: string;
+  category: string;
+  game: () => JSX.Element;
 }

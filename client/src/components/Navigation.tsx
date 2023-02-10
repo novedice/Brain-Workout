@@ -31,7 +31,7 @@ export function Navigation() {
         <Link to="/" className="mr-5 hover:text-red-200">
           MAIN PAGE
         </Link>
-        <Link to="/game" className="mr-5 hover:text-red-200">
+        <Link to="/games" className="mr-5 hover:text-red-200">
           BRAIN GAME
         </Link>
         <Link to="/statistic" className="mr-5 hover:text-red-200">

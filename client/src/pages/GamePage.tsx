@@ -29,15 +29,17 @@ export function GamePage() {
             {filteredGames().map((game) => {
               return (
                 <React.Fragment key={game.name}>
-                  <div>
-                    <p>{game.name}</p>
-                    <p>{game.category}</p>
+                  <div className="all-games-wrap">
+                    <Link to={`/games/${game.path}`}>
+                      <p>{game.name}</p>
+                      <p>{game.category}</p>
+                    </Link>
                   </div>
                 </React.Fragment>
               );
             })}
           </div>
-          <Link to="/game/MeaningColorGame">Game!</Link>
+          <Link to="/games/MeaningColorGame">Game!</Link>
           {/* <MeaningColorGame /> */}
         </main>
       </div>

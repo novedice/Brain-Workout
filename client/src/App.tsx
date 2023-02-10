@@ -17,8 +17,8 @@ export function App() {
 
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/game/" element={<GamePage />} />
-        <Route path={`/game/:CurrentGame`} element={<CurrentGamePage />} />
+        <Route path="/games/" element={<GamePage />} />
+        <Route path={`/games/:CurrentGame`} element={<CurrentGamePage />} />
         <Route path="/statistic" element={<StatisticPage />} />
         <Route path="/account_settings" element={<AccounSettingsPage />} />
       </Routes>
