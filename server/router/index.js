@@ -7,6 +7,6 @@ const router = new Router();
 
 router.use('/users', userRouter);
 
-router.use('/game/:id', authMiddleware, leadersRouter);
+router.use('/game', authMiddleware, leadersRouter);
 
 module.exports = router;
