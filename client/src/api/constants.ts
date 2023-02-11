@@ -1,9 +1,8 @@
 export const BaseUrl = 'api';
 export const users = 'users';
-export const winners = 'winners';
-export const game = 'game';
 export const results = 'results';
 export const registration = 'registration';
+export const game = 'game';
 export const login = 'login';
 export const authorization = 'auth';
 export const categories = 'categories';

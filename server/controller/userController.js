@@ -79,17 +79,9 @@ class UserController {
   }
 
   async delete(req, res, next) {
-    const { password } = req.body;
-    if (!password) {
-      return next(ApiError.badRequest('Invalid password!'));
-    }
     const user = User.findByPk(req.user.id);
     if (!user) {
       return next(ApiError.notFound('User not found!'));
-    }
-    const comparePassword = bcrypt.compareSync(password, user.password);
-    if (!comparePassword) {
-      return next(ApiError.badRequest('Wrong password!'));
     }
     await user.destroy();
     res.json({message: 'User deleted successfully!'});

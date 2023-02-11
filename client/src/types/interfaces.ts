@@ -1,9 +1,3 @@
-export interface ISession {
-  id: number;
-  userID: number;
-  token: string;
-}
-
 export interface IUser {
   id?: number;
   nickname: string;
@@ -52,6 +46,12 @@ export interface IColorMeaning {
   meaning: string;
   border: string;
 }
+
+export interface ILeader {
+  id: number,
+  nickname: string,
+  result: number
+} 
 
 export type QParam = {
   CurrentGame: string;

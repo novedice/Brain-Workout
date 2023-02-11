@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { IToken } from '../types/interfaces';
 import { authorization, BaseUrl, users } from './constants';
 import { $host } from './http';
 // import { useJwt } from 'react-jwt';
@@ -11,50 +12,47 @@ interface IDataUser {
   nickname?: string;
 }
 
-export interface IUserResponse {
-  token: 'string'
-}
+// export const getUser = () => {
+//   const [cookie] = useCookies(['token']);
+//   const [user, setUser] = useState();
+//   const [error, setError] = useState('');
+//   const getUs = async () => {
+//     try {
+//       const response = await axios.get(`${BaseUrl}/${users}/${cookie}`, {
+//         withCredentials: true,
+//       });
+//       if (response) {
+//         setUser(response.data);
+//       }
+//     } catch (e) {
+//       setError((e as AxiosError).message);
+//     }
+//   };
+//   useEffect(() => {
+//     getUs();
+//   });
 
-export const getUser = () => {
-  const [cookie] = useCookies(['token']);
-  const [user, setUser] = useState();
-  const [error, setError] = useState('');
-  const getUs = async () => {
-    try {
-      const response = await axios.get(`${BaseUrl}/${users}/${cookie}`, {
-        withCredentials: true,
-      });
-      if (response) {
-        setUser(response.data);
-      }
-    } catch (e) {
-      setError((e as AxiosError).message);
-    }
-  };
-  useEffect(() => {
-    getUs();
-  });
-
-  return { user, error };
-};
+//   return { user, error };
+// };
 
 export const updateUser = async (data: IDataUser) => {
-  const [cookie] = useCookies(['token']);
   try {
-    await axios.put(`${BaseUrl}/${users}/${cookie}`, data, {
+    const response = await axios.put<IToken>(`${BaseUrl}/${users}/`, data, {
       withCredentials: true,
     });
+    return response.data;
   } catch (e) {
     console.log(e);
+    return null;
   }
 };
 
 export const deleteUser = async () => {
-  const [cookie] = useCookies(['token']);
   try {
-    await axios.delete(`${BaseUrl}/${users}/${users}/${cookie}`, {
+    const response = await axios.delete(`${BaseUrl}/${users}`, {
       withCredentials: true,
     });
+    return response.data;
   } catch (e) {
     console.log(e);
   }
@@ -70,7 +68,7 @@ export const registrAuthUser = async (
   // const [, setCookie] = useCookies(['token']);
 
   try {
-    const response = await $host.post<IUserResponse>(`${BaseUrl}/${users}/${action}`, data, {
+    const response = await $host.post<IToken>(`${BaseUrl}/${users}/${action}`, data, {
       withCredentials: true,
     })
     // const response = await axios.post(`${BaseUrl}/${users}/${action}`, data, {
@@ -115,7 +113,7 @@ export const checkToken = async () => {
   // const [cookie, setCookie] = useCookies(['token']);
   let error;
   try {
-    const response = await $host.get<IUserResponse>(
+    const response = await $host.get<IToken>(
       `${BaseUrl}/${users}/${authorization}`,
       { withCredentials: true }
     );
