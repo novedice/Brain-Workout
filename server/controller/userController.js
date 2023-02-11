@@ -1,7 +1,7 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
-const { User } = require('../models/models');
+const { User, Session } = require('../models/models');
 const uuid = require('uuid');
 const sessionController = require('./sessionController');
 
@@ -54,12 +54,28 @@ class UserController {
   async check(req, res, next) {
     const token = generateJWT(req.user.id, req.user.nickname, req.user.email, req.user.sessionId);
     const session = await sessionController.get(req.user.sessionId);
-    console.log(session);
     if (session) {
       await session.update({token});
-      console.log('here');
     }
     return res.json({token});
+  }
+
+  async update(req, res, next) {
+    const { nickname, email, password } = req.body;
+    const user = User.findByPk(req.user.id);
+    if (!user) {
+      return next(ApiError.notFound('User not found!'));
+    }
+    if (nickname) await user.update({nickname});
+    if (email) await user.update({email});
+    if (password) await user.update({password});
+    const token = generateJWT(user.id, user.nickname, user.email, req.user.sessionId);
+    const session = await sessionController.get(req.user.sessionId);
+    if (session) {
+      return res.status(401).json({message: 'User not authorized!'});
+    }
+    await session.update({token});
+    res.json({token});
   }
 
   async delete(req, res, next) {
