@@ -14,8 +14,10 @@ router.get('/auth', authMiddleware, userController.check);
 
 router.delete('/', authMiddleware, userController.delete);
 
-router.use('/categories', authMiddleware, categoryRouter)
+router.use('/categories', authMiddleware, categoryRouter);
 
-router.use('/results', authMiddleware, resultRouter)
+router.use('/results', authMiddleware, resultRouter);
+
+router.put('/', authMiddleware, userController.update);
 
 module.exports = router;
