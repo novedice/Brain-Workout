@@ -47,7 +47,7 @@ const SignUpModal = () => {
   // };
 
   const sigInComplete = async () => {
-    const registation = await registrAuthUser(
+    const registration = await registrAuthUser(
       { email: email, password: password, nickname: nickname },
       'registration'
     );
@@ -56,8 +56,12 @@ const SignUpModal = () => {
       payload: { nickname: nickname, loggedIn: false, language: user.language },
       type: UPDATE_USER,
     });
-    console.log('registration data', registation);
+    console.log('registration data', registration);
+    if (registration) {
+      document.cookie = `auth=Bearer ${registration.token}`;
+    }
     console.log('user after sign up', user);
+    console.log('cookies', document.cookie);
     modalShow();
   };
 

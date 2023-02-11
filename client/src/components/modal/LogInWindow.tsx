@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 import { decodeToken } from 'react-jwt';
 import { Link } from 'react-router-dom';
-import { refreshToken, registrAuthUser } from '../../api/user-requests';
-import { HIDE_MODAL, LOGGIN, SHOW_SIGNUP, UPDATE_TOKEN } from '../../constants';
+import { /* refreshToken,*/ checkToken, registrAuthUser } from '../../api/user-requests';
+import { HIDE_MODAL, LOGGIN, SHOW_SIGNUP, /* UPDATE_TOKEN */ } from '../../constants';
 import {
   styleErrorMes,
   styleInput,
@@ -23,7 +23,7 @@ const LogInWindow = () => {
   const { token } = useTypeSelector((state) => state.tokenInfo);
   // const user = useTypeSelector((state) => state.userInfo);
   // const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
-  const [cookie] = useCookies(['token']);
+  // const [cookie] = useCookies(['token']);
 
   const modalHide = () => {
     dispatch({ type: HIDE_MODAL });
@@ -41,8 +41,9 @@ const LogInWindow = () => {
     console.log('login data', loginResponse);
     if (loginResponse) {
       dispatch({ type: LOGGIN });
-      const t = await refreshToken(cookie);
-      dispatch({ payload: t, type: UPDATE_TOKEN });
+      // const t = await refreshToken(cookie);
+      // dispatch({ payload: t, type: UPDATE_TOKEN });
+      document.cookie = `auth=Bearer ${loginResponse.token}`;
       console.log('token:', token);
       const decodedToken = decodeToken(token);
       console.log(decodedToken);

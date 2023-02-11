@@ -2,12 +2,17 @@ import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { authorization, BaseUrl, users } from './constants';
+import { $host } from './http';
 // import { useJwt } from 'react-jwt';
 
 interface IDataUser {
   email: string;
   password: string;
   nickname?: string;
+}
+
+export interface IUserResponse {
+  token: 'string'
 }
 
 export const getUser = () => {
@@ -65,9 +70,12 @@ export const registrAuthUser = async (
   // const [, setCookie] = useCookies(['token']);
 
   try {
-    const response = await axios.post(`${BaseUrl}/${users}/${action}`, data, {
+    const response = await $host.post<IUserResponse>(`${BaseUrl}/${users}/${action}`, data, {
       withCredentials: true,
-    });
+    })
+    // const response = await axios.post(`${BaseUrl}/${users}/${action}`, data, {
+    //   withCredentials: true,
+    // });
     return response.data;
 
     // if (response) {
@@ -100,22 +108,18 @@ export const registrAuthUser = async (
 //   }
 //   return token;
 // };
-interface ICookie {
-  token?: string;
-}
 
-export const refreshToken = async (cookie: ICookie) => {
+export const checkToken = async () => {
   // const [newToken, setNewToken] = useState();
   // const [error, setError] = useState('');
   // const [cookie, setCookie] = useCookies(['token']);
-  let response;
   let error;
   try {
-    response = await axios.get(
-      `${BaseUrl}/${users}/${authorization}/${cookie}`,
+    const response = await $host.get<IUserResponse>(
+      `${BaseUrl}/${users}/${authorization}`,
       { withCredentials: true }
     );
-    console.log('response', response);
+    return response.data;
     // if (response) {
 
     //   // setNewToken(response.data);
@@ -124,7 +128,7 @@ export const refreshToken = async (cookie: ICookie) => {
   } catch (e) {
     error = (e as AxiosError).message;
     console.log(error);
-    return error;
+    return null;
   }
-  return response.data;
+  
 };
