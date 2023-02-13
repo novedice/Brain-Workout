@@ -1,4 +1,5 @@
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
+import { ReactionTime } from '../components/Games/ReactionTime/ReactionTime';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList } from '../types/interfaces';
 
@@ -7,9 +8,7 @@ export const allGames: IGameList[] = [
     name: 'Reaction Time',
     path: 'reaction-time',
     category: 'Speed',
-    game: () => {
-      return <></>;
-    },
+    game: ReactionTime,
   },
   {
     name: 'Sequence Memory',
