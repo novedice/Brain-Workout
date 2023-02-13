@@ -63,3 +63,8 @@ export interface IGameList {
   category: string;
   game: () => JSX.Element;
 }
+
+export interface ICardSpeedMacth {
+  src: string;
+  name: string;
+}

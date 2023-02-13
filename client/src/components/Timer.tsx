@@ -35,7 +35,7 @@ export const Timer = ({
 
   return (
     <>
-      <p>{`Time left: ${seconds}`}</p>
+      <p>{`Time left: ${seconds} s`}</p>
     </>
   );
 };
