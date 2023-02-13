@@ -63,11 +63,13 @@ export const registrAuthUser = async (
   // const [error, setError] = useState('');
   // const { reEvaluateToken } = useJwt('');
   // const [, setCookie] = useCookies(['token']);
+  console.log(`${BaseUrl}/${users}/${action}`);
 
   try {
     const response = await axios.post(`${BaseUrl}/${users}/${action}`, data, {
       withCredentials: true,
     });
+    console.log(`${BaseUrl}/${users}/${action}`);
     return response.data;
 
     // if (response) {
