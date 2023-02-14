@@ -7,6 +7,10 @@ class CategoryController {
     if (!category) {
       return next(ApiError.badRequest('Invalid category!'));
     }
+    const candidate = Category.findOne({where: {category, userId: req.user.id}});
+    if (candidate) {
+      return res.json(candidate);
+    }
     const categoryObj = Category.create({category, userId: req.user.id});
     res.json(categoryObj);
   }

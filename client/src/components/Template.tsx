@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie';
-import { refreshToken } from '../api/user-requests';
+import { checkToken } from '../api/user-requests';
 import { UPDATE_TOKEN, UPDATE_USER } from '../constants';
 import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
 import { IUser } from '../types/interfaces';
@@ -20,7 +20,7 @@ export const Template = () => {
   };
 
   const logUser = async () => {
-    const t = await refreshToken(cookie);
+    const t = await checkToken();
     console.log('t', t);
     dispatch({ payload: t, type: UPDATE_TOKEN });
     console.log('new token', token1);

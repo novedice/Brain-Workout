@@ -7,7 +7,7 @@ class LeaderController {
     if (isNaN(id) || id < 1) {
       return next(ApiError.badRequest('Invalid id!'));
     }
-    let { limit, page, sort } = req.body;
+    let { limit, page, sort } = req.query;
     limit = limit || 50;
     page = page || 1;
     sort = sort || 'ASC';
