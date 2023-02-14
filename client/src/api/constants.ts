@@ -1,4 +1,4 @@
-export const BaseUrl = 'localhost:5000/api';
+export const BaseUrl = 'api';
 export const users = 'users';
 export const results = 'results';
 export const registration = 'registration';

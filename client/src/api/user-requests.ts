@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
+// import { useEffect, useState } from 'react';
+// import { useCookies } from 'react-cookie';
 import { IToken } from '../types/interfaces';
 import { authorization, BaseUrl, users } from './constants';
 import { $host } from './http';
@@ -66,8 +66,6 @@ export const registrAuthUser = async (
   // const [error, setError] = useState('');
   // const { reEvaluateToken } = useJwt('');
   // const [, setCookie] = useCookies(['token']);
-  console.log(`${BaseUrl}/${users}/${action}`);
-
   try {
     const response = await $host.post<IToken>(
       `${BaseUrl}/${users}/${action}`,
@@ -91,6 +89,7 @@ export const registrAuthUser = async (
     if (e) {
       // setError((e as AxiosError).message);
       console.log(e);
+      // return e;
     }
   }
 };

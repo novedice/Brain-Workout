@@ -3,6 +3,8 @@ export interface IUser {
   nickname: string;
   language: 'en' | 'rus';
   loggedIn: boolean;
+  email?: string;
+  alwaysSignIn?: boolean;
 }
 
 export interface IToken {
@@ -48,10 +50,10 @@ export interface IColorMeaning {
 }
 
 export interface ILeader {
-  id: number,
-  nickname: string,
-  result: number
-} 
+  id: number;
+  nickname: string;
+  result: number;
+}
 
 export type QParam = {
   CurrentGame: string;

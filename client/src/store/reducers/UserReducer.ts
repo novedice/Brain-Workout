@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { IUser } from '../../types/interfaces';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { CHANGE_LANGUAGE, UPDATE_USER } from '../../constants';
+import { CHANGE_LANGUAGE, LOGGINUSER, UPDATE_USER } from '../../constants';
 
-const initialState = {
+const initialState: IUser = {
   id: 0,
   nickname: '',
   language: 'en',
   loggedIn: false,
+  email: '',
+  alwaysSignIn: true,
 };
 export const UserReducer = (
   state = initialState,
@@ -15,13 +17,24 @@ export const UserReducer = (
 ) => {
   switch (action.type) {
     case UPDATE_USER: {
-      return action.payload;
+      state.nickname = action.payload.nickname
+        ? action.payload.nickname
+        : state.nickname;
+      state.email = action.payload.email ? action.payload.email : state.email;
+      state.loggedIn = action.payload.loggedIn;
+      state.language = action.payload.language
+        ? action.payload.language
+        : state.language;
+      state.alwaysSignIn = action.payload.alwaysSignIn;
+      state.id = action.payload.id ? action.payload.id : state.id;
+
+      return state;
     }
     case CHANGE_LANGUAGE: {
       state.language = state.language === 'en' ? 'rus' : 'en';
       return state;
     }
-    case 'LOGGINUSER': {
+    case LOGGINUSER: {
       state.loggedIn = true;
       return state;
     }
