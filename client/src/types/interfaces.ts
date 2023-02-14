@@ -1,14 +1,10 @@
-export interface ISession {
-  id: number;
-  userID: number;
-  token: string;
-}
-
 export interface IUser {
   id?: number;
   nickname: string;
   language: 'en' | 'rus';
   loggedIn: boolean;
+  email?: string;
+  alwaysSignIn?: boolean;
 }
 
 export interface IToken {
@@ -51,6 +47,12 @@ export interface IColorMeaning {
   color: string;
   meaning: string;
   border: string;
+}
+
+export interface ILeader {
+  id: number;
+  nickname: string;
+  result: number;
 }
 
 export type QParam = {

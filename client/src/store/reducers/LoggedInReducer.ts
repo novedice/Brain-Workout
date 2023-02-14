@@ -15,7 +15,7 @@ export const LoggedInReducer = (state = initialState, action: ImodalAction) => {
     case LOGGIN:
       return { loggedIn: true };
     case LOGOUT:
-      return { loggedOut: false };
+      return { loggedIn: false };
     default:
       return state;
   }

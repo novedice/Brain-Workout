@@ -1,10 +1,10 @@
-export const BaseUrl = 'localhost:5000/api';
+export const BaseUrl = 'api';
 export const users = 'users';
-export const winners = 'winners';
-export const game = 'game';
 export const results = 'results';
 export const registration = 'registration';
+export const game = 'game';
 export const login = 'login';
 export const authorization = 'auth';
 export const categories = 'categories';
 export const leaders = 'leaders';
+export const API_URL = 'http://localhost:5000';
