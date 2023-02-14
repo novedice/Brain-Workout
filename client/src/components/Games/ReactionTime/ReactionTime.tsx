@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import './ReactionTime.css';
+import '../../../assets/clock.png';
 
 export function ReactionTime() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [defaultGameState, setDefaultGameState] = useState(true);
   const [gameStatus, setGameStatus] = useState(false);
   const [gameClicked, setGameClicked] = useState(false);
   const [firstTime, setFirstTime] = useState(0);
   const [secondTime, setSecondTime] = useState(0);
+  const [results, setResults] = useState(false);
 
   const getRandomTime = (min: number, max: number) => {
     let result = Math.floor(Math.random() * Math.floor(max)) + min;
@@ -21,17 +22,16 @@ export function ReactionTime() {
     let timeTwo = new Date();
     let timeClick = timeTwo.getTime();
     setSecondTime(timeClick);
-    setTimeout(() => {
-      setDefaultGameState(true);
-      setGameClicked(false);
-    }, 3000);
+    setResults(true);
+    setGameClicked(false);
+    // setTimeout(() => {
+    //
+    // }, 3000);
     // let differentTime = timeClick - timeNow;
     // console.log(timeNow);
 
     // console.log(differentTime);
   };
-  // let click = HandleClick();
-  // console.log('Second click ' + click);
 
   const timeoutOne = (time: number) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -59,6 +59,26 @@ export function ReactionTime() {
     // timeoutTwo(endTime);
   };
 
+  const [arr, setArr] = useState<number[]>([]);
+
+  const resultArrayFunc = () => {
+    setArr([...arr, differentTime]);
+  };
+
+  console.log(arr);
+
+  const resetGame = () => {
+    gameStart();
+    setDefaultGameState(false);
+    setResults(false);
+    setGameStatus(true);
+    resultArrayFunc();
+    if (arr.length === 2) {
+      let bestScore = arr.reduce((acc, elem) => (acc < elem ? acc : elem));
+      console.log(bestScore);
+    }
+  };
+
   return (
     <div className="container">
       <h1>Reaction Time Speed Game</h1>
@@ -67,26 +87,51 @@ export function ReactionTime() {
         <label className="green-label">GREEN</label>
       </p>
       {defaultGameState && (
-        <div className="click-area" style={{ background: 'yellow' }}></div>
+        <div
+          className="click-area time-container"
+          style={{ background: 'rgb(59 130 246 / 0.5)' }}
+          onClick={() => gameStart()}
+        >
+          <p>Click for starting game</p>
+        </div>
       )}
       {gameStatus && (
-        <div className="click-area" style={{ background: 'red' }}></div>
+        <div
+          className="click-area time-container"
+          style={{ background: 'red' }}
+        >
+          <p>Waiting for green...</p>
+        </div>
       )}
       {gameClicked && (
         <div
           className="click-area"
-          style={{ background: 'green' }}
+          style={{ background: 'rgb(75, 219, 106)' }}
           onClick={() => HandleClick()}
-        ></div>
+        >
+          <p className="click-text">Click!</p>
+        </div>
       )}
-      {/* <div className={green ? 'click-area_green' : ''}></div> */}
-      <div className="time-container">
-        <p>Your reaction time: </p>
-        <p>{differentTime > 0 ? differentTime : 0}</p>
-      </div>
-      <button className="mt-2 border px-2" onClick={() => gameStart()}>
-        Start Game
-      </button>
+      {results && (
+        <div
+          className="click-area"
+          style={{ background: 'blue' }}
+          onClick={() => resetGame()}
+        >
+          <div className="time-container">
+            <img src="clock.png" alt="121" className="mb-5" />
+            <p>
+              Your reaction time:{' '}
+              {differentTime > 0 ? differentTime + ' ms' : ''}
+            </p>
+            <p></p>
+            <p className="small-text">Click to keep going</p>
+          </div>
+        </div>
+      )}
+      {/* <button className="mt-2 border px-2" onClick={() => gameStart()}>
+      Start Game
+      </button>  */}
     </div>
   );
 }
