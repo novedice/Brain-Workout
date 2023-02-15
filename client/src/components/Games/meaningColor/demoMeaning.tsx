@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 // import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
 
@@ -62,11 +63,10 @@ export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
         <div className="flex h-full flex-col justify-around">
           <div className="how-to-play flex h-2/3 flex-col">
             <p className="mb-5 text-center text-xl text-gray-700">
-              How to play
+              <FormattedMessage id="how_to_play" />
             </p>
             <p className="mb-5 text-center text-xl text-blue-900">
-              Ignore meaning of the word at the right and focus just on its
-              color
+              <FormattedMessage id="how_color" />
             </p>
             <div className="inside-wrap flex h-full flex-col justify-center">
               <div className="mb-10 flex justify-center">
@@ -76,7 +76,7 @@ export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
                   <p
                     className={`flex  items-center justify-center text-center text-5xl uppercase ${colors[leftColor].color}`}
                   >
-                    {colors[leftMeaning].meaning}
+                    <FormattedMessage id={colors[leftMeaning].meaning} />
                   </p>
                 </div>
                 <div
@@ -96,7 +96,7 @@ export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
                   disabled={noDisabled}
                   // disabled={!started}
                 >
-                  NO
+                  <FormattedMessage id="no" />
                 </button>
                 <button
                   className={`${yesNow} yes-answ-demo h-[50px] w-[80px] rounded-lg border ${backColor} bg-blue-400`}
@@ -104,7 +104,7 @@ export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
                   disabled={yesDisabled}
                   // disabled={!started}
                 >
-                  YES
+                  <FormattedMessage id="yes" />
                 </button>
               </div>
             </div>
@@ -114,7 +114,7 @@ export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
             onClick={() => setHowToPlay(false)}
             className={` ${startButton} mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-red-400`}
           >
-            PLAY GAME
+            <FormattedMessage id="start_game" />
           </button>
         </div>
       </>

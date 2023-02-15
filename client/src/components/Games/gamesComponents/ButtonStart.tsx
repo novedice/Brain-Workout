@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 interface IButtonStartProps {
   started: boolean;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,7 +24,11 @@ export const ButtonStart = ({
           }
         }}
       >
-        {started ? 'STOP' : 'START'}
+        {started ? (
+          <FormattedMessage id="stop" />
+        ) : (
+          <FormattedMessage id="start" />
+        )}
       </button>
     </>
   );

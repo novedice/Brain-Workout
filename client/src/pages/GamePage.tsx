@@ -24,15 +24,14 @@ export function GamePage() {
 
         <main className="flex w-[80%] flex-col justify-around">
           <div className="flex flex-wrap justify-around">
-            {/* <Template /> */}
             {filteredGames().map((game) => {
               return (
-                <React.Fragment key={game.name}>
+                <React.Fragment key={game.path}>
                   <div className="m-5 flex items-center justify-center border p-3">
                     <div className="all-games-wrap">
                       <Link to={`/games/${game.path}`}>
                         <p>{game.name}</p>
-                        <p>{game.category}</p>
+                        <p>{game.categoryName}</p>
                       </Link>
                     </div>
                   </div>
@@ -40,7 +39,6 @@ export function GamePage() {
               );
             })}
           </div>
-          {/* <MeaningColorGame /> */}
         </main>
       </div>
     </>

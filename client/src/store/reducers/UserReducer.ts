@@ -2,11 +2,12 @@
 import { IUser } from '../../types/interfaces';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { CHANGE_LANGUAGE, LOGGINUSER, UPDATE_USER } from '../../constants';
+import { LOCALES } from '../../i18n/locales';
 
 const initialState: IUser = {
   id: 0,
   nickname: '',
-  language: 'en',
+  language: LOCALES.ENGLISH,
   loggedIn: false,
   email: '',
   alwaysSignIn: true,
@@ -31,7 +32,8 @@ export const UserReducer = (
       return state;
     }
     case CHANGE_LANGUAGE: {
-      state.language = state.language === 'en' ? 'rus' : 'en';
+      state.language =
+        state.language === LOCALES.ENGLISH ? LOCALES.RUSSIAN : LOCALES.ENGLISH;
       return state;
     }
     case LOGGINUSER: {

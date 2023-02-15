@@ -1,7 +1,9 @@
+import { ReactElement } from 'react';
+
 export interface IUser {
   id?: number;
   nickname: string;
-  language: 'en' | 'rus';
+  language: string;
   loggedIn: boolean;
   email?: string;
   alwaysSignIn?: boolean;
@@ -60,13 +62,19 @@ export type QParam = {
 };
 
 export interface IGameList {
-  name: string;
+  name: ReactElement;
   path: string;
   category: string;
+  categoryName: ReactElement;
   game: () => JSX.Element;
 }
 
 export interface ICardSpeedMacth {
   src: string;
   name: string;
+}
+
+export interface ICategories {
+  category: string;
+  categoryName: ReactElement;
 }

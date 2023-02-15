@@ -39,8 +39,6 @@ export const SpeedMatchGame = () => {
     setBeginAnswer(new Date());
   };
 
-  // const finishGame = () => {};
-
   const changeCards = async () => {
     setChanging('changing-front');
     setBackActive('changing-back');
@@ -111,7 +109,7 @@ export const SpeedMatchGame = () => {
         </>
       )}
       {!finished && (
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col items-center">
           <div className="mb-[5%] flex w-full items-center justify-around">
             <ButtonStart
               startGame={startGame}
@@ -125,7 +123,7 @@ export const SpeedMatchGame = () => {
               {paused ? 'PLAY' : 'PAUSE'}
               <img
                 className="h-[34px] w-[34px] bg-blue-300"
-                src={paused ? 'pause.jpeg' : 'play.png'}
+                src={paused ? 'play.png' : 'pause.jpeg'}
               ></img>
             </button>
             <div className="m-5">
@@ -142,6 +140,7 @@ export const SpeedMatchGame = () => {
             <p className="m-5">SCORE: {score}</p>
             <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
           </div>
+          <p>Does this title matches the previous one?</p>
           <div className="cover flex">
             <div className="left-card">
               <SpeedMatchCard

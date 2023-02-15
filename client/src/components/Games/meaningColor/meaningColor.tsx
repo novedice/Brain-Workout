@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
 import { Timer } from '../../Timer';
@@ -90,13 +91,21 @@ export const MeaningColorGame = () => {
                   }
                 }}
               >
-                {started ? 'STOP' : 'START'}
+                {started ? (
+                  <FormattedMessage id="stop" />
+                ) : (
+                  <FormattedMessage id="start" />
+                )}
               </button>
               <button
                 className="mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-blue-300"
                 onClick={() => setPaused(!paused)}
               >
-                {paused ? 'PLAY' : 'PAUSE'}
+                {paused ? (
+                  <FormattedMessage id="play" />
+                ) : (
+                  <FormattedMessage id="pause" />
+                )}
               </button>
               <div className="m-5">
                 <Timer
@@ -119,7 +128,7 @@ export const MeaningColorGame = () => {
                   <p
                     className={`flex  items-center justify-center text-center text-5xl uppercase ${colors[leftColor].color}`}
                   >
-                    {colors[leftMeaningColor].meaning}
+                    <FormattedMessage id={colors[leftMeaningColor].meaning} />
                   </p>
                 </div>
                 <div
@@ -128,7 +137,7 @@ export const MeaningColorGame = () => {
                   <p
                     className={`flex items-center justify-center text-center text-5xl uppercase ${colors[rightColor].color}`}
                   >
-                    {colors[rightMeaningColor].meaning}
+                    <FormattedMessage id={colors[rightMeaningColor].meaning} />
                   </p>
                 </div>
               </div>
@@ -138,14 +147,14 @@ export const MeaningColorGame = () => {
                   onClick={noAnswer}
                   disabled={!started}
                 >
-                  NO
+                  <FormattedMessage id="no" />
                 </button>
                 <button
                   className="h-[50px] w-[80px] rounded-lg border bg-blue-400"
                   onClick={yesAnswer}
                   disabled={!started}
                 >
-                  YES
+                  <FormattedMessage id="yes" />
                 </button>
               </div>
             </div>
