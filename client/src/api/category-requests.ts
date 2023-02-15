@@ -1,5 +1,6 @@
 import { BaseUrl, categories, users } from "./constants";
 import { $host } from "./http";
+import { IResultResponse } from "./result-requerests";
 
 export const createCategory = async (category: string) => {
   try {
