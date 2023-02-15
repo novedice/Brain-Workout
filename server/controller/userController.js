@@ -6,9 +6,9 @@ const uuid = require('uuid');
 const sessionController = require('./sessionController');
 const { isValidEmail } = require('../util/validation');
 
-const generateJWT = (id, nickname, email, sessionId) => {
+const generateJWT = (id, nickname, email, sessionId, lang) => {
   return jsonwebtoken.sign(
-    {id: id, nickname, email, sessionId}, 
+    {id: id, nickname, email, sessionId, lang}, 
     process.env.SECRET_KEY,
     {expiresIn: '24h'}
   );
@@ -16,7 +16,8 @@ const generateJWT = (id, nickname, email, sessionId) => {
 
 class UserController {
   async registration(req, res, next) {
-    const { nickname, password, email } = req.body;
+    let { nickname, password, email, lang } = req.body;
+    if (!lang) lang = 'rus';
     if (!nickname && !password && !email && !isValidEmail(email)) {
       return next(ApiError.badRequest('Invalid email, nickname or password!'));
     }
@@ -26,9 +27,9 @@ class UserController {
     }
 
     const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({nickname, password: hashPassword, email});
+    const user = await User.create({nickname, password: hashPassword, email, lang});
     const session = await sessionController.create(user);
-    const token = generateJWT(user.id, user.nickname, user.email, session.id);
+    const token = generateJWT(user.id, user.nickname, user.email, session.id, user.lang);
     await sessionController.update(session.id, token);
     return res.json({token});
   }
@@ -47,7 +48,7 @@ class UserController {
       return next(ApiError.badRequest('Wrong password!'));
     }
     const session = await sessionController.create(user);
-    const token = generateJWT(user.id, user.nickname, user.email, session.id);
+    const token = generateJWT(user.id, user.nickname, user.email, session.id, user.lang);
     await sessionController.update(session.id, token);
     return res.json({token});
   }
@@ -62,19 +63,20 @@ class UserController {
   }
 
   async update(req, res, next) {
-    const { nickname, email, password } = req.body;
+    const { nickname, email, password, lang } = req.body;
     const user = User.findByPk(req.user.id);
     if (!user) {
       return next(ApiError.notFound('User not found!'));
     }
-    if (nickname) await user.update({nickname});
-    if (email) await user.update({email});
-    if (password) await user.update({password});
-    const token = generateJWT(user.id, user.nickname, user.email, req.user.sessionId);
     const session = await sessionController.get(req.user.sessionId);
     if (session) {
       return res.status(401).json({message: 'User not authorized!'});
     }
+    if (nickname) await user.update({nickname});
+    if (email) await user.update({email});
+    if (password) await user.update({password});
+    if (lang) await user.update({lang});
+    const token = generateJWT(user.id, user.nickname, user.email, req.user.sessionId, user.lang);
     await session.update({token});
     res.json({token});
   }
