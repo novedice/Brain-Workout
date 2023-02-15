@@ -4,6 +4,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const { User, Session } = require('../models/models');
 const uuid = require('uuid');
 const sessionController = require('./sessionController');
+const { isValidEmail } = require('../util/validation');
 
 const generateJWT = (id, nickname, email, sessionId) => {
   return jsonwebtoken.sign(
@@ -16,7 +17,7 @@ const generateJWT = (id, nickname, email, sessionId) => {
 class UserController {
   async registration(req, res, next) {
     const { nickname, password, email } = req.body;
-    if (!nickname && !password && !email) {
+    if (!nickname && !password && !email && !isValidEmail(email)) {
       return next(ApiError.badRequest('Invalid email, nickname or password!'));
     }
     const candidate = await User.findOne({where: {email}});
