@@ -1,5 +1,7 @@
 // import { useState } from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 interface ITimerProps {
   seconds: number;
   started: boolean;
@@ -20,11 +22,8 @@ export const Timer = ({
   paused,
   setSeconds,
 }: ITimerProps) => {
-  // const [secondsLeft, setSecondsLeft] = useState(seconds);
-
   setTimeout(() => {
     if (seconds > 0 && started && !paused) {
-      // setSecondsLeft(secondsLeft - 1);
       setSeconds(seconds - 1);
     }
     if (seconds <= 1 && started && !finished) {
@@ -35,7 +34,9 @@ export const Timer = ({
 
   return (
     <>
-      <p>{`Time left: ${seconds} s`}</p>
+      <p>
+        <FormattedMessage id="time_left" values={{ n: seconds }} />
+      </p>
     </>
   );
 };

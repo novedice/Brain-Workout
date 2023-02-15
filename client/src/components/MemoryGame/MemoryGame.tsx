@@ -3,6 +3,7 @@ import { CARD_IMAGES } from './constants';
 import SingleCard from './SingleCard';
 import { ICards } from './types';
 import './MemoryGame.css';
+import { FormattedMessage } from 'react-intl';
 
 const shuffleCards = () => {
   return [...CARD_IMAGES, ...CARD_IMAGES]
@@ -93,12 +94,12 @@ export function MemoryGame() {
 
   return (
     <div className="game-wrapper flex flex-col items-center">
-      Memory game
+      <FormattedMessage id="memory_game" />
       <button
         className="mt-2 w-28 rounded-full border p-1 hover:bg-red-200"
         onClick={resetGame}
       >
-        New Game
+        <FormattedMessage id="new_game" />
       </button>
       <div className="grid-cards mb-4">
         {cards.map((card) => (
@@ -111,8 +112,12 @@ export function MemoryGame() {
           />
         ))}
       </div>
-      <p>Moves : {turns}</p>
-      <p>Best Score : {bestScore}</p>
+      <p>
+        <FormattedMessage id="moves" values={{ n: turns }} />
+      </p>
+      <p>
+        <FormattedMessage id="best_score" values={{ s: bestScore }} />
+      </p>
       {/* {localStorage.getItem('bestScore') && (
         <div>
           <span>Best score:</span> {bestScore}

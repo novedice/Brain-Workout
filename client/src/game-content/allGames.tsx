@@ -1,3 +1,4 @@
+import { FormattedMessage } from 'react-intl';
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
 import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
@@ -5,94 +6,106 @@ import { IGameList } from '../types/interfaces';
 
 export const allGames: IGameList[] = [
   {
-    name: 'Reaction Time',
+    name: <FormattedMessage id="reaction_time" />,
     path: 'reaction-time',
-    category: 'Speed',
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Sequence Memory',
+    name: <FormattedMessage id="sequence_memory" />,
     path: 'sequence-memory',
-    category: 'Memory',
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Aim Trainer',
+    name: <FormattedMessage id="aim_trainer" />,
     path: 'aim-trainer',
-    category: 'Speed',
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Chimp test',
+    name: <FormattedMessage id="chimp_test" />,
     path: 'chimp-test',
-    category: 'Problem solving',
+    category: 'problem_solving',
+    categoryName: <FormattedMessage id="problem_solving" />,
     game: () => {
       return <></>;
     },
   },
 
   {
-    name: 'Number Memory',
+    name: <FormattedMessage id="number_memory" />,
     path: 'number-memory',
-    category: 'Memory',
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Verbal Memory',
+    name: <FormattedMessage id="verbal_memory" />,
     path: 'verbal-memory',
-    category: 'Memory',
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Visual memory',
+    name: <FormattedMessage id="visual_memory" />,
     path: 'visual-memory',
-    category: 'Memory',
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Typing',
+    name: <FormattedMessage id="typing" />,
     path: 'typing',
-    category: 'Speed',
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Pixel logic',
+    name: <FormattedMessage id="pixel_logic" />,
     path: 'pixel-logic',
-    category: 'Problem solving',
+    category: 'problem_solving',
+    categoryName: <FormattedMessage id="problem_solving" />,
     game: () => {
       return <></>;
     },
   },
   {
-    name: 'Color Match',
+    name: <FormattedMessage id="color_match" />,
     path: 'color-match',
-    category: 'Flexibility',
+    category: 'flexibility',
+    categoryName: <FormattedMessage id="flexibility" />,
     game: MeaningColorGame,
   },
   {
-    name: 'Memory Game',
+    name: <FormattedMessage id="memory_game" />,
     path: 'memory-game',
-    category: 'Memory',
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
     game: MemoryGame,
   },
   {
-    name: 'Speed Match',
+    name: <FormattedMessage id="speed_match" />,
     path: 'speed-match',
-    category: 'Speed',
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
     game: SpeedMatchGame,
   },
 ];

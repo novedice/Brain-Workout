@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import {
@@ -21,6 +21,7 @@ import {
 import { useAppDispatch, useTypeSelector } from '../../hooks/useTypeSelector';
 import { IUser } from '../../types/interfaces';
 import './ModalWindow.css';
+import { FormattedMessage } from 'react-intl';
 
 const LogInWindow = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const LogInWindow = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordEr, setPasswordEr] = useState('');
+  const [passwordEr, setPasswordEr] = useState<ReactElement | string>('');
   const { token } = useTypeSelector((state) => state.tokenInfo);
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const [checked, setChecked] = useState(true);
@@ -72,7 +73,7 @@ const LogInWindow = () => {
         localStorage.removeItem('user');
       }
     } else {
-      setPasswordEr('Your email or password is incorrect. Please try again');
+      setPasswordEr(<FormattedMessage id="wrong_password" />);
     }
   };
 
@@ -82,7 +83,6 @@ const LogInWindow = () => {
     setEmailError('');
 
     if (!password || !email || passwordEr || emailError) {
-      return;
     } else {
       loginComplete();
     }
@@ -114,9 +114,11 @@ const LogInWindow = () => {
           }
           onClick={(e) => e.stopPropagation()}
         >
-          <h1 className="caption_login mb-2">Log in</h1>
+          <h1 className="caption_login mb-2">
+            <FormattedMessage id="login" />
+          </h1>
           <p className="mb-2">
-            Need an account?
+            <FormattedMessage id="need_account" />
             <span
               className="link__signup"
               onClick={() => {
@@ -124,7 +126,7 @@ const LogInWindow = () => {
                 signUpModalShow();
               }}
             >
-              Sign Up
+              <FormattedMessage id="signup" />
             </span>
           </p>
           <form
@@ -132,7 +134,7 @@ const LogInWindow = () => {
             className="ml-auto mr-auto flex w-full max-w-lg flex-col p-4"
           >
             <label className={`label__signup ${styleLabel} ${styleText}`}>
-              E-mail
+              <FormattedMessage id="e_mail" />
               <input
                 type="text"
                 className={`mb-1 w-full ${styleInput}`}
@@ -141,7 +143,7 @@ const LogInWindow = () => {
             </label>
             {emailError && <p className={styleErrorMes}>{emailError}</p>}
             <label className={`label__signup ${styleLabel} ${styleText}`}>
-              Password
+              <FormattedMessage id="password" />
               <input
                 type="password"
                 className={`mb-1 w-full ${styleInput}`}
@@ -151,8 +153,8 @@ const LogInWindow = () => {
             {passwordEr && (
               <p className={`${styleErrorMes} text-lg`}>{passwordEr}</p>
             )}
-            <button className="mb-3 w-16 rounded-full border bg-blue-400 p-1 px-3  hover:bg-red-200">
-              Login
+            <button className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3  hover:bg-red-200">
+              <FormattedMessage id="login" />
             </button>
             <div className="flex items-center justify-start">
               <label>
@@ -162,14 +164,14 @@ const LogInWindow = () => {
                   checked={checked}
                   onChange={staySignedHandler}
                 ></input>
-                Stay signed in
+                <FormattedMessage id="stay_signed" />
               </label>
             </div>
           </form>
           <p className="mb-2">
-            Forgot password?
+            <FormattedMessage id="forgot_password" />
             <Link to="/reset" className="link__signup">
-              Reset password
+              <FormattedMessage id="reset_password" />
             </Link>
           </p>
         </div>
