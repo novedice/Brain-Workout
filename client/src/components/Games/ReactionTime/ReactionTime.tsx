@@ -9,6 +9,7 @@ export function ReactionTime() {
   const [firstTime, setFirstTime] = useState(0);
   const [secondTime, setSecondTime] = useState(0);
   const [results, setResults] = useState(false);
+  const [totalResult, setTotalResult] = useState(false);
 
   const getRandomTime = (min: number, max: number) => {
     let result = Math.floor(Math.random() * Math.floor(max)) + min;
@@ -16,21 +17,6 @@ export function ReactionTime() {
     console.log(result);
 
     return result;
-  };
-
-  const HandleClick = () => {
-    let timeTwo = new Date();
-    let timeClick = timeTwo.getTime();
-    setSecondTime(timeClick);
-    setResults(true);
-    setGameClicked(false);
-    // setTimeout(() => {
-    //
-    // }, 3000);
-    // let differentTime = timeClick - timeNow;
-    // console.log(timeNow);
-
-    // console.log(differentTime);
   };
 
   const timeoutOne = (time: number) => {
@@ -56,6 +42,7 @@ export function ReactionTime() {
     timeoutOne(timeChange);
     setDefaultGameState(false);
     setGameClicked(false);
+    setTotalResult(false);
     // timeoutTwo(endTime);
   };
 
@@ -66,19 +53,56 @@ export function ReactionTime() {
   };
 
   console.log(arr);
+  const HandleClick = () => {
+    let timeTwo = new Date();
+    let timeClick = timeTwo.getTime();
+    setSecondTime(timeClick);
+    setResults(true);
+    setGameClicked(false);
 
+    // setTimeout(() => {
+    //
+    // }, 3000);
+    // let differentTime = timeClick - timeNow;
+    // console.log(timeNow);
+
+    // console.log(differentTime);
+  };
+  const [bestScore, setBestScore] = useState(0);
+  // const getResult = () => {
+  //   if (arr.length === 2) {
+  //     setBestScore(arr.reduce((acc, elem) => (acc < elem ? acc : elem)));
+  //     setTotalResult(true);
+  //     // setResults(false);
+  //     setGameStatus(false);
+  //     setGameClicked(false);
+  //     // setFirstTime(false);
+  //     // console.log(bestScore);
+  //   }
+  //   // if (bestScore > 0) {
+
+  //   //   // setResults(false);
+  //   //   console.log(bestScore);
+  //   // }
+  // };
   const resetGame = () => {
     gameStart();
     setDefaultGameState(false);
     setResults(false);
     setGameStatus(true);
     resultArrayFunc();
+    // getResult();
     if (arr.length === 2) {
-      let bestScore = arr.reduce((acc, elem) => (acc < elem ? acc : elem));
-      console.log(bestScore);
+      setBestScore(arr.reduce((acc, elem) => (acc < elem ? acc : elem)));
+      setTotalResult(true);
+      // setResults(false);
+      setGameStatus(false);
+      setGameClicked(false);
+      // setFirstTime(false);
+      // console.log(bestScore);
     }
   };
-
+  const saveResult = () => {};
   return (
     <div className="container">
       <h1>Reaction Time Speed Game</h1>
@@ -132,6 +156,21 @@ export function ReactionTime() {
       {/* <button className="mt-2 border px-2" onClick={() => gameStart()}>
       Start Game
       </button>  */}
+      {totalResult && (
+        <div
+          className="click-area time-container"
+          style={{ background: 'rgb(59 130 246 / 0.5)' }}
+          // onClick={() => setDefaultGameState(true)}
+        >
+          <p>{bestScore}</p>
+          <button className="mt-2 border px-2" onClick={() => gameStart()}>
+            Start Game
+          </button>
+          <button className="mt-2 border px-2" onClick={() => saveResult()}>
+            Save result
+          </button>
+        </div>
+      )}
     </div>
   );
 }
