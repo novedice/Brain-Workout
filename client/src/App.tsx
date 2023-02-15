@@ -9,8 +9,35 @@ import { AccounSettingsPage } from './pages/AccounSettingsPage';
 import LogInWindow from './components/modal/LogInWindow';
 import SignUpModal from './components/modal/SignUPModal';
 import { CurrentGamePage } from './pages/CurrentGamePage';
+import { useAppDispatch } from './hooks/useTypeSelector';
+import { LOGGIN, UPDATE_USER } from './constants';
+import { IUser } from './types/interfaces';
 
 export function App() {
+  const dispatch = useAppDispatch();
+  let thisUser: IUser = {
+    email: 'none',
+    nickname: 'none',
+    language: 'en',
+    loggedIn: true,
+  };
+
+  if (localStorage.getItem('user')) {
+    thisUser = JSON.parse(localStorage.getItem('user') as string);
+    dispatch({
+      payload: {
+        id: thisUser.id,
+        nickname: thisUser.nickname,
+        loggedIn: true,
+        email: thisUser.email,
+        language: thisUser.language,
+        alwaysSignIn: true,
+      },
+      type: UPDATE_USER,
+    });
+    dispatch({ type: LOGGIN });
+  }
+
   return (
     <div className="flex h-screen flex-col justify-between">
       <Navigation />

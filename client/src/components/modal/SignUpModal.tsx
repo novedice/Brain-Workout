@@ -37,41 +37,46 @@ const SignUpModal = () => {
     dispatch({ type: SHOW_MODAL });
   };
 
-  // const logUser = async (newUser: IUser) => {
-  //   const t = await refreshToken(cookie);
-  //   console.log('t', t);
-  //   dispatch({ payload: t, type: UPDATE_TOKEN });
-  //   console.log('new token', token1);
-  //   console.log('update');
-  //   dispatch({ payload: newUser, type: UPDATE_USER });
-  // };
-
   const sigInComplete = async () => {
     const registration = await registrAuthUser(
       { email: email, password: password, nickname: nickname },
       'registration'
     );
 
-    dispatch({
-      payload: { nickname: nickname, loggedIn: false, language: user.language },
-      type: UPDATE_USER,
-    });
     console.log('registration data', registration);
     if (registration) {
+      dispatch({
+        payload: {
+          nickname: nickname,
+          loggedIn: false,
+          language: user.language,
+          email: user.email,
+        },
+        type: UPDATE_USER,
+      });
       document.cookie = `auth=Bearer ${registration.token}`;
+      console.log('user after sign up', user);
+      console.log('cookies', document.cookie);
+      signUpModalHide();
+      modalShow();
+    } else {
+      setEmailError(
+        'User with this email already exists. Please check the information and try again. If you already have an account, please Log In. '
+      );
     }
-    console.log('user after sign up', user);
-    console.log('cookies', document.cookie);
-    modalShow();
   };
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('submit');
+    // setConfirmPassErr('');
+    // setEmailError('');
+    // setNameError('');
+    // setPasswordEr('');
+    console.log('submit started');
 
     setPasswordEr(isValidPassword(password));
     setNameError(isNameValid(nickname));
-    setEmailError(isEmailValid(email));
+    setEmailError(emailError ? emailError : isEmailValid(email));
     setConfirmPassErr(isPasswordsEquial(confirmPass, password));
 
     if (
@@ -86,9 +91,7 @@ const SignUpModal = () => {
     ) {
       return;
     } else {
-      console.log('signed up');
       sigInComplete();
-      signUpModalHide();
       return;
     }
   };
@@ -150,9 +153,7 @@ const SignUpModal = () => {
               onChange={emailHandler}
             />
           </label>
-          {emailError && (
-            <p className={styleErrorMes}>Please enter valid email</p>
-          )}
+          {emailError && <p className={styleErrorMes}>{emailError}</p>}
           <label className={`label__signup ${styleLabel} ${styleText}`}>
             Name
             <input
@@ -189,17 +190,10 @@ const SignUpModal = () => {
           <button
             type="submit"
             className="mb-3 w-36 rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
-            // onSubmit={submitHandler}
           >
             Sign up
           </button>
         </form>
-        {/* <p className="mb-2">
-          Forgot password?
-          <Link to="/reset" className="link__signup">
-            Reset password
-          </Link>
-        </p> */}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
+import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList } from '../types/interfaces';
 
@@ -87,5 +88,11 @@ export const allGames: IGameList[] = [
     path: 'memory-game',
     category: 'Memory',
     game: MemoryGame,
+  },
+  {
+    name: 'Speed Match',
+    path: 'speed-match',
+    category: 'Speed',
+    game: SpeedMatchGame,
   },
 ];
