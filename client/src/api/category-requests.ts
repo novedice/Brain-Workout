@@ -12,7 +12,7 @@ export const createCategory = async (category: string) => {
   }
 };
 
-export const getCategory = async (category: string) => {
+export const getCategory = async () => {
   try {
     const response = await $host.get<IResultResponse>(`${BaseUrl}/${users}/${categories}`, {
       withCredentials: true,
