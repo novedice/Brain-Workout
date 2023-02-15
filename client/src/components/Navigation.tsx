@@ -44,7 +44,7 @@ export function Navigation({
   };
 
   return (
-    <nav className="mb-3 flex h-16 w-[100%] items-center justify-between bg-blue-300 px-12 text-center text-lg text-white">
+    <nav className="upper-case mb-3 flex h-16 w-[100%] items-center justify-between bg-blue-300 px-12 text-center text-lg text-white">
       <a
         className="unlink mr-2"
         href="https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rsclone/rsclone.md"
@@ -63,7 +63,7 @@ export function Navigation({
         </Link>
       </div>
       {!loggedIn && (
-        <div>
+        <div className="upper-case">
           <span
             className="mr-5 cursor-pointer hover:text-red-200"
             onClick={modalShow}
@@ -79,11 +79,9 @@ export function Navigation({
         </div>
       )}
       {loggedIn && (
-        <>
-          <Link to="/account_settings" className="mr-5 hover:text-red-200">
-            <FormattedMessage id="to_settings" />
-          </Link>
-        </>
+        <Link to="/account_settings" className="mr-5 hover:text-red-200">
+          <FormattedMessage id="to_settings" />
+        </Link>
       )}
       <button
         onClick={() => handleChangeLang()}

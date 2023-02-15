@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { registrAuthUser } from '../../api/user-requests';
 import { HIDE_SIGNUP, SHOW_MODAL, UPDATE_USER } from '../../constants';
 import {
@@ -17,13 +18,13 @@ import './ModalWindow.css';
 
 const SignUpModal = () => {
   const [nickname, setNickname] = useState('');
-  const [nameError, setNameError] = useState('');
+  const [nameError, setNameError] = useState<ReactElement | string>();
   const [password, setPassword] = useState('');
-  const [passwordEr, setPasswordEr] = useState('');
+  const [passwordEr, setPasswordEr] = useState<ReactElement | string>();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState<ReactElement | string>();
   const [confirmPass, setConfirmPass] = useState('');
-  const [confirmPassErr, setConfirmPassErr] = useState('');
+  const [confirmPassErr, setConfirmPassErr] = useState<ReactElement | string>();
   const user: IUser = useTypeSelector((state) => state.userInfo);
 
   const dispatch = useAppDispatch();
@@ -38,52 +39,45 @@ const SignUpModal = () => {
   };
 
   const sigInComplete = async () => {
-    const registration = await registrAuthUser(
-      { email: email, password: password, nickname: nickname },
-      'registration'
-    );
+    // const registration = await registrAuthUser(
+    //   { email: email, password: password, nickname: nickname },
+    //   'registration'
+    // );
 
-    console.log('registration data', registration);
-    if (registration) {
-      dispatch({
-        payload: {
-          nickname: nickname,
-          loggedIn: false,
-          language: user.language,
-          email: user.email,
-        },
-        type: UPDATE_USER,
-      });
-      document.cookie = `auth=Bearer ${registration.token}`;
-      console.log('user after sign up', user);
-      console.log('cookies', document.cookie);
-      signUpModalHide();
-      modalShow();
-    } else {
-      setEmailError(
-        'User with this email already exists. Please check the information and try again. If you already have an account, please Log In. '
-      );
-    }
+    // console.log('registration data', registration);
+    // if (registration) {
+    //   dispatch({
+    //     payload: {
+    //       nickname: nickname,
+    //       loggedIn: false,
+    //       language: user.language,
+    //       email: user.email,
+    //     },
+    //     type: UPDATE_USER,
+    //   });
+    //   document.cookie = `auth=Bearer ${registration.token}`;
+    //   console.log('user after sign up', user);
+    //   console.log('cookies', document.cookie);
+    signUpModalHide();
+    modalShow();
+    // } else {
+    // setEmailError(<FormattedMessage id="user_exists" />);
+    // return;
   };
 
-  const submitHandler = (event: React.FormEvent) => {
+  const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    // setConfirmPassErr('');
-    // setEmailError('');
-    // setNameError('');
-    // setPasswordEr('');
-    console.log('submit started');
 
     setPasswordEr(isValidPassword(password));
     setNameError(isNameValid(nickname));
-    setEmailError(emailError ? emailError : isEmailValid(email));
+    setEmailError(isEmailValid(email));
     setConfirmPassErr(isPasswordsEquial(confirmPass, password));
 
     if (
-      passwordEr ||
-      emailError ||
-      confirmPassErr ||
-      nameError ||
+      passwordEr !== '' ||
+      emailError !== '' ||
+      confirmPassErr !== '' ||
+      nameError !== '' ||
       !nickname ||
       !email ||
       !password ||
@@ -91,8 +85,32 @@ const SignUpModal = () => {
     ) {
       return;
     } else {
-      sigInComplete();
-      return;
+      console.log(passwordEr, emailError, confirmPassErr, nameError);
+      const registration = await registrAuthUser(
+        { email: email, password: password, nickname: nickname },
+        'registration'
+      );
+
+      console.log('registration data', registration);
+      if (registration) {
+        dispatch({
+          payload: {
+            nickname: nickname,
+            loggedIn: false,
+            language: user.language,
+            email: user.email,
+          },
+          type: UPDATE_USER,
+        });
+        document.cookie = `auth=Bearer ${registration.token}`;
+        console.log('user after sign up', user);
+        console.log('cookies', document.cookie);
+        sigInComplete();
+        return;
+      } else {
+        setEmailError(<FormattedMessage id="user_exists" />);
+        return;
+      }
     }
   };
 
@@ -127,9 +145,11 @@ const SignUpModal = () => {
         }
         onClick={(e) => e.stopPropagation()}
       >
-        <h1 className="caption_login mb-2">Sign up</h1>
+        <h1 className="caption_login mb-2">
+          <FormattedMessage id="registration" />
+        </h1>
         <p className="mb-2">
-          Already have an account?
+          <FormattedMessage id="already_have" />
           <span
             className="link__signup"
             onClick={() => {
@@ -137,7 +157,7 @@ const SignUpModal = () => {
               modalShow();
             }}
           >
-            Log in
+            <FormattedMessage id="to_login" />
           </span>
         </p>
         <form
@@ -145,7 +165,7 @@ const SignUpModal = () => {
           className="ml-auto mr-auto flex w-full max-w-lg flex-col p-4"
         >
           <label className={`label__signup ${styleLabel} ${styleText}`}>
-            Email
+            <FormattedMessage id="e_mail" />
             <input
               type="email"
               name="email"
@@ -153,31 +173,27 @@ const SignUpModal = () => {
               onChange={emailHandler}
             />
           </label>
-          {emailError && <p className={styleErrorMes}>{emailError}</p>}
+          {emailError && <div className={styleErrorMes}>{emailError}</div>}
           <label className={`label__signup ${styleLabel} ${styleText}`}>
-            Name
+            <FormattedMessage id="name" />
             <input
               type="text"
               className={`mb-1 w-full ${styleInput}`}
               onChange={nameHandler}
             />
           </label>
-          {nameError && (
-            <p className={styleErrorMes}>
-              The name should contain at least 3 letters
-            </p>
-          )}
+          {nameError && <div className={styleErrorMes}>{nameError}</div>}
           <label className={`label__signup ${styleLabel} ${styleText}`}>
-            Password
+            <FormattedMessage id="password" />
             <input
               type="password"
               className={`mb-1 w-full ${styleInput}`}
               onChange={passwordHandler}
             />
           </label>
-          {passwordEr && <p className={styleErrorMes}>{passwordEr}</p>}
+          {passwordEr && <div className={styleErrorMes}>{passwordEr}</div>}
           <label className={`label__signup ${styleLabel} ${styleText}`}>
-            Confirm password
+            <FormattedMessage id="confirm_password" />
             <input
               type="password"
               className={`mb-1 w-full ${styleInput}`}
@@ -185,13 +201,13 @@ const SignUpModal = () => {
             />
           </label>
           {confirmPassErr && (
-            <p className={styleErrorMes}>The passwords are not the same</p>
+            <div className={styleErrorMes}>{confirmPassErr}</div>
           )}
           <button
             type="submit"
-            className="mb-3 w-36 rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
+            className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
           >
-            Sign up
+            <FormattedMessage id="registration" />
           </button>
         </form>
       </div>

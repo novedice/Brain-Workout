@@ -14,7 +14,7 @@ export const ButtonStart = ({
   return (
     <>
       <button
-        className="mr-3 h-[50px] w-[150px] self-center rounded-lg border-8 border-blue-300 bg-white"
+        className="mr-3 h-[50px] w-[150px] self-center rounded-lg border-8 border-blue-300 bg-gray-200"
         onClick={() => {
           if (!started) {
             startGame();

@@ -9,6 +9,10 @@ import { Timer } from '../../Timer';
 import { ButtonStart } from '../gamesComponents/ButtonStart';
 import '../../../assets/speed-match-game/pause.jpeg';
 import '../../../assets/speed-match-game/play.png';
+import { ButtonPause } from '../gamesComponents/ButtonPause';
+import { FormattedMessage } from 'react-intl';
+import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
+import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 
 export const SpeedMatchGame = () => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
@@ -77,7 +81,6 @@ export const SpeedMatchGame = () => {
       setMultiple(1);
     }
     setSpeed(speed + (+new Date() - +beginAnswer));
-
     changeCards();
     setBeginAnswer(new Date());
   };
@@ -85,28 +88,16 @@ export const SpeedMatchGame = () => {
   return (
     <>
       {finished && (
-        <>
-          <div className="flex h-full w-full flex-col items-center justify-center bg-gray-300">
-            <p>SPEED MATCH</p>
-            <p>{`Score: ${score}`}</p>
-            <p>{`Correct: ${rightAnswers} of ${
-              rightAnswers + wrongAnswers
-            }`}</p>
-            <p>{`Accuracy: ${(
-              (rightAnswers * 100) /
-              (rightAnswers + wrongAnswers)
-            ).toFixed(0)}%`}</p>
-            <p>{`Your average speed is ${(
-              speed /
-              (rightAnswers + wrongAnswers)
-            ).toFixed(0)} ms`}</p>
-            <ButtonStart
-              startGame={startGame}
-              setStarted={setStarted}
-              started={started}
-            />
-          </div>
-        </>
+        <FinishGameTable
+          score={score}
+          rightAnswers={rightAnswers}
+          wrongAnswers={wrongAnswers}
+          speed={speed}
+          startGame={startGame}
+          started={started}
+          setStarted={setStarted}
+          gameID="speed_match"
+        />
       )}
       {!finished && (
         <div className="flex w-full flex-col items-center">
@@ -116,16 +107,8 @@ export const SpeedMatchGame = () => {
               setStarted={setStarted}
               started={started}
             />
-            <button
-              className="mr-3 flex h-[50px] w-[150px] items-center justify-around self-center rounded-lg border-8  border-blue-300 align-middle"
-              onClick={() => setPaused(!paused)}
-            >
-              {paused ? 'PLAY' : 'PAUSE'}
-              <img
-                className="h-[34px] w-[34px] bg-blue-300"
-                src={paused ? 'play.png' : 'pause.jpeg'}
-              ></img>
-            </button>
+            <ButtonPause paused={paused} setPaused={setPaused} />
+
             <div className="m-5">
               <Timer
                 seconds={seconds}
@@ -137,10 +120,14 @@ export const SpeedMatchGame = () => {
                 setSeconds={setSeconds}
               />
             </div>
-            <p className="m-5">SCORE: {score}</p>
+            <p className="m-5">
+              <FormattedMessage id="score" values={{ n: score }} />
+            </p>
             <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
           </div>
-          <p>Does this title matches the previous one?</p>
+          <p>
+            <FormattedMessage id="question_speed_match" />
+          </p>
           <div className="cover flex">
             <div className="left-card">
               <SpeedMatchCard
@@ -165,20 +152,8 @@ export const SpeedMatchGame = () => {
             </div>
           </div>
           <div className="flex justify-center align-middle">
-            <button
-              className="mr-3 h-[50px] w-[80px] rounded-lg border bg-blue-400"
-              onClick={noAnswer}
-              disabled={!started}
-            >
-              NO
-            </button>
-            <button
-              className="h-[50px] w-[80px] rounded-lg border bg-blue-400"
-              onClick={yesAnswer}
-              disabled={!started}
-            >
-              YES
-            </button>
+            <ButtonYesNo val="no" callback={noAnswer} disabled={!started} />
+            <ButtonYesNo val="yes" callback={yesAnswer} disabled={!started} />
           </div>
         </div>
       )}
