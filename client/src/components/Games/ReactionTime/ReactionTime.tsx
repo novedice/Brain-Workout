@@ -10,12 +10,13 @@ export function ReactionTime() {
   const [secondTime, setSecondTime] = useState(0);
   const [results, setResults] = useState(false);
   const [totalResult, setTotalResult] = useState(false);
+  const [resultArray, setResultArray] = useState<number[]>([]);
+  const [bestScore, setBestScore] = useState(0);
+  const [wrongClick, setWrongClick] = useState(0 || '');
 
   const getRandomTime = (min: number, max: number) => {
     let result = Math.floor(Math.random() * Math.floor(max)) + min;
     result = result * 1000;
-    console.log(result);
-
     return result;
   };
 
@@ -28,81 +29,69 @@ export function ReactionTime() {
       let timeOne = new Date();
       let timeNow = timeOne.getTime();
       setFirstTime(timeNow);
-      // console.log('First click ' + timeNow);
     }, time);
   };
+  console.log(firstTime);
 
   let differentTime = secondTime - firstTime;
+  // let wrongClick = secondTime - firstTime;
 
   const gameStart = () => {
     let timeChange = getRandomTime(1, 8);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let endTime = timeChange + 5000;
     setGameStatus(true);
     timeoutOne(timeChange);
     setDefaultGameState(false);
     setGameClicked(false);
     setTotalResult(false);
-    // timeoutTwo(endTime);
   };
 
-  const [arr, setArr] = useState<number[]>([]);
-
-  const resultArrayFunc = () => {
-    setArr([...arr, differentTime]);
-  };
-
-  console.log(arr);
   const HandleClick = () => {
     let timeTwo = new Date();
     let timeClick = timeTwo.getTime();
     setSecondTime(timeClick);
     setResults(true);
     setGameClicked(false);
-
-    // setTimeout(() => {
-    //
-    // }, 3000);
-    // let differentTime = timeClick - timeNow;
-    // console.log(timeNow);
-
-    // console.log(differentTime);
   };
-  const [bestScore, setBestScore] = useState(0);
-  // const getResult = () => {
-  //   if (arr.length === 2) {
-  //     setBestScore(arr.reduce((acc, elem) => (acc < elem ? acc : elem)));
-  //     setTotalResult(true);
-  //     // setResults(false);
-  //     setGameStatus(false);
-  //     setGameClicked(false);
-  //     // setFirstTime(false);
-  //     // console.log(bestScore);
-  //   }
-  //   // if (bestScore > 0) {
 
-  //   //   // setResults(false);
-  //   //   console.log(bestScore);
-  //   // }
-  // };
+  const gameStop = () => {
+    setResultArray([]);
+    setTotalResult(true);
+    setGameStatus(false);
+    setGameClicked(false);
+  };
+
   const resetGame = () => {
     gameStart();
-    setDefaultGameState(false);
-    setResults(false);
     setGameStatus(true);
-    resultArrayFunc();
-    // getResult();
-    if (arr.length === 2) {
-      setBestScore(arr.reduce((acc, elem) => (acc < elem ? acc : elem)));
-      setTotalResult(true);
-      // setResults(false);
-      setGameStatus(false);
-      setGameClicked(false);
-      // setFirstTime(false);
-      // console.log(bestScore);
+    setResults(false);
+    setDefaultGameState(false);
+    setWrongClick('');
+    setResultArray([...resultArray, differentTime]);
+    if (resultArray.length === 2) {
+      setBestScore(
+        resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))
+      );
+      gameStop();
     }
   };
-  const saveResult = () => {};
+
+  const newGame = () => {
+    setResultArray([]);
+    gameStart();
+  };
+
+  const wrongClicked = () => {
+    let timeTwo = new Date();
+    let timeWrongClick = timeTwo.getTime();
+    setWrongClick(timeWrongClick.toString());
+    setResults(false);
+    setGameClicked(false);
+  };
+
+  const saveResult = () => {
+    localStorage.setItem('bestReactionScore', JSON.stringify(bestScore));
+  };
+
   return (
     <div className="container">
       <h1>Reaction Time Speed Game</h1>
@@ -123,8 +112,16 @@ export function ReactionTime() {
         <div
           className="click-area time-container"
           style={{ background: 'red' }}
+          onClick={() => wrongClicked()}
         >
-          <p>Waiting for green...</p>
+          {wrongClick && (
+            <div className="flex flex-col items-center">
+              <p className="click-text">To soon!</p>
+              <p className="click-text">Waiting for green please...</p>
+            </div>
+          )}
+
+          {!wrongClick && <p className="click-text">Waiting for green...</p>}
         </div>
       )}
       {gameClicked && (
@@ -153,20 +150,24 @@ export function ReactionTime() {
           </div>
         </div>
       )}
-      {/* <button className="mt-2 border px-2" onClick={() => gameStart()}>
-      Start Game
-      </button>  */}
+
       {totalResult && (
         <div
           className="click-area time-container"
           style={{ background: 'rgb(59 130 246 / 0.5)' }}
           // onClick={() => setDefaultGameState(true)}
         >
-          <p>{bestScore}</p>
-          <button className="mt-2 border px-2" onClick={() => gameStart()}>
-            Start Game
+          <p>You best time: {bestScore} ms</p>
+          <button
+            className="mt-2 rounded-full border px-4 text-xl hover:bg-red-200"
+            onClick={() => newGame()}
+          >
+            Start New Game
           </button>
-          <button className="mt-2 border px-2" onClick={() => saveResult()}>
+          <button
+            className="m-2 rounded-full border px-4 text-xl hover:bg-red-200"
+            onClick={() => saveResult()}
+          >
             Save result
           </button>
         </div>
