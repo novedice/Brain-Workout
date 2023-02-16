@@ -1,6 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
 import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
+import { TypingSpeed } from '../components/Games/TypingSpeed/TypingSpeed';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList } from '../types/interfaces';
 
@@ -74,9 +75,7 @@ export const allGames: IGameList[] = [
     path: 'typing',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
-    game: () => {
-      return <></>;
-    },
+    game: TypingSpeed,
   },
   {
     name: <FormattedMessage id="pixel_logic" />,
