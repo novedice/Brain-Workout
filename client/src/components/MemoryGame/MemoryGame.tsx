@@ -4,6 +4,8 @@ import SingleCard from './SingleCard';
 import { ICards } from './types';
 import './MemoryGame.css';
 import { FormattedMessage } from 'react-intl';
+import { IGameProps } from '../../types/interfaces';
+// import { writeResults } from '../Games/gameFunctions/finishGame';
 
 const shuffleCards = () => {
   return [...CARD_IMAGES, ...CARD_IMAGES]
@@ -11,7 +13,7 @@ const shuffleCards = () => {
     .map((card) => ({ ...card, id: Math.random() }));
 };
 
-export function MemoryGame() {
+export function MemoryGame({ gameId, gameName }: IGameProps) {
   const [cards, setCards] = useState<ICards[]>(shuffleCards());
   const [turns, setTurns] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<ICards | null>(null);
@@ -38,6 +40,9 @@ export function MemoryGame() {
       setBestScore(newBestScore);
       localStorage.setItem('bestScore', '' + newBestScore);
     }
+    console.log(gameId);
+    console.log(gameName);
+    // writeResults(gameId, newBestScore, gameName);
   };
 
   const checkCompletion = () => {

@@ -48,7 +48,6 @@ export const registrAuthUser = async (
       }
     );
     return response.data;
-
   } catch (e) {
     if (e) {
       console.log(e);
@@ -56,7 +55,6 @@ export const registrAuthUser = async (
     }
   }
 };
-
 
 export const checkToken = async () => {
   let error;
@@ -69,6 +67,6 @@ export const checkToken = async () => {
   } catch (e) {
     error = (e as AxiosError).message;
     console.log(error);
-    return null;
+    // return null;
   }
 };

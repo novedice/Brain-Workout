@@ -16,6 +16,7 @@ import { IntlProvider } from 'react-intl';
 import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
+import { checkToken } from './api/user-requests';
 
 export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
@@ -36,6 +37,7 @@ export function App() {
         },
         type: UPDATE_USER,
       });
+      checkToken();
       if (thisUser.loggedIn) {
         dispatch({ type: LOGGIN });
       }

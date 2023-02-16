@@ -2,7 +2,7 @@ import { cards } from './cards';
 import './speedMatch.css';
 import { SpeedMatchCard } from './renderCard';
 import '../../../assets/speed-match-game/card-cover.jpeg';
-import { ICardSpeedMacth } from '../../../types/interfaces';
+import { ICardSpeedMacth, IGameProps } from '../../../types/interfaces';
 import { useState } from 'react';
 import { getRandom } from '../../../functions/random';
 import { Timer } from '../../Timer';
@@ -13,8 +13,9 @@ import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { FormattedMessage } from 'react-intl';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { writeResults } from '../gameFunctions/finishGame';
 
-export const SpeedMatchGame = () => {
+export const SpeedMatchGame = ({ gameId, gameName }: IGameProps) => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
   const [prevCard, setPrevCard] = useState<ICardSpeedMacth>();
   const [nextCard, setNextCard] = useState<ICardSpeedMacth>(
@@ -27,7 +28,7 @@ export const SpeedMatchGame = () => {
   const [finished, setFinished] = useState(false);
   const [changing, setChanging] = useState<'' | 'changing-front'>('');
   const [rightAnswers, setRightAnswers] = useState(0);
-  const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [totalAnswers, setTotalAnswers] = useState(0);
   const [multiple, setMultiple] = useState(1);
   const [backActive, setBackActive] = useState<'' | 'changing-back'>('');
   const [speed, setSpeed] = useState(0);
@@ -38,10 +39,13 @@ export const SpeedMatchGame = () => {
     setSeconds(20);
     setFinished(false);
     setStarted(true);
-    setSeconds(20);
     setSpeed(0);
     setBeginAnswer(new Date());
   };
+
+  // const gameFinish = () => {
+  //   writeResults(gameId, score, gameName);
+  // };
 
   const changeCards = async () => {
     setChanging('changing-front');
@@ -56,16 +60,29 @@ export const SpeedMatchGame = () => {
     }, 250);
   };
 
+  const handleRightAnswer = () => {
+    setScore(score + 50 * multiple);
+    setRightAnswers(rightAnswers + 1);
+    setTotalAnswers(totalAnswers + 1);
+    setMultiple(multiple === 10 ? 10 : multiple + 1);
+  };
+
+  const handleWrongAnswer = () => {
+    setTotalAnswers(totalAnswers + 1);
+    setMultiple(1);
+  };
+
   const yesAnswer = () => {
     if (prevCard === currentCard) {
-      setScore(score + 50 * multiple);
-      setRightAnswers(rightAnswers + 1);
-      setMultiple(multiple === 10 ? 10 : multiple + 1);
+      handleRightAnswer();
+      // setScore(score + 50 * multiple);
+      // setRightAnswers(rightAnswers + 1);
+      // setMultiple(multiple === 10 ? 10 : multiple + 1);
     } else {
-      setWrongAnswers(wrongAnswers + 1);
-      setMultiple(1);
+      handleWrongAnswer();
+      // settotalAnswers(totalAnswers + 1);
+      // setMultiple(1);
     }
-    // const dif = ((new Date()) - beginAnswer);
     setSpeed(speed + (+new Date() - +beginAnswer));
     changeCards();
     setBeginAnswer(new Date());
@@ -73,17 +90,27 @@ export const SpeedMatchGame = () => {
 
   const noAnswer = () => {
     if (prevCard !== currentCard) {
-      setScore(score + 50 * multiple);
-      setRightAnswers(rightAnswers + 1);
-      setMultiple(multiple === 10 ? 10 : multiple + 1);
+      handleRightAnswer();
+      // setScore(score + 50 * multiple);
+      // setRightAnswers(rightAnswers + 1);
+      // setMultiple(multiple === 10 ? 10 : multiple + 1);
     } else {
-      setWrongAnswers(wrongAnswers + 1);
-      setMultiple(1);
+      handleWrongAnswer();
+      // setTotalAnswers(totalAnswers + 1);
+      // setMultiple(1);
     }
     setSpeed(speed + (+new Date() - +beginAnswer));
     changeCards();
     setBeginAnswer(new Date());
   };
+  // useEffect(() => {
+  //   if (finished) {
+  //     writeResults(gameId, score, gameName);
+  //   }
+  // }, [finished]);
+  if (finished) {
+    writeResults(gameId, score, gameName);
+  }
 
   return (
     <>
@@ -91,12 +118,14 @@ export const SpeedMatchGame = () => {
         <FinishGameTable
           score={score}
           rightAnswers={rightAnswers}
-          wrongAnswers={wrongAnswers}
+          totalAnswers={totalAnswers}
           speed={speed}
           startGame={startGame}
           started={started}
           setStarted={setStarted}
-          gameID="speed_match"
+          gameName="speed_match"
+          gameID={gameId}
+          finished={finished}
         />
       )}
       {!finished && (

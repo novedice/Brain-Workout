@@ -27,22 +27,25 @@ export interface ICategory {
 }
 
 export interface IResult {
-  id: number;
-  userID: string;
   value: number;
-  createdDate: Date;
+  createdAt: Date;
+  // gameId: number;
 }
 
 export interface IResults {
-  gameID: number;
+  // id: number;
+  gameId: number;
   gameName: string;
-  valueType: string;
-  result: IResult[];
+  // valueType: string;
+  results: IResult[];
 }
 
 export interface IResData {
-  gameID: number;
+  gameId: number;
   value: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: number;
 }
 
 export interface IColorMeaning {
@@ -66,7 +69,7 @@ export interface IGameList {
   path: string;
   category: string;
   categoryName: ReactElement;
-  game: () => JSX.Element;
+  game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
 export interface ICardSpeedMacth {
@@ -77,4 +80,9 @@ export interface ICardSpeedMacth {
 export interface ICategories {
   category: string;
   categoryName: ReactElement;
+}
+
+export interface IGameProps {
+  gameName: string;
+  gameId: number;
 }
