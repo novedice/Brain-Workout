@@ -1,21 +1,27 @@
-// export function TypingSpeed() {
-//   return <p>TypingSpeed</p>;
-// }
-interface IState {
-  type: string;
-  content: Array<string>;
-}
+import { useState, useRef } from 'react';
+
 export function TypingSpeed() {
-  const state: IState = {
-    type: 'e2ndunmund udu2nun unu 2d2d2',
-    content: [],
-  };
+  const getContent = () =>
+    'cloud javascrit scc angular vue redux react'
+      .split(' ')
+      .sort(() => (Math.random() > 0.5 ? 1 : -1));
+
+  const [userInput, setUserInput] = useState('');
+  const content = useRef(getContent());
+
   return (
     <div>
       <h1>Typing Speed Test</h1>
       <h3>How many words per minute can you type?</h3>
-      <p>{state.type}</p>
-      <input type="text" name="" id="" />
+      <p>{content.current.join(' ')}</p>
+      <input
+        type="text"
+        name=""
+        id=""
+        className="border"
+        value={userInput}
+        onChange={(event) => setUserInput(event?.target.value)}
+      />
     </div>
   );
 }
