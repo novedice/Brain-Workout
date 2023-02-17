@@ -14,8 +14,19 @@ class ResultController {
     res.json(result);
   }
 
+  async getBest(req, res, next) {
+    const userId = req.body.id;
+    const { gameId, sort } = req.body;
+    if ((!sort || !['ASC', 'DESC'].includes(sort)) || !gameId) {
+      return next(ApiError.badRequest('Некорректные gameId или sort!'));
+    }
+    const result = await Result.findOne({where: {gameId, userId}, order: [['value', sort]]});
+    res.json({result: result.value});
+  }
+
   async get(req, res, next) {
     let { gameId, limit, page } = req.body;
+    const userId = req.body.id; 
     gameId = gameId || null;
     limit = limit || null;
     page = page || null;
@@ -25,25 +36,25 @@ class ResultController {
     let results;
     if (gameId) {
       if (!page && limit) {
-        results = await Result.findAndCountAll({where: {gameId}, limit});
+        results = await Result.findAndCountAll({where: {gameId, userId}, limit});
       }
       if (!page && !limit) {
-        results = await Result.findAndCountAll({where: {gameId}});
+        results = await Result.findAndCountAll({where: {gameId, userId}});
       }
       if (page && limit) {
         const offset = limit * page - limit;
-        results = await Result.findAndCountAll({where: {gameId}, limit, offset});
+        results = await Result.findAndCountAll({where: {gameId, userId}, limit, offset});
       }
     } else {
       if (!page && limit) {
-        results = await Result.findAndCountAll({limit});
+        results = await Result.findAndCountAll({where: {userId}, limit});
       }
       if (!page && !limit) {
-        results = await Result.findAndCountAll();
+        results = await Result.findAndCountAll({where: {userId}});
       }
       if (page && limit) {
         const offset = limit * page - limit;
-        results = await Result.findAndCountAll({limit, offset});
+        results = await Result.findAndCountAll({where: {userId}, limit, offset});
       }
     }
     res.setHeader('x-total-count', results.count);
