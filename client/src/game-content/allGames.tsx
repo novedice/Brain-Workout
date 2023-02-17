@@ -1,11 +1,13 @@
 import { FormattedMessage } from 'react-intl';
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
+import NumberMemory from '../components/Games/numberMemory/NumberMemory';
 import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList } from '../types/interfaces';
 
 export const allGames: IGameList[] = [
   {
+    id: 1,
     name: <FormattedMessage id="reaction_time" />,
     path: 'reaction-time',
     category: 'speed',
@@ -15,6 +17,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 2,
     name: <FormattedMessage id="sequence_memory" />,
     path: 'sequence-memory',
     category: 'memory',
@@ -24,6 +27,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 3,
     name: <FormattedMessage id="aim_trainer" />,
     path: 'aim-trainer',
     category: 'speed',
@@ -33,6 +37,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 4,
     name: <FormattedMessage id="chimp_test" />,
     path: 'chimp-test',
     category: 'problem_solving',
@@ -43,15 +48,15 @@ export const allGames: IGameList[] = [
   },
 
   {
+    id: 5,
     name: <FormattedMessage id="number_memory" />,
     path: 'number-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: () => {
-      return <></>;
-    },
+    game: NumberMemory,
   },
   {
+    id: 6,
     name: <FormattedMessage id="verbal_memory" />,
     path: 'verbal-memory',
     category: 'memory',
@@ -61,6 +66,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 7,
     name: <FormattedMessage id="visual_memory" />,
     path: 'visual-memory',
     category: 'memory',
@@ -70,6 +76,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 8,
     name: <FormattedMessage id="typing" />,
     path: 'typing',
     category: 'speed',
@@ -79,6 +86,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 9,
     name: <FormattedMessage id="pixel_logic" />,
     path: 'pixel-logic',
     category: 'problem_solving',
@@ -88,6 +96,7 @@ export const allGames: IGameList[] = [
     },
   },
   {
+    id: 10,
     name: <FormattedMessage id="color_match" />,
     path: 'color-match',
     category: 'flexibility',
@@ -95,6 +104,7 @@ export const allGames: IGameList[] = [
     game: MeaningColorGame,
   },
   {
+    id: 11,
     name: <FormattedMessage id="memory_game" />,
     path: 'memory-game',
     category: 'memory',
@@ -102,6 +112,7 @@ export const allGames: IGameList[] = [
     game: MemoryGame,
   },
   {
+    id: 12,
     name: <FormattedMessage id="speed_match" />,
     path: 'speed-match',
     category: 'speed',

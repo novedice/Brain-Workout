@@ -1,6 +1,5 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { IResData } from '../types/interfaces';
 import { BaseUrl, results, users } from './constants';
 import { $host } from './http';
@@ -44,3 +43,14 @@ export const createResult = async (resData: IResData) => {
     console.log(e);
   }
 };
+
+export const getBestResult = async (gameId: number, sort: 'ASC' | 'DESC') => {
+  try {
+    const response = await $host.post<{result: number}>(`${BaseUrl}/${users}/${results}/best`, {gameId, sort}, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e)
+  }
+}

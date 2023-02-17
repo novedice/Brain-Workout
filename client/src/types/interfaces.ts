@@ -14,7 +14,7 @@ export interface IToken {
 }
 
 export interface IGame {
-  gameID: number;
+  gameId: number;
   category: string;
   gameName: string;
   valueType: string;
@@ -23,25 +23,25 @@ export interface IGame {
 export interface ICategory {
   id: number;
   category: string;
-  userID: number;
+  userId: number;
 }
 
 export interface IResult {
   id: number;
-  userID: string;
+  userId: string;
   value: number;
   createdDate: Date;
 }
 
 export interface IResults {
-  gameID: number;
+  gameId: number;
   gameName: string;
   valueType: string;
   result: IResult[];
 }
 
 export interface IResData {
-  gameID: number;
+  gameId: number;
   value: number;
 }
 
@@ -62,6 +62,7 @@ export type QParam = {
 };
 
 export interface IGameList {
+  id: number,
   name: ReactElement;
   path: string;
   category: string;
