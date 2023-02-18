@@ -82,7 +82,7 @@ class UserController {
       req.user.lang
     );
     let session = await sessionController.get(req.user.sessionId);
-    if (!session) {
+    if (session) {
       await session.update({ token });
     } else {
       session = await sessionController.create(req.user, token);
@@ -97,7 +97,7 @@ class UserController {
       return next(ApiError.notFound("User not found!"));
     }
     const session = await sessionController.get(req.user.sessionId);
-    if (session) {
+    if (!session) {
       return res.status(401).json({ message: "User not authorized!" });
     }
     if (nickname) await user.update({ nickname });
