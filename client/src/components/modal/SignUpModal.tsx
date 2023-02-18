@@ -39,30 +39,8 @@ const SignUpModal = () => {
   };
 
   const sigInComplete = async () => {
-    // const registration = await registrAuthUser(
-    //   { email: email, password: password, nickname: nickname },
-    //   'registration'
-    // );
-
-    // console.log('registration data', registration);
-    // if (registration) {
-    //   dispatch({
-    //     payload: {
-    //       nickname: nickname,
-    //       loggedIn: false,
-    //       language: user.language,
-    //       email: user.email,
-    //     },
-    //     type: UPDATE_USER,
-    //   });
-    //   document.cookie = `auth=Bearer ${registration.token}`;
-    //   console.log('user after sign up', user);
-    //   console.log('cookies', document.cookie);
     signUpModalHide();
     modalShow();
-    // } else {
-    // setEmailError(<FormattedMessage id="user_exists" />);
-    // return;
   };
 
   const submitHandler = async (event: React.FormEvent) => {
@@ -85,13 +63,10 @@ const SignUpModal = () => {
     ) {
       return;
     } else {
-      console.log(passwordEr, emailError, confirmPassErr, nameError);
       const registration = await registrAuthUser(
         { email: email, password: password, nickname: nickname },
         'registration'
       );
-
-      console.log('registration data', registration);
       if (registration) {
         dispatch({
           payload: {
@@ -102,7 +77,7 @@ const SignUpModal = () => {
           },
           type: UPDATE_USER,
         });
-        document.cookie = `auth=Bearer ${registration.token};path=/`;
+        document.cookie = `auth=Bearer ${registration.token};path=/;max-age=session}`;
         console.log('user after sign up', user);
         console.log('cookies', document.cookie);
         sigInComplete();

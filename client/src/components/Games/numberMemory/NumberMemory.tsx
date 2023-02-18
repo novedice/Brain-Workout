@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createResult, getBestResult } from '../../../api/result-requerests';
+import { allGames } from '../../../game-content/allGames';
 import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
@@ -14,7 +15,9 @@ const generateNumber = (length: number) => {
 
 const gameId = 5;
 
-export default function NumberMemory({id}: {id: number}) {
+export default function NumberMemory() {
+  // const gameInfo = allGames.find((el) => el.id === id);
+  const gamePath = 'number-memory';
   const {lang} = useTypeSelector(state => state.userInfo)
   const {loggedIn} = useTypeSelector(state => state.loggedInInfo);
   const [currentLength, setCurrentLength] = useState(1);
@@ -77,7 +80,16 @@ export default function NumberMemory({id}: {id: number}) {
       if (loggedIn) {
         createResult({gameId, value: score})
       }
-      localStorage.setItem('number-memory', String(score));
+      let saveScore: number = 0;
+      const localScore = localStorage.getItem(gamePath);
+      if (localScore) {
+        if (score > Number(localScore)) {
+          saveScore = score;
+        } else {
+          saveScore = Number(localScore);
+        }
+      }
+      localStorage.setItem(gamePath, String(saveScore));
       setIsSaved(true);
     }
   }
@@ -94,20 +106,20 @@ export default function NumberMemory({id}: {id: number}) {
 
   useEffect(() => {
     if (loggedIn) {
-      getBestResult(id, 'DESC')
+      getBestResult(5, 'DESC')
       .then((res) => {
         if (res) {
           setBestResult(res.value);
         }
       })
       .catch(() => {
-        const result = localStorage.getItem('number-memory');
+        const result = localStorage.getItem(gamePath);
         if (result) {
           setBestResult(Number(result));
         }
       });
     }
-  }, [loggedIn])  
+  }, [])  
 
   useEffect(() => {
     if (time > 0 && isRemember) {

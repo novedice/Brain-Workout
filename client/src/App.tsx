@@ -34,7 +34,7 @@ export function App() {
       checkToken()
       .then(async (res) => {
         if (!res) return; 
-        document.cookie = `auth=Bearer ${res.token};path=/`;
+        document.cookie = `auth=Bearer ${res.token};path=/;max-age=${alwaysSignIn ? (24 * 60 * 60) : 'session'}`;
         const userData = jwtDecode<IUser>(res.token);
         dispatch({
           payload: {  

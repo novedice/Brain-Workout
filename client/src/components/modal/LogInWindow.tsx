@@ -59,7 +59,7 @@ const LogInWindow = () => {
         type: UPDATE_USER,
       });
 
-      document.cookie = `auth=Bearer ${loginResponse.token};path=/`;
+      document.cookie = `auth=Bearer ${loginResponse.token};path=/;max-age=${checked ? (24 * 60 * 60) : 'session'}`;
       console.log(loginResponse.token)
       modalHide();
       dispatch({ type: LOGGINUSER });

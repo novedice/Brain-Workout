@@ -53,7 +53,7 @@ export const allGames: IGameList[] = [
     path: 'number-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: () => NumberMemory({id: 5}),
+    game: NumberMemory,
   },
   {
     id: 6,
