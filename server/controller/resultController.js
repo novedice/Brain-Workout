@@ -15,18 +15,19 @@ class ResultController {
   }
 
   async getBest(req, res, next) {
-    const userId = req.body.id;
-    const { gameId, sort } = req.body;
+    const userId = req.user.id;
+    console.log(userId);
+    const { gameId, sort } = req.query;
     if ((!sort || !['ASC', 'DESC'].includes(sort)) || !gameId) {
       return next(ApiError.badRequest('Некорректные gameId или sort!'));
     }
-    const result = await Result.findOne({where: {gameId, userId}, order: [['value', sort]]});
-    res.json({result: result.value});
+    const result = await Result.findOne({where: {gameId, userId}, attributes: ['value'], order: [['value', sort]]});
+    res.json(result);
   }
 
   async get(req, res, next) {
-    let { gameId, limit, page } = req.body;
-    const userId = req.body.id; 
+    let { gameId, limit, page } = req.query;
+    const userId = req.user.id; 
     gameId = gameId || null;
     limit = limit || null;
     page = page || null;

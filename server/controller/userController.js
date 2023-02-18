@@ -47,17 +47,22 @@ class UserController {
     if (!comparePassword) {
       return next(ApiError.badRequest('Wrong password!'));
     }
+    console.log(user);
     const session = await sessionController.create(user);
+    console.log(session)
     const token = generateJWT(user.id, user.nickname, user.email, session.id, user.lang);
+    console.log(token);
     await sessionController.update(session.id, token);
     return res.json({token});
   }
 
   async check(req, res, next) {
     const token = generateJWT(req.user.id, req.user.nickname, req.user.email, req.user.sessionId);
-    const session = await sessionController.get(req.user.sessionId);
+    let session = await sessionController.get(req.user.sessionId);
     if (session) {
       await session.update({token});
+    } else {
+      session = await sessionController.create(req.user, token);
     }
     return res.json({token});
   }
