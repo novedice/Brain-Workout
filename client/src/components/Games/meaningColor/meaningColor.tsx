@@ -40,15 +40,9 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
     setSeconds(20);
     setFinished(false);
     setStarted(true);
-    setSeconds(20);
     changeColors();
   };
 
-  // const gameFinish = () => {
-  //   localStorage.setItem('score', score.toString());
-  //   writeResults(gameId, score, gameName);
-  //   // setFinished(false);
-  // };
   const handleRightAnswer = () => {
     setBackColor('bg-green-500');
     setTimeout(() => setBackColor(''), 100);
@@ -82,10 +76,6 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
     }
     changeColors();
   };
-
-  // if (finished) {
-  //   gameFinish();
-  // }
 
   return (
     <>
