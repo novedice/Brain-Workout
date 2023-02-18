@@ -40,7 +40,7 @@ export const FinishGameTable = ({
 }: IFinishGameTableProps) => {
   const dispatch = useAppDispatch();
 
-  const result1 = async () => {
+  const result = async () => {
     if (score !== 0 && finished) {
       const res = await createResult({ gameId: gameID, value: score });
       if (res) {
@@ -58,11 +58,21 @@ export const FinishGameTable = ({
           type: ADD_RESULT,
         });
       }
+      let saveScore: number = 0;
+      const localScore = localStorage.getItem(gameName);
+      if (localScore) {
+        if (score > Number(localScore)) {
+          saveScore = score;
+        } else {
+          saveScore = Number(localScore);
+        }
+      }
+      localStorage.setItem(gameName, String(saveScore));
       return res;
     }
   };
   useEffect(() => {
-    result1();
+    result();
   }, [finished]);
 
   return (
