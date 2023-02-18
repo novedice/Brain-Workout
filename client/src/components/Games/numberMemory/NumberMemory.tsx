@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createResult, getBestResult } from '../../../api/result-requerests';
+// import { allGames } from '../../../game-content/allGames';
 import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
@@ -15,7 +16,9 @@ const generateNumber = (length: number) => {
 const gameId = 5;
 
 export default function NumberMemory() {
-  const {language} = useTypeSelector(state => state.userInfo)
+  // const gameInfo = allGames.find((el) => el.id === id);
+  const gamePath = 'number-memory';
+  const {lang} = useTypeSelector(state => state.userInfo)
   const {loggedIn} = useTypeSelector(state => state.loggedInInfo);
   const [currentLength, setCurrentLength] = useState(1);
   const [currentNumber, setCurrentNumber] = useState('');
@@ -77,7 +80,16 @@ export default function NumberMemory() {
       if (loggedIn) {
         createResult({gameId, value: score})
       }
-      localStorage.setItem('number-memory', String(score));
+      let saveScore: number = 0;
+      const localScore = localStorage.getItem(gamePath);
+      if (localScore) {
+        if (score > Number(localScore)) {
+          saveScore = score;
+        } else {
+          saveScore = Number(localScore);
+        }
+      }
+      localStorage.setItem(gamePath, String(saveScore));
       setIsSaved(true);
     }
   }
@@ -97,13 +109,15 @@ export default function NumberMemory() {
       getBestResult(5, 'DESC')
       .then((res) => {
         if (res) {
-          setBestResult(res.result);
+          setBestResult(res.value);
+        }
+      })
+      .catch(() => {
+        const result = localStorage.getItem(gamePath);
+        if (result) {
+          setBestResult(Number(result));
         }
       });
-    }
-    const result = localStorage.getItem('number-memory');
-    if (result) {
-      setBestResult(Number(result));
     }
   }, [])  
 
@@ -126,7 +140,7 @@ export default function NumberMemory() {
       <div className="number-game__header">
         <div className="number-game__title">Number Memory</div>
         <div className="number-game__description">{
-          language === 'rus' ?
+          lang === 'rus' ?
           'Запомните число и после введите его.' : 
           'Remember the number and then enter it.'
         }</div>
@@ -134,7 +148,7 @@ export default function NumberMemory() {
          bestResult !== undefined && bestResult !== 0 && 
           <div className="number-game__best-result">
             {
-              language === 'rus' ?
+              lang === 'rus' ?
               `Ваш лучший результат: Уровень ${bestResult}` :
               `Your best result: Level ${bestResult}`
             }
@@ -145,7 +159,7 @@ export default function NumberMemory() {
         <div className="number-game__container-inner">
           {
             (isStart || isEnd) && 
-            <div className="number-game__score">{language === 'rus' ? 'Уровень' : 'Level'} {score}</div>
+            <div className="number-game__score">{lang === 'rus' ? 'Уровень' : 'Level'} {score}</div>
           }
           {
             isStart && !isEnd &&
@@ -170,9 +184,9 @@ export default function NumberMemory() {
                     onChange={onNumberInputChange}
                     type='text'
                     onKeyUp={onEnterPress}
-                    placeholder={language === 'rus' ? 'Число' : 'Number'}
+                    placeholder={lang === 'rus' ? 'Число' : 'Number'}
                     ></input>
-                    <button onClick={submitHandler}>{language === 'rus' ? 'Ввод' : 'Submit'}</button>
+                    <button onClick={submitHandler}>{lang === 'rus' ? 'Ввод' : 'Submit'}</button>
                   </div>
                 }
               </div>
@@ -183,7 +197,7 @@ export default function NumberMemory() {
             <div className="number-game__end">
               <div className="number-game__message">
                 {
-                  language === 'rus' ?
+                  lang === 'rus' ?
                   'Игра окончена!' :
                   "Game over!"
                 }

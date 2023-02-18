@@ -7,9 +7,10 @@ import { $host } from './http';
 // import { useJwt } from 'react-jwt';
 
 interface IDataUser {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   nickname?: string;
+  lang?: string;
 }
 
 export const updateUser = async (data: IDataUser) => {
