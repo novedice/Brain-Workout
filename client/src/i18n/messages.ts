@@ -4,7 +4,7 @@ export const messages = {
   [LOCALES.ENGLISH]: {
     to_main: `HOME`,
     to_games: 'BRAIN GAMES',
-    to_statistic: 'STATISTIC',
+    to_statistic: 'statistic',
     to_settings: 'Account settings',
     to_login: 'log in',
     to_signup: 'SIGN UP',
@@ -78,11 +78,17 @@ export const messages = {
       'User with this email already exists. Please check the information and try again. If you already have an account, please Log In.',
     user_not_exists: 'User with this email does not exists.',
     wrong_password: 'Your email or password is incorrect. Please try again',
+    your_best_streak:
+      'your best streak {count, plural, one {# day} other {# days}}',
+    your_streak: 'your streak now {count, plural, one {# day} other {# days}}',
+    best_result: 'best result: {score, number}',
+    times_played: 'times played: {times, number}',
+    your_progress: 'your progress',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
     to_games: 'ИГРЫ',
-    to_statistic: 'СТАТИСТИКА',
+    to_statistic: 'статистика',
     to_settings: 'Настройки',
     to_login: 'войти',
     to_signup: 'ЗАРЕГИСТРИРОВАТЬСЯ',
@@ -159,5 +165,12 @@ export const messages = {
     user_not_exists:
       'пользователя с таким адресом электронной почты не существует.',
     wrong_password: 'Неправильный имэйл или пароль.',
+    your_best_streak:
+      'Максимально сыграно без перерыва {count, plural, one {# день} two {# дня} three {# дня} four {# дня} other {# дней}}',
+    your_streak:
+      'Сыграно подряд сейчас {count, plural, one {# день} two {# дня} three {# дня} four {# дня} other {# дней}}',
+    best_result: 'лучший результат: {score, number}',
+    times_played: 'раз сыграно: {times, number}',
+    your_progress: 'ваш прогресс',
   },
 };

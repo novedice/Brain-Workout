@@ -40,6 +40,7 @@ export const UserReducer = (
       state.loggedIn = true;
       return state;
     }
+    default:
+      return state;
   }
-  return state;
 };

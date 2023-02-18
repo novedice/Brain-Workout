@@ -29,7 +29,7 @@ export interface ICategory {
 export interface IResult {
   value: number;
   createdAt: Date;
-  // gameId: number;
+  gameId: number;
 }
 
 export interface IResults {
@@ -85,4 +85,14 @@ export interface ICategories {
 export interface IGameProps {
   gameName: string;
   gameId: number;
+}
+
+export interface IOrderedArray {
+  bestScore: number;
+  gameId: number;
+  gameName: ReactElement;
+  results: {
+    value: number;
+    createdAt: string;
+  }[];
 }

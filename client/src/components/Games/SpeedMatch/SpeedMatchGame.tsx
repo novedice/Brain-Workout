@@ -13,9 +13,8 @@ import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { FormattedMessage } from 'react-intl';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
-import { writeResults } from '../gameFunctions/finishGame';
 
-export const SpeedMatchGame = ({ gameId, gameName }: IGameProps) => {
+export const SpeedMatchGame = ({ gameId }: IGameProps) => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
   const [prevCard, setPrevCard] = useState<ICardSpeedMacth>();
   const [nextCard, setNextCard] = useState<ICardSpeedMacth>(
@@ -42,10 +41,6 @@ export const SpeedMatchGame = ({ gameId, gameName }: IGameProps) => {
     setSpeed(0);
     setBeginAnswer(new Date());
   };
-
-  // const gameFinish = () => {
-  //   writeResults(gameId, score, gameName);
-  // };
 
   const changeCards = async () => {
     setChanging('changing-front');
@@ -75,13 +70,8 @@ export const SpeedMatchGame = ({ gameId, gameName }: IGameProps) => {
   const yesAnswer = () => {
     if (prevCard === currentCard) {
       handleRightAnswer();
-      // setScore(score + 50 * multiple);
-      // setRightAnswers(rightAnswers + 1);
-      // setMultiple(multiple === 10 ? 10 : multiple + 1);
     } else {
       handleWrongAnswer();
-      // settotalAnswers(totalAnswers + 1);
-      // setMultiple(1);
     }
     setSpeed(speed + (+new Date() - +beginAnswer));
     changeCards();
@@ -91,26 +81,13 @@ export const SpeedMatchGame = ({ gameId, gameName }: IGameProps) => {
   const noAnswer = () => {
     if (prevCard !== currentCard) {
       handleRightAnswer();
-      // setScore(score + 50 * multiple);
-      // setRightAnswers(rightAnswers + 1);
-      // setMultiple(multiple === 10 ? 10 : multiple + 1);
     } else {
       handleWrongAnswer();
-      // setTotalAnswers(totalAnswers + 1);
-      // setMultiple(1);
     }
     setSpeed(speed + (+new Date() - +beginAnswer));
     changeCards();
     setBeginAnswer(new Date());
   };
-  // useEffect(() => {
-  //   if (finished) {
-  //     writeResults(gameId, score, gameName);
-  //   }
-  // }, [finished]);
-  if (finished) {
-    writeResults(gameId, score, gameName);
-  }
 
   return (
     <>

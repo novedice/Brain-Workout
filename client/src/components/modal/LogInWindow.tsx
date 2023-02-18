@@ -61,6 +61,7 @@ const LogInWindow = () => {
         },
         type: UPDATE_USER,
       });
+      localStorage.setItem('token', JSON.stringify(loginResponse.token));
 
       document.cookie = `auth=Bearer ${loginResponse.token}`;
       console.log('token:', token);

@@ -1,6 +1,6 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { createResult, IResultResponse } from '../../../api/result-requerests';
+import { createResult } from '../../../api/result-requerests';
 import { ADD_RESULT } from '../../../constants';
 import { useAppDispatch } from '../../../hooks/useTypeSelector';
 // import { writeResults } from '../gameFunctions/finishGame';
@@ -36,41 +36,34 @@ export const FinishGameTable = ({
   startGame,
   gameID,
   gameName,
+  finished,
 }: IFinishGameTableProps) => {
-  // writeResults(gameID, score, gameName);
   const dispatch = useAppDispatch();
-  const [currentRes, setCurrentRes] = useState<IResultResponse>();
+
   const result1 = async () => {
-    const res = await createResult({ gameId: gameID, value: score });
-    if (res) {
-      console.log('res', res);
-      setCurrentRes(res);
+    if (score !== 0 && finished) {
+      const res = await createResult({ gameId: gameID, value: score });
+      if (res) {
+        console.log('res', res);
+        dispatch({
+          payload: [
+            {
+              gameId: res.gameId,
+              value: res.value,
+              createdAt: res.createdAt,
+              userId: res.userId,
+              id: res.id,
+            },
+          ],
+          type: ADD_RESULT,
+        });
+      }
+      return res;
     }
-    return res;
   };
   useEffect(() => {
     result1();
-  }, []);
-  // const result = result1();
-  // for (let userResult of userResults) {
-  // if (userResult.gameId === result.gameId) {
-  dispatch({
-    payload: {
-      gameId: currentRes?.gameId,
-      gameName: gameName,
-      result: { value: currentRes?.value, createdAt: currentRes?.createdAt },
-    },
-    type: ADD_RESULT,
-  });
-  // const [curUserRes, setCurUserRes] = useState<IResults[]>([
-  //   {
-  //     gameId: 0,
-  //     gameName: 'unknown',
-  //     results: [{ value: 0, createdAt: new Date() }],
-  //   },
-  // ]);
-  // const userResults = useTypeSelector((state) => state.resultsInfo);
-  // const dispatch = useAppDispatch();
+  }, [finished]);
 
   return (
     <>
@@ -81,20 +74,24 @@ export const FinishGameTable = ({
         <p>
           <FormattedMessage id="score" values={{ n: score }} />
         </p>
-        <p>
-          <FormattedMessage
-            id="correct_answers"
-            values={{ n: rightAnswers, m: totalAnswers }}
-          />
-        </p>
-        <p>
-          <FormattedMessage
-            id="accuracy"
-            values={{
-              n: ((rightAnswers * 100) / totalAnswers).toFixed(0),
-            }}
-          />
-        </p>
+        {rightAnswers !== 0 && (
+          <>
+            <p>
+              <FormattedMessage
+                id="correct_answers"
+                values={{ n: rightAnswers, m: totalAnswers }}
+              />
+            </p>
+            <p>
+              <FormattedMessage
+                id="accuracy"
+                values={{
+                  n: ((rightAnswers * 100) / totalAnswers).toFixed(0),
+                }}
+              />
+            </p>
+          </>
+        )}
         <p>
           {speed !== 0 && (
             <FormattedMessage

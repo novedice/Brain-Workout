@@ -4,7 +4,7 @@ import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
 import { IGameProps } from '../../../types/interfaces';
 import { Timer } from '../../Timer';
-import { writeResults } from '../gameFunctions/finishGame';
+// import { writeResults } from '../gameFunctions/finishGame';
 import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { ButtonStart } from '../gamesComponents/ButtonStart';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
@@ -12,7 +12,7 @@ import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
-export const MeaningColorGame = ({ gameId, gameName }: IGameProps) => {
+export const MeaningColorGame = ({ gameId }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
   const [leftMeaningColor, setLeftMeaninfColor] = useState(0);
   const [rightColor, setRightColor] = useState(0);
@@ -44,11 +44,11 @@ export const MeaningColorGame = ({ gameId, gameName }: IGameProps) => {
     changeColors();
   };
 
-  const gameFinish = () => {
-    localStorage.setItem('score', score.toString());
-    writeResults(gameId, score, gameName);
-    // setFinished(false);
-  };
+  // const gameFinish = () => {
+  //   localStorage.setItem('score', score.toString());
+  //   writeResults(gameId, score, gameName);
+  //   // setFinished(false);
+  // };
   const handleRightAnswer = () => {
     setBackColor('bg-green-500');
     setTimeout(() => setBackColor(''), 100);
@@ -83,9 +83,9 @@ export const MeaningColorGame = ({ gameId, gameName }: IGameProps) => {
     changeColors();
   };
 
-  if (finished) {
-    gameFinish();
-  }
+  // if (finished) {
+  //   gameFinish();
+  // }
 
   return (
     <>
@@ -101,7 +101,7 @@ export const MeaningColorGame = ({ gameId, gameName }: IGameProps) => {
             started={started}
             setStarted={setStarted}
             startGame={startGame}
-            gameName={gameName}
+            gameName={'color_match'}
             gameID={gameId}
             finished={finished}
           />

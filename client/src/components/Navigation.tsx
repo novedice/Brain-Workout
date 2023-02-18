@@ -44,7 +44,7 @@ export function Navigation({
   };
 
   return (
-    <nav className="upper-case mb-3 flex h-16 w-[100%] items-center justify-between bg-blue-300 px-12 text-center text-lg text-white">
+    <nav className="upper-case flex h-16 w-[100%] items-center justify-between bg-blue-300 px-12 text-center text-lg text-white">
       <a
         className="unlink mr-2"
         href="https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rsclone/rsclone.md"

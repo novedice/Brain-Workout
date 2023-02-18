@@ -1,7 +1,15 @@
 import React, { ReactElement, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { registrAuthUser } from '../../api/user-requests';
-import { HIDE_SIGNUP, SHOW_MODAL, UPDATE_USER } from '../../constants';
+import jwt_decode from 'jwt-decode';
+import {
+  HIDE_SIGNUP,
+  LOGGIN,
+  LOGGINUSER,
+  SHOW_MODAL,
+  UPDATE_TOKEN,
+  UPDATE_USER,
+} from '../../constants';
 import {
   styleErrorMes,
   styleInput,
@@ -39,8 +47,45 @@ const SignUpModal = () => {
   };
 
   const sigInComplete = async () => {
-    signUpModalHide();
-    modalShow();
+    const registration = await registrAuthUser(
+      { email: email, password: password, nickname: nickname },
+      'registration'
+    );
+
+    console.log('registration data', registration);
+    if (registration) {
+      dispatch({ type: LOGGIN });
+      console.log('token data', jwt_decode<IUser>(registration.token));
+      dispatch({
+        payload: {
+          id: jwt_decode<IUser>(registration.token).id,
+          nickname: jwt_decode<IUser>(registration.token).nickname,
+          loggedIn: true,
+          language: user.language,
+          email: user.email,
+          alwaysSignIn: true,
+        },
+        type: UPDATE_USER,
+      });
+
+      dispatch({
+        payload: { token: registration.token },
+        type: UPDATE_TOKEN,
+      });
+      dispatch({ type: LOGGINUSER });
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', JSON.stringify(registration.token));
+
+      document.cookie = `auth=Bearer ${registration.token}`;
+      console.log('user after sign up', user);
+      console.log('cookies', document.cookie);
+      signUpModalHide();
+    } else {
+      setEmailError(<FormattedMessage id="user_exists" />);
+      return;
+    }
+
+    // modalShow();
   };
 
   const submitHandler = async (event: React.FormEvent) => {
@@ -64,31 +109,9 @@ const SignUpModal = () => {
       return;
     } else {
       console.log(passwordEr, emailError, confirmPassErr, nameError);
-      const registration = await registrAuthUser(
-        { email: email, password: password, nickname: nickname },
-        'registration'
-      );
 
-      console.log('registration data', registration);
-      if (registration) {
-        dispatch({
-          payload: {
-            nickname: nickname,
-            loggedIn: false,
-            language: user.language,
-            email: user.email,
-          },
-          type: UPDATE_USER,
-        });
-        document.cookie = `auth=Bearer ${registration.token}`;
-        console.log('user after sign up', user);
-        console.log('cookies', document.cookie);
-        sigInComplete();
-        return;
-      } else {
-        setEmailError(<FormattedMessage id="user_exists" />);
-        return;
-      }
+      sigInComplete();
+      return;
     }
   };
 
