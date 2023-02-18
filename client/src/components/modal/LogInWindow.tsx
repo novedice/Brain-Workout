@@ -42,7 +42,7 @@ const LogInWindow = () => {
 
   const loginComplete = async () => {
     const loginResponse = await registrAuthUser(
-      { email: email, password: password },
+      { email: email, password: password, lang: user.lang },
       'login'
     );
     if (loginResponse) {
@@ -58,6 +58,7 @@ const LogInWindow = () => {
         },
         type: UPDATE_USER,
       });
+      localStorage.setItem('token', JSON.stringify(loginResponse.token));
 
       document.cookie = `auth=Bearer ${loginResponse.token};path=/;max-age=${checked ? (24 * 60 * 60) : 'session'}`;
       console.log(loginResponse.token)

@@ -4,6 +4,7 @@ export interface IUser {
   id?: number;
   nickname: string;
   lang: string;
+  loggedIn: boolean;
   email?: string;
   alwaysSignIn?: boolean;
 }
@@ -26,22 +27,25 @@ export interface ICategory {
 }
 
 export interface IResult {
-  id: number;
-  userId: string;
   value: number;
-  createdDate: Date;
+  createdAt: Date;
+  gameId: number;
 }
 
 export interface IResults {
+  // id: number;
   gameId: number;
   gameName: string;
-  valueType: string;
-  result: IResult[];
+  // valueType: string;
+  results: IResult[];
 }
 
 export interface IResData {
   gameId: number;
   value: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: number;
 }
 
 export interface IColorMeaning {
@@ -61,12 +65,12 @@ export type QParam = {
 };
 
 export interface IGameList {
-  id: number,
+  id: number;
   name: ReactElement;
   path: string;
   category: string;
   categoryName: ReactElement;
-  game: () => JSX.Element;
+  game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
 export interface ICardSpeedMacth {
@@ -77,4 +81,19 @@ export interface ICardSpeedMacth {
 export interface ICategories {
   category: string;
   categoryName: ReactElement;
+}
+
+export interface IGameProps {
+  gameName: string;
+  gameId: number;
+}
+
+export interface IOrderedArray {
+  bestScore: number;
+  gameId: number;
+  gameName: ReactElement;
+  results: {
+    value: number;
+    createdAt: string;
+  }[];
 }

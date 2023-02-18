@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 // import { useEffect, useState } from 'react';
 // import { useCookies } from 'react-cookie';
 import { IToken } from '../types/interfaces';
@@ -15,7 +15,7 @@ interface IDataUser {
 
 export const updateUser = async (data: IDataUser) => {
   try {
-    const response = await axios.put<IToken>(`${BaseUrl}/${users}/`, data, {
+    const response = await $host.put<IToken>(`${BaseUrl}/${users}/`, data, {
       withCredentials: true,
     });
     return response.data;
@@ -27,7 +27,7 @@ export const updateUser = async (data: IDataUser) => {
 
 export const deleteUser = async () => {
   try {
-    const response = await axios.delete(`${BaseUrl}/${users}`, {
+    const response = await $host.delete(`${BaseUrl}/${users}`, {
       withCredentials: true,
     });
     return response.data;
@@ -48,8 +48,8 @@ export const registrAuthUser = async (
         withCredentials: true,
       }
     );
+    console.log('response', response.data);
     return response.data;
-
   } catch (e) {
     if (e) {
       console.log(e);
@@ -57,7 +57,6 @@ export const registrAuthUser = async (
     }
   }
 };
-
 
 export const checkToken = async () => {
   let error;
@@ -70,6 +69,6 @@ export const checkToken = async () => {
   } catch (e) {
     error = (e as AxiosError).message;
     console.log(error);
-    return null;
+    // return null;
   }
 };

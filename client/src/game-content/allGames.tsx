@@ -3,7 +3,7 @@ import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor'
 import NumberMemory from '../components/Games/numberMemory/NumberMemory';
 import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
-import { IGameList } from '../types/interfaces';
+import { IGameList, IGameProps } from '../types/interfaces';
 
 export const allGames: IGameList[] = [
   {
@@ -12,8 +12,13 @@ export const allGames: IGameList[] = [
     path: 'reaction-time',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
@@ -22,8 +27,13 @@ export const allGames: IGameList[] = [
     path: 'sequence-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
@@ -32,8 +42,13 @@ export const allGames: IGameList[] = [
     path: 'aim-trainer',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
@@ -42,8 +57,13 @@ export const allGames: IGameList[] = [
     path: 'chimp-test',
     category: 'problem_solving',
     categoryName: <FormattedMessage id="problem_solving" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
 
@@ -61,8 +81,13 @@ export const allGames: IGameList[] = [
     path: 'verbal-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
@@ -71,8 +96,13 @@ export const allGames: IGameList[] = [
     path: 'visual-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
@@ -81,8 +111,13 @@ export const allGames: IGameList[] = [
     path: 'typing',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
@@ -91,8 +126,13 @@ export const allGames: IGameList[] = [
     path: 'pixel-logic',
     category: 'problem_solving',
     categoryName: <FormattedMessage id="problem_solving" />,
-    game: () => {
-      return <></>;
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {

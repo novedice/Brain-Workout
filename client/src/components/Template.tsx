@@ -5,10 +5,10 @@ import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
 import { IUser } from '../types/interfaces';
 
 export const Template = () => {
-  const { id, nickname, lang } = useTypeSelector(
+  const { id, nickname, lang, loggedIn } = useTypeSelector(
     (state) => state.userInfo
   );
-  const {loggedIn} = useTypeSelector((state) => state.loggedInInfo);
+  // const {loggedIn} = useTypeSelector((state) => state.loggedInInfo);
   const { token: token1 } = useTypeSelector((state) => state.tokenInfo);
   const dispatch = useAppDispatch();
   // const [cookie] = useCookies(['token']);
@@ -17,6 +17,7 @@ export const Template = () => {
     id: 1,
     nickname: 'HNB',
     lang: 'en',
+    loggedIn: true,
   };
 
   const logUser = async () => {

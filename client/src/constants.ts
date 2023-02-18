@@ -9,3 +9,7 @@ export const UPDATE_TOKEN = 'UPDATE_TOKEN';
 export const LOGGINUSER = 'LOGGINUSER';
 export const LOGGIN = 'LOGGIN';
 export const LOGOUT = 'LOGOUT';
+
+export const ADD_RESULT = 'ADD_RESULT';
+export const CREATE_NEW_RESULT = 'CREATE_NEW_RESULT';
+export const UPDATE_ALL_RESULTS = 'UPDATE_ALL_RESULTS';

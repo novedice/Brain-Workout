@@ -93,17 +93,21 @@ export function Navigation({
         <>
           {' '}
           <p>{user.nickname}</p>
-          <div
-            onClick={logoutHandler}
-            className="flex items-center justify-between"
-          >
-            <p className="mr-3">
-              <FormattedMessage id="to_logout" />
-            </p>
-            <p>
-              <img className="h-[20px] w-[20px]" src="logout.png"></img>
-            </p>
-          </div>
+          <Link to="/">
+            <div
+              onClick={() => {
+                logoutHandler();
+              }}
+              className="flex items-center justify-between"
+            >
+              <p className="mr-3">
+                <FormattedMessage id="to_logout" />
+              </p>
+              <p>
+                <img className="h-[20px] w-[20px]" src="logout.png"></img>
+              </p>
+            </div>
+          </Link>
         </>
       )}
     </nav>

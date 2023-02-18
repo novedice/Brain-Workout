@@ -1,63 +1,108 @@
-import { SetStateAction } from 'react';
+import { SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { createResult } from '../../../api/result-requerests';
+import { ADD_RESULT } from '../../../constants';
+import { useAppDispatch } from '../../../hooks/useTypeSelector';
+// import { writeResults } from '../gameFunctions/finishGame';
+// import { createResult } from '../../../api/result-requerests';
+// import { ADD_RESULT } from '../../../constants';
+// import {
+//   useAppDispatch,
+//   useTypeSelector,
+// } from '../../../hooks/useTypeSelector';
+// import { IResults } from '../../../types/interfaces';
 import { ButtonStart } from './ButtonStart';
 
 interface IFinishGameTableProps {
   score: number;
   rightAnswers: number;
-  wrongAnswers: number;
+  totalAnswers: number;
   speed: number;
   started: boolean;
   setStarted: React.Dispatch<SetStateAction<boolean>>;
   startGame: () => void;
-  gameID: string;
+  gameName: string;
+  gameID: number;
+  finished: boolean;
 }
 
 export const FinishGameTable = ({
   score,
   rightAnswers,
-  wrongAnswers,
+  totalAnswers,
   speed,
   started,
   setStarted,
   startGame,
   gameID,
+  gameName,
+  finished,
 }: IFinishGameTableProps) => {
+  const dispatch = useAppDispatch();
+
+  const result1 = async () => {
+    if (score !== 0 && finished) {
+      const res = await createResult({ gameId: gameID, value: score });
+      if (res) {
+        console.log('res', res);
+        dispatch({
+          payload: [
+            {
+              gameId: res.gameId,
+              value: res.value,
+              createdAt: res.createdAt,
+              userId: res.userId,
+              id: res.id,
+            },
+          ],
+          type: ADD_RESULT,
+        });
+      }
+      return res;
+    }
+  };
+  useEffect(() => {
+    result1();
+  }, [finished]);
+
   return (
     <>
       <div className="flex h-full w-full flex-col items-center justify-center bg-gray-300">
         <p className="upper-case">
-          <FormattedMessage id={gameID} />
+          <FormattedMessage id={gameName} />
         </p>
         <p>
           <FormattedMessage id="score" values={{ n: score }} />
         </p>
-        <p>
-          <FormattedMessage
-            id="correct_answers"
-            values={{ n: rightAnswers, m: rightAnswers + wrongAnswers }}
-          />
-        </p>
-        <p>
-          <FormattedMessage
-            id="accuracy"
-            values={{
-              n: ((rightAnswers * 100) / (rightAnswers + wrongAnswers)).toFixed(
-                0
-              ),
-            }}
-          />
-        </p>
+        {rightAnswers !== 0 && (
+          <>
+            <p>
+              <FormattedMessage
+                id="correct_answers"
+                values={{ n: rightAnswers, m: totalAnswers }}
+              />
+            </p>
+            <p>
+              <FormattedMessage
+                id="accuracy"
+                values={{
+                  n: ((rightAnswers * 100) / totalAnswers).toFixed(0),
+                }}
+              />
+            </p>
+          </>
+        )}
         <p>
           {speed !== 0 && (
             <FormattedMessage
               id="average_speed"
               values={{
-                n: (speed / (rightAnswers + wrongAnswers)).toFixed(0),
+                n: (speed / totalAnswers).toFixed(0),
               }}
             />
           )}
         </p>
+        {/* <button onClick={handleResults}>Make results</button> */}
         <ButtonStart
           startGame={startGame}
           setStarted={setStarted}
