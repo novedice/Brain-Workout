@@ -97,12 +97,12 @@ const SignUpModal = () => {
           payload: {
             nickname: nickname,
             loggedIn: false,
-            language: user.language,
+            lang: user.lang,
             email: user.email,
           },
           type: UPDATE_USER,
         });
-        document.cookie = `auth=Bearer ${registration.token}`;
+        document.cookie = `auth=Bearer ${registration.token};path=/`;
         console.log('user after sign up', user);
         console.log('cookies', document.cookie);
         sigInComplete();

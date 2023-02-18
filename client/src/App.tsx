@@ -16,36 +16,46 @@ import { IntlProvider } from 'react-intl';
 import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
+import { checkToken, updateUser } from './api/user-requests';
+import jwtDecode from 'jwt-decode';
 
 export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
-  const [currentLang, setCurrentLang] = useState(user.language);
+  const [currentLang, setCurrentLang] = useState(user.lang);
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
-      const thisUser = JSON.parse(localStorage.getItem('user') as string);
-      dispatch({
-        payload: {
-          id: thisUser.id,
-          nickname: thisUser.nickname,
-          loggedIn: thisUser.loggedIn,
-          email: thisUser.email,
-          language: thisUser.language,
-          alwaysSignIn: true,
-        },
-        type: UPDATE_USER,
-      });
-      if (thisUser.loggedIn) {
-        dispatch({ type: LOGGIN });
+      const local = localStorage.getItem('alwaysSignIn');
+      let alwaysSignIn = false;
+      if (local) {
+        alwaysSignIn = JSON.parse(local);
       }
-      setCurrentLang(thisUser.language);
+      checkToken()
+      .then(async (res) => {
+        if (!res) return; 
+        document.cookie = `auth=Bearer ${res.token};path=/`;
+        const userData = jwtDecode<IUser>(res.token);
+        dispatch({
+          payload: {  
+            id: userData.id,
+            nickname: userData.nickname,
+            email: userData.email,
+            language: userData.lang,
+            alwaysSignIn,
+          },
+          type: UPDATE_USER,
+        });
+        dispatch({ type: LOGGIN });
+        setCurrentLang(user.lang);
+      })
     }
   }, [localStorage]);
 
   const handleChangeLang = () => {
     dispatch({ type: CHANGE_LANGUAGE });
-    setCurrentLang(user.language);
+    setCurrentLang(user.lang);
+    updateUser({lang: user.lang});
     localStorage.setItem('user', JSON.stringify(user));
   };
 

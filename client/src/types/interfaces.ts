@@ -3,8 +3,7 @@ import { ReactElement } from 'react';
 export interface IUser {
   id?: number;
   nickname: string;
-  language: string;
-  loggedIn: boolean;
+  lang: string;
   email?: string;
   alwaysSignIn?: boolean;
 }
