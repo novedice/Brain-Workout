@@ -84,6 +84,7 @@ export const messages = {
     best_result: 'best result: {score, number}',
     times_played: 'times played: {times, number}',
     your_progress: 'your progress',
+    save: 'save',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -172,5 +173,6 @@ export const messages = {
     best_result: 'лучший результат: {score, number}',
     times_played: 'раз сыграно: {times, number}',
     your_progress: 'ваш прогресс',
+    save: 'сохранить',
   },
 };

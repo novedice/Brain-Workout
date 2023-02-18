@@ -73,14 +73,7 @@ export const allGames: IGameList[] = [
     path: 'number-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: ({ gameId, gameName }: IGameProps) => {
-      return (
-        <>
-          {gameId}
-          {gameName}
-        </>
-      );
-    },
+    game: NumberMemory,
   },
   {
     id: 6,

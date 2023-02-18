@@ -47,6 +47,7 @@ export const registrAuthUser = async (
         withCredentials: true,
       }
     );
+    console.log('response', response.data);
     return response.data;
   } catch (e) {
     if (e) {

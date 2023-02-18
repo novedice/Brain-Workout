@@ -29,7 +29,6 @@ export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
   const [currentLang, setCurrentLang] = useState(user.language);
-
   const authUser = async () => {
     if (localStorage.getItem('token')) {
       document.cookie = `auth=Bearer ${JSON.parse(
