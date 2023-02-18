@@ -15,7 +15,7 @@ class ResultController {
   }
 
   async getBest(req, res, next) {
-    const userId = req.body.id;
+    const userId = req.user.id;
     const { gameId, sort } = req.body;
     if ((!sort || !['ASC', 'DESC'].includes(sort)) || !gameId) {
       return next(ApiError.badRequest('Некорректные gameId или sort!'));
@@ -25,8 +25,8 @@ class ResultController {
   }
 
   async get(req, res, next) {
-    let { gameId, limit, page } = req.body;
-    const userId = req.body.id; 
+    let { gameId, limit, page } = req.query;
+    const userId = req.user.id; 
     gameId = gameId || null;
     limit = limit || null;
     page = page || null;
