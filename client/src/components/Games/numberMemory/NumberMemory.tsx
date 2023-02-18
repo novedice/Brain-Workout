@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createResult, getBestResult } from '../../../api/result-requerests';
+// import { allGames } from '../../../game-content/allGames';
 import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
@@ -15,6 +16,8 @@ const generateNumber = (length: number) => {
 const gameId = 5;
 
 export default function NumberMemory() {
+  // const gameInfo = allGames.find((el) => el.id === id);
+  const gamePath = 'number-memory';
   const { lang } = useTypeSelector((state) => state.userInfo);
   const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
   const [currentLength, setCurrentLength] = useState(1);
@@ -79,7 +82,16 @@ export default function NumberMemory() {
       if (loggedIn) {
         createResult({ gameId, value: score });
       }
-      localStorage.setItem('number-memory', String(score));
+      let saveScore: number = 0;
+      const localScore = localStorage.getItem(gamePath);
+      if (localScore) {
+        if (score > Number(localScore)) {
+          saveScore = score;
+        } else {
+          saveScore = Number(localScore);
+        }
+      }
+      localStorage.setItem(gamePath, String(saveScore));
       setIsSaved(true);
     }
   };
@@ -96,12 +108,20 @@ export default function NumberMemory() {
 
   useEffect(() => {
     if (loggedIn) {
-      getBestResult(5, 'DESC').then((res) => {
-        if (res) {
-          setBestResult(res.result);
-        }
-      });
+      getBestResult(5, 'DESC')
+        .then((res) => {
+          if (res) {
+            setBestResult(res.value);
+          }
+        })
+        .catch(() => {
+          const result = localStorage.getItem(gamePath);
+          if (result) {
+            setBestResult(Number(result));
+          }
+        });
     }
+
     const result = localStorage.getItem('number-memory');
     if (result) {
       setBestResult(Number(result));
@@ -131,7 +151,7 @@ export default function NumberMemory() {
         <div className="number-game__description">
           {lang === 'rus'
             ? 'Запомните число и после введите его.'
-            : 'Remember the number and then enter it.'}
+            : 'Remember the number and then enter it.'}{' '}
         </div>
         {bestResult !== undefined && bestResult !== 0 && (
           <div className="number-game__best-result">

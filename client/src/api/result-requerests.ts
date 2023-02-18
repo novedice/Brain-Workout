@@ -64,9 +64,8 @@ export const createResult = async (resData: IResData) => {
 
 export const getBestResult = async (gameId: number, sort: 'ASC' | 'DESC') => {
   try {
-    const response = await $host.post<{ result: number }>(
-      `${BaseUrl}/${users}/${results}/best`,
-      { gameId, sort },
+    const response = await $host.get<{ value: number }>(
+      `${BaseUrl}/${users}/${results}/best?gameId=${gameId}&sort=${sort}`,
       {
         withCredentials: true,
       }
