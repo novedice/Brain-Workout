@@ -44,7 +44,7 @@ const LogInWindow = () => {
 
   const loginComplete = async () => {
     const loginResponse = await registrAuthUser(
-      { email: email, password: password },
+      { email: email, password: password, lang: user.lang },
       'login'
     );
     if (loginResponse) {
@@ -56,7 +56,7 @@ const LogInWindow = () => {
           nickname: jwt_decode<IUser>(loginResponse.token).nickname,
           loggedIn: true,
           email: email,
-          language: user.language,
+          language: user.lang,
           alwaysSignIn: checked,
         },
         type: UPDATE_USER,

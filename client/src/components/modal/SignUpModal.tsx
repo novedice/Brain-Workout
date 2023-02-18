@@ -48,7 +48,12 @@ const SignUpModal = () => {
 
   const sigInComplete = async () => {
     const registration = await registrAuthUser(
-      { email: email, password: password, nickname: nickname },
+      {
+        email: email,
+        password: password,
+        nickname: nickname,
+        lang: user.lang,
+      },
       'registration'
     );
 
@@ -61,7 +66,7 @@ const SignUpModal = () => {
           id: jwt_decode<IUser>(registration.token).id,
           nickname: jwt_decode<IUser>(registration.token).nickname,
           loggedIn: true,
-          language: user.language,
+          language: user.lang,
           email: user.email,
           alwaysSignIn: true,
         },

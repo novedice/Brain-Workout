@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 // import { useEffect, useState } from 'react';
 // import { useCookies } from 'react-cookie';
 import { IToken } from '../types/interfaces';
@@ -7,14 +7,15 @@ import { $host } from './http';
 // import { useJwt } from 'react-jwt';
 
 interface IDataUser {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   nickname?: string;
+  lang?: string;
 }
 
 export const updateUser = async (data: IDataUser) => {
   try {
-    const response = await axios.put<IToken>(`${BaseUrl}/${users}/`, data, {
+    const response = await $host.put<IToken>(`${BaseUrl}/${users}/`, data, {
       withCredentials: true,
     });
     return response.data;
@@ -26,7 +27,7 @@ export const updateUser = async (data: IDataUser) => {
 
 export const deleteUser = async () => {
   try {
-    const response = await axios.delete(`${BaseUrl}/${users}`, {
+    const response = await $host.delete(`${BaseUrl}/${users}`, {
       withCredentials: true,
     });
     return response.data;

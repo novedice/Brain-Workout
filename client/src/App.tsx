@@ -23,12 +23,12 @@ import { IntlProvider } from 'react-intl';
 import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
-import { checkToken } from './api/user-requests';
+import { checkToken, updateUser } from './api/user-requests';
 
 export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
-  const [currentLang, setCurrentLang] = useState(user.language);
+  const [currentLang, setCurrentLang] = useState(user.lang);
   const authUser = async () => {
     if (localStorage.getItem('token')) {
       document.cookie = `auth=Bearer ${JSON.parse(
@@ -38,12 +38,16 @@ export function App() {
       console.log('new token', newToken);
       if (newToken) {
         dispatch({ type: LOGGIN });
+        console.log('decode token:', jwt_decode<IUser>(newToken.token).lang);
         dispatch({
           payload: {
             id: jwt_decode<IUser>(newToken.token).id,
             nickname: jwt_decode<IUser>(newToken.token).nickname,
             loggedIn: true,
-            language: jwt_decode<IUser>(newToken.token).language,
+            language:
+              jwt_decode<IUser>(newToken.token).lang === 'en'
+                ? LOCALES.ENGLISH
+                : LOCALES.RUSSIAN,
             email: jwt_decode<IUser>(newToken.token).email,
             alwaysSignIn: true,
           },
@@ -55,7 +59,7 @@ export function App() {
         });
         dispatch({ type: LOGGINUSER });
         setCurrentLang(
-          jwt_decode<IUser>(newToken.token).language === 'en'
+          jwt_decode<IUser>(newToken.token).lang === 'en'
             ? LOCALES.ENGLISH
             : LOCALES.RUSSIAN
         );
@@ -69,11 +73,20 @@ export function App() {
     authUser();
   }, []);
 
-  const handleChangeLang = () => {
+  // TODO updateUser - language
+  const handleChangeLang = async () => {
     dispatch({ type: CHANGE_LANGUAGE });
-    setCurrentLang(user.language);
-
-    // TODO updateUser - language
+    setCurrentLang(user.lang);
+    const responseUpdate = await updateUser({ lang: user.lang });
+    if (responseUpdate) {
+      document.cookie = `auth=Bearer ${responseUpdate.token}`;
+      localStorage.setItem('token', JSON.stringify(responseUpdate.token));
+      console.log('token after change lang', responseUpdate.token);
+      console.log(
+        'decode token after change lang:',
+        jwt_decode<IUser>(responseUpdate.token).lang
+      );
+    }
 
     localStorage.setItem('user', JSON.stringify(user));
   };
