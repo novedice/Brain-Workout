@@ -84,7 +84,7 @@ export function StatisticPage() {
                     </p>
                   </div>
                   {gameResults.results.length !== 0 && (
-                    <div className="mb-4 h-[254px] w-[504px] border-2">
+                    <div className="mb-4 h-[276px] w-[504px] border-2">
                       <Canvas
                         canvasId={`game-${gameResults.gameId}`}
                         results={gameResults.results}

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { createResult, getBestResult } from '../../../api/result-requerests';
+import { ADD_RESULT } from '../../../constants';
 // import { allGames } from '../../../game-content/allGames';
-import { useTypeSelector } from '../../../hooks/useTypeSelector';
+import {
+  useAppDispatch,
+  useTypeSelector,
+} from '../../../hooks/useTypeSelector';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
 
@@ -31,6 +35,7 @@ export default function NumberMemory() {
   const [bestResult, setBestResult] = useState<number>();
   const [isSaved, setIsSaved] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
+  const dispatch = useAppDispatch();
 
   const start = () => {
     setScore(1);
@@ -77,10 +82,25 @@ export default function NumberMemory() {
     }
   };
 
-  const saveResult = () => {
+  const saveResult = async () => {
     if (!isSaved) {
       if (loggedIn) {
-        createResult({ gameId, value: score });
+        const res = await createResult({ gameId, value: score });
+        if (res) {
+          console.log('res', res);
+          dispatch({
+            payload: [
+              {
+                gameId: res.gameId,
+                value: res.value,
+                createdAt: res.createdAt,
+                userId: res.userId,
+                id: res.id,
+              },
+            ],
+            type: ADD_RESULT,
+          });
+        }
       }
       let saveScore: number = 0;
       const localScore = localStorage.getItem(gamePath);
