@@ -62,23 +62,17 @@ export const createResult = async (resData: IResData) => {
   }
 };
 
-// export const registrAuthUser = async (
-//   data: IDataUser,
-//   action: 'registration' | 'login'
-// ) => {
-//   try {
-//     const response = await $host.post<IToken>(
-//       `${BaseUrl}/${users}/${action}`,
-//       data,
-//       {
-//         withCredentials: true,
-//       }
-//     );
-//     return response.data;
-//   } catch (e) {
-//     if (e) {
-//       console.log(e);
-//       // return e;
-//     }
-//   }
-// };
+export const getBestResult = async (gameId: number, sort: 'ASC' | 'DESC') => {
+  try {
+    const response = await $host.post<{ result: number }>(
+      `${BaseUrl}/${users}/${results}/best`,
+      { gameId, sort },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+};

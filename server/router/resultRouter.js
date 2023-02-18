@@ -7,4 +7,6 @@ router.post('/', resultController.create);
 
 router.get('/', resultController.get);
 
+router.get('/best', resultController.get);
+
 module.exports = router;
