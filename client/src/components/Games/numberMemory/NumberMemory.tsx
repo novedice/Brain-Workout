@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createResult, getBestResult } from '../../../api/result-requerests';
-import { allGames } from '../../../game-content/allGames';
+// import { allGames } from '../../../game-content/allGames';
 import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
