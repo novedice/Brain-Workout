@@ -4,7 +4,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const { User, Session } = require("../models/models");
 const uuid = require("uuid");
 const sessionController = require("./sessionController");
-const { isValidEmail } = require("../util/validation");
+const {isValidEmail} = require('../util/validation')
 
 const generateJWT = (id, nickname, email, sessionId, lang) => {
   return jsonwebtoken.sign(
@@ -92,12 +92,12 @@ class UserController {
 
   async update(req, res, next) {
     const { nickname, email, password, lang } = req.body;
-    const user = User.findByPk(req.user.id);
+    const user = await User.findByPk(req.user.id);
     if (!user) {
       return next(ApiError.notFound("User not found!"));
     }
     const session = await sessionController.get(req.user.sessionId);
-    if (session) {
+    if (!session) {
       return res.status(401).json({ message: "User not authorized!" });
     }
     if (nickname) await user.update({ nickname });
