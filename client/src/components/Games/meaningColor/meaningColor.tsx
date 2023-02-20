@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
+import { IGameProps } from '../../../types/interfaces';
 import { Timer } from '../../Timer';
+// import { writeResults } from '../gameFunctions/finishGame';
 import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { ButtonStart } from '../gamesComponents/ButtonStart';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
@@ -10,7 +12,7 @@ import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
-export const MeaningColorGame = () => {
+export const MeaningColorGame = ({ gameId }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
   const [leftMeaningColor, setLeftMeaninfColor] = useState(0);
   const [rightColor, setRightColor] = useState(0);
@@ -23,7 +25,7 @@ export const MeaningColorGame = () => {
   const [howToPlay, setHowToPlay] = useState(true);
   const [, setBackColor] = useState('');
   const [rightAnswers, setRightAnswers] = useState(0);
-  const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [totalAnswers, setTotalAnswers] = useState(0);
   const [multiple, setMultiple] = useState(1);
 
   const changeColors = () => {
@@ -38,50 +40,42 @@ export const MeaningColorGame = () => {
     setSeconds(20);
     setFinished(false);
     setStarted(true);
-    setSeconds(20);
     changeColors();
   };
 
-  const gameFinish = () => {
-    localStorage.setItem('score', score.toString());
-    // setFinished(false);
+  const handleRightAnswer = () => {
+    setBackColor('bg-green-500');
+    setTimeout(() => setBackColor(''), 100);
+    setScore(score + 50 * multiple);
+    setRightAnswers(rightAnswers + 1);
+    setTotalAnswers(totalAnswers + 1);
+    setMultiple(multiple === 10 ? 10 : multiple + 1);
+  };
+
+  const handleWrongAnswer = () => {
+    setBackColor('bg-red-500');
+    setTimeout(() => setBackColor(''), 100);
+    setTotalAnswers(totalAnswers + 1);
+    setMultiple(1);
   };
 
   const noAnswer = () => {
     if (leftMeaningColor !== rightColor) {
-      setScore(score + 50 * multiple);
-      setRightAnswers(rightAnswers + 1);
-      setMultiple(multiple === 10 ? 10 : multiple + 1);
-      setBackColor('bg-green-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleRightAnswer();
     } else {
-      setBackColor('bg-red-500');
-      setWrongAnswers(wrongAnswers + 1);
-      setMultiple(1);
-      setTimeout(() => setBackColor(''), 100);
+      handleWrongAnswer();
     }
     changeColors();
   };
 
   const yesAnswer = () => {
     if (leftMeaningColor === rightColor) {
-      setScore(score + 50 * multiple);
-      setRightAnswers(rightAnswers + 1);
-      setMultiple(multiple === 10 ? 10 : multiple + 1);
-      setBackColor('bg-green-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleRightAnswer();
     } else {
-      setWrongAnswers(wrongAnswers + 1);
-      setMultiple(1);
-      setBackColor('bg-red-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleWrongAnswer();
     }
     changeColors();
   };
-
-  if (finished) {
-    gameFinish();
-  }
 
   return (
     <>
@@ -92,12 +86,14 @@ export const MeaningColorGame = () => {
           <FinishGameTable
             score={score}
             rightAnswers={rightAnswers}
-            wrongAnswers={wrongAnswers}
+            totalAnswers={totalAnswers}
             speed={0}
             started={started}
             setStarted={setStarted}
             startGame={startGame}
-            gameID={'color_match'}
+            gameName={'color_match'}
+            gameID={gameId}
+            finished={finished}
           />
         )}
         {howToPlay && (

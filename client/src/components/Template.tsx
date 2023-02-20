@@ -5,9 +5,10 @@ import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
 import { IUser } from '../types/interfaces';
 
 export const Template = () => {
-  const { id, nickname, language, loggedIn } = useTypeSelector(
+  const { id, nickname, lang, loggedIn } = useTypeSelector(
     (state) => state.userInfo
   );
+  // const {loggedIn} = useTypeSelector((state) => state.loggedInInfo);
   const { token: token1 } = useTypeSelector((state) => state.tokenInfo);
   const dispatch = useAppDispatch();
   // const [cookie] = useCookies(['token']);
@@ -15,7 +16,7 @@ export const Template = () => {
   const newUser: IUser = {
     id: 1,
     nickname: 'HNB',
-    language: 'en',
+    lang: 'en',
     loggedIn: true,
   };
 
@@ -31,7 +32,7 @@ export const Template = () => {
     <>
       {' '}
       <div>
-        <p>{`id = ${id}; nickname=${nickname}; lang=${language}, log=${loggedIn}`}</p>
+        <p>{`id = ${id}; nickname=${nickname}; lang=${lang}, log=${loggedIn}`}</p>
       </div>
       <button onClick={logUser}>UPDATE USER</button>
     </>

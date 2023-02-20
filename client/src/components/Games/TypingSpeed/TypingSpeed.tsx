@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import randomWords from 'random-words';
 import './TypingSpeed.css';
@@ -25,7 +24,6 @@ export function TypingSpeed() {
   }, [statusGame]);
 
   function generateWords() {
-    // return new Array(NUMB_WORDS).fill(null).map(() => randomWords(NUMB_WORDS));
     return randomWords(NUMB_WORDS);
   }
 
@@ -106,11 +104,19 @@ export function TypingSpeed() {
     }
   }
 
+  const saveResult = () => {
+    localStorage.setItem('bestTypingScore', JSON.stringify(correct));
+    localStorage.setItem(
+      'bestTypingAccuracyScore',
+      JSON.stringify(Math.round((correct / (correct + inCorrect)) * 100))
+    );
+  };
+
   return (
     <div className="container-game">
       <h1 className="game-name">Typing Speed Test</h1>
       <h2 className="time-left">
-        Time left: <span className="seconds-left">{timeLeft}</span>
+        Time left: <span className="important-text">{timeLeft}</span>
       </h2>
 
       {statusGame === 'Started' && (
@@ -149,21 +155,44 @@ export function TypingSpeed() {
           onChange={(e) => setCurrentInput(e.target.value)}
         ></input>
       </div>
-      <button
-        className="mb-4 w-28 rounded-full border p-1 hover:bg-red-200"
-        onClick={startTime}
-      >
-        Start
-      </button>
+
+      {statusGame === 'wait' && (
+        <button
+          className="btn mb-4 w-28 rounded-full border p-1 text-xl hover:bg-red-200"
+          onClick={startTime}
+        >
+          Start
+        </button>
+      )}
+
       {statusGame === 'Finished' && (
-        <div className="section">
-          <p>
-            Words per minute: <span>{correct}</span>
-          </p>
-          <p>
-            Accuracy:{' '}
-            <span>{Math.round(correct / (inCorrect + correct)) * 100}%</span>
-          </p>
+        <div className="section result-section">
+          <div className="result-container content">
+            <p>
+              Words per minute:{' '}
+              <span className="important-text">{correct}</span>
+            </p>
+            <p>
+              Accuracy:{' '}
+              <span className="important-text">
+                {Math.round((correct / (correct + inCorrect)) * 100)}%
+              </span>
+            </p>
+          </div>
+          <div>
+            <button
+              className="btn mr-4 rounded-full border p-1 px-4 text-xl hover:bg-red-200"
+              onClick={() => saveResult()}
+            >
+              Save score
+            </button>
+            <button
+              className="btn rounded-full border p-1 px-4 text-xl hover:bg-red-200"
+              onClick={startTime}
+            >
+              New test
+            </button>
+          </div>
         </div>
       )}
     </div>

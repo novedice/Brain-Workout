@@ -9,7 +9,6 @@ import {
   LOGGIN,
   LOGGINUSER,
   SHOW_SIGNUP /* UPDATE_TOKEN */,
-  UPDATE_TOKEN,
   UPDATE_USER,
 } from '../../constants';
 import {
@@ -30,7 +29,6 @@ const LogInWindow = () => {
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordEr, setPasswordEr] = useState<ReactElement | string>('');
-  const { token } = useTypeSelector((state) => state.tokenInfo);
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const [checked, setChecked] = useState(true);
 
@@ -44,11 +42,10 @@ const LogInWindow = () => {
 
   const loginComplete = async () => {
     const loginResponse = await registrAuthUser(
-      { email: email, password: password },
+      { email: email, password: password, lang: user.lang },
       'login'
     );
     if (loginResponse) {
-      dispatch({ payload: { token: loginResponse.token }, type: UPDATE_TOKEN });
       dispatch({ type: LOGGIN });
       dispatch({
         payload: {
@@ -56,14 +53,15 @@ const LogInWindow = () => {
           nickname: jwt_decode<IUser>(loginResponse.token).nickname,
           loggedIn: true,
           email: email,
-          language: user.language,
+          language: user.lang,
           alwaysSignIn: checked,
         },
         type: UPDATE_USER,
       });
+      localStorage.setItem('token', JSON.stringify(loginResponse.token));
 
-      document.cookie = `auth=Bearer ${loginResponse.token}`;
-      console.log('token:', token);
+      document.cookie = `auth=Bearer ${loginResponse.token};path=/;max-age=${checked ? (24 * 60 * 60) : 'session'}`;
+      console.log(loginResponse.token)
       modalHide();
       dispatch({ type: LOGGINUSER });
 

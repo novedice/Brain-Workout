@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 export interface IUser {
   id?: number;
   nickname: string;
-  language: string;
+  lang: string;
   loggedIn: boolean;
   email?: string;
   alwaysSignIn?: boolean;
@@ -14,7 +14,7 @@ export interface IToken {
 }
 
 export interface IGame {
-  gameID: number;
+  gameId: number;
   category: string;
   gameName: string;
   valueType: string;
@@ -23,26 +23,29 @@ export interface IGame {
 export interface ICategory {
   id: number;
   category: string;
-  userID: number;
+  userId: number;
 }
 
 export interface IResult {
-  id: number;
-  userID: string;
   value: number;
-  createdDate: Date;
+  createdAt: Date;
+  gameId: number;
 }
 
 export interface IResults {
-  gameID: number;
+  // id: number;
+  gameId: number;
   gameName: string;
-  valueType: string;
-  result: IResult[];
+  // valueType: string;
+  results: IResult[];
 }
 
 export interface IResData {
-  gameID: number;
+  gameId: number;
   value: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: number;
 }
 
 export interface IColorMeaning {
@@ -62,11 +65,12 @@ export type QParam = {
 };
 
 export interface IGameList {
+  id: number;
   name: ReactElement;
   path: string;
   category: string;
   categoryName: ReactElement;
-  game: () => JSX.Element;
+  game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
 export interface ICardSpeedMacth {
@@ -77,4 +81,19 @@ export interface ICardSpeedMacth {
 export interface ICategories {
   category: string;
   categoryName: ReactElement;
+}
+
+export interface IGameProps {
+  gameName: string;
+  gameId: number;
+}
+
+export interface IOrderedArray {
+  bestScore: number;
+  gameId: number;
+  gameName: ReactElement;
+  results: {
+    value: number;
+    createdAt: string;
+  }[];
 }

@@ -6,9 +6,9 @@ export function Footer() {
     <footer className="h-18 flex w-[100%] items-center justify-between bg-blue-300 px-12 align-baseline text-lg text-white">
       <div className="github -ml-3 flex items-center">
         <a className="unlink" href="https://github.com/novedice/Brain-Workout">
-          <img className="w-[80px]" src="GitHubLogo1.png"></img>
+          <img className="w-[150px]" src="GitHubLogo1.png"></img>
         </a>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col  justify-start">
           <a className="unlink" href="https://github.com/SergeiBuiko">
             sergeibuiko
           </a>
@@ -19,15 +19,6 @@ export function Footer() {
             sluzerpp
           </a>
         </div>
-        {/* <a className="unlink" href="https://github.com/SergeiBuiko">
-          <img className="w-[80px]" src="GitHubLogo1.png"></img>
-        </a>
-        <a className="unlink" href="https://github.com/novedice">
-          <img className="w-[80px]" src="GitHubLogo1.png"></img>
-        </a>
-        <a className="unlink" href="https://github.com/sluzerpp">
-          <img className="w-[80px]" src="GitHubLogo1.png"></img>
-        </a> */}
       </div>
       <div className="year">
         <p className="text-header">2023</p>
