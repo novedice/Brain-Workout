@@ -1,14 +1,37 @@
 import '../assets/logo-brain.png';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import './mainPage.css';
+// import Calendar from 'react-calendar';
+// import 'react-calendar/dist/Calendar.css';
 import { FormattedMessage } from 'react-intl';
+import { UserCalendar } from '../components/UserCalendar';
+import { getUserResults } from '../api/result-requerests';
+import { useEffect, useState } from 'react';
+import { UPDATE_ALL_RESULTS } from '../constants';
+import { useAppDispatch } from '../hooks/useTypeSelector';
+import { findActiveDays } from '../functions/findActiveDays';
 
 export function MainPage() {
+  const [activeDays, setActiveDays] = useState<string[]>();
+  const dispatch = useAppDispatch();
+
+  const reciveResults = async () => {
+    const response = await getUserResults();
+    if (response) {
+      dispatch({ payload: response, type: UPDATE_ALL_RESULTS });
+      // setOrderedRes(resultsForStatistic(response));
+      setActiveDays(findActiveDays(response));
+    }
+  };
+
+  useEffect(() => {
+    reciveResults();
+  }, []);
+
   return (
     <>
       <main className="main">
-        <div className="main-container flex justify-center">
-          <div className="workout-container m-2 flex w-[40%] flex-col justify-around rounded bg-blue-300 p-2 text-white">
+        <div className="main-container">
+          <div className="workout-container">
             <div className="today-workout ml-auto mr-auto flex w-[100%] justify-center bg-blue-500">
               <FormattedMessage id="today" />
             </div>
@@ -26,11 +49,15 @@ export function MainPage() {
               </div>
             </div>
           </div>
-          <div className="calendar-wrap m-2">
+          <div className="calendar-container m-2">
             <FormattedMessage id="show_calendar" />
-            <div className="calendar border">
+            {/* <div className="calendar border">
               <Calendar />
-            </div>
+            </div> */}
+            <UserCalendar
+              // datesArray={datesForCalendar(new Date())}
+              activeDays={activeDays}
+            />
           </div>
         </div>
       </main>

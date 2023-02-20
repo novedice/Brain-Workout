@@ -1,0 +1,25 @@
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.workout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 4px;
+  width: 60%;
+  color: white;
+  background-color: rgb(147 197 253);
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+  align-items: center;
+  justify-content: center;
+}

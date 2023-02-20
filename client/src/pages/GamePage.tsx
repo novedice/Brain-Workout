@@ -9,7 +9,7 @@ export function GamePage() {
 
   const filteredGames = () => {
     let filtGames = allGames;
-    if (category !== 'All categories' && category) {
+    if (category !== 'all_categories' && category) {
       filtGames = allGames.filter((game) => game.category === category);
     }
     return filtGames;

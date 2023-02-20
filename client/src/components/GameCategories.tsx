@@ -21,11 +21,7 @@ export function GameCategories() {
         {CATEGORIES.map((category) => {
           return (
             <React.Fragment key={category}>
-              <label
-                htmlFor={category}
-                className="category"
-                // onClick={() => console.log(category)}
-              >
+              <label htmlFor={category} className="category">
                 <input
                   type="radio"
                   className="checked:text-red-500  "
@@ -35,11 +31,9 @@ export function GameCategories() {
                   checked={categorySearch === category ? true : false}
                   onChange={() => {
                     onClickCategory(category);
-                    // hasCategories(category);
                   }}
                 />
                 <FormattedMessage id={category} />
-                {/* {category} */}
               </label>
             </React.Fragment>
           );
