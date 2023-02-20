@@ -9,6 +9,7 @@ import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { ButtonStart } from '../gamesComponents/ButtonStart';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { GamePaused } from '../gamesComponents/PauseComponent';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
@@ -101,60 +102,81 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
         )}
         {!howToPlay && !finished && (
           <>
-            <div className="head-game width-[100%] flex self-end">
-              <ButtonStart
-                started={started}
+            {paused && (
+              <GamePaused
+                paused={paused}
+                setPaused={setPaused}
+                // started={started}
                 setStarted={setStarted}
                 startGame={startGame}
               />
-              <ButtonPause paused={paused} setPaused={setPaused} />
-              <div className="m-5">
-                <Timer
-                  seconds={seconds}
-                  started={started}
-                  paused={paused}
-                  finished={finished}
-                  setFinished={setFinished}
-                  setStarted={setStarted}
-                  setSeconds={setSeconds}
-                />
-              </div>
+            )}
+            {!paused && (
+              <>
+                <div className="head-game width-[100%] flex self-end">
+                  <ButtonStart
+                    started={started}
+                    setStarted={setStarted}
+                    startGame={startGame}
+                  />
+                  <ButtonPause paused={paused} setPaused={setPaused} />
+                  <div className="m-5">
+                    <Timer
+                      seconds={seconds}
+                      started={started}
+                      paused={paused}
+                      finished={finished}
+                      setFinished={setFinished}
+                      setStarted={setStarted}
+                      setSeconds={setSeconds}
+                    />
+                  </div>
 
-              <p className="m-5">
-                <FormattedMessage id="score" values={{ n: score }} />
-              </p>
-              <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
-            </div>
-            <div className="inside-wrap flex h-full flex-col justify-center">
-              <div className="mb-10 flex justify-center">
-                <div
-                  className={`left-part mr-5 flex h-[100px] w-[45%] justify-center border-4 ${colors[leftColor].border} align-middle `}
-                >
-                  <p
-                    className={`flex  items-center justify-center text-center text-5xl uppercase ${colors[leftColor].color}`}
-                  >
-                    <FormattedMessage id={colors[leftMeaningColor].meaning} />
+                  <p className="m-5">
+                    <FormattedMessage id="score" values={{ n: score }} />
                   </p>
+                  <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
                 </div>
-                <div
-                  className={`left-part  flex h-[100px] w-[45%] justify-center border-4  ${colors[rightColor].border} align-middle `}
-                >
-                  <p
-                    className={`flex items-center justify-center text-center text-5xl uppercase ${colors[rightColor].color}`}
-                  >
-                    <FormattedMessage id={colors[rightMeaningColor].meaning} />
-                  </p>
+                <div className="inside-wrap flex h-full flex-col justify-center">
+                  <div className="mb-10 flex justify-center">
+                    <div
+                      className={`left-part mr-5 flex h-[100px] w-[45%] justify-center border-4 ${colors[leftColor].border} align-middle `}
+                    >
+                      <p
+                        className={`flex  items-center justify-center text-center text-5xl uppercase ${colors[leftColor].color}`}
+                      >
+                        <FormattedMessage
+                          id={colors[leftMeaningColor].meaning}
+                        />
+                      </p>
+                    </div>
+                    <div
+                      className={`left-part  flex h-[100px] w-[45%] justify-center border-4  ${colors[rightColor].border} align-middle `}
+                    >
+                      <p
+                        className={`flex items-center justify-center text-center text-5xl uppercase ${colors[rightColor].color}`}
+                      >
+                        <FormattedMessage
+                          id={colors[rightMeaningColor].meaning}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                  <div className="buttons flex w-[100%] justify-center">
+                    <ButtonYesNo
+                      callback={noAnswer}
+                      disabled={!started}
+                      val="no"
+                    />
+                    <ButtonYesNo
+                      callback={yesAnswer}
+                      disabled={!started}
+                      val="yes"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="buttons flex w-[100%] justify-center">
-                <ButtonYesNo callback={noAnswer} disabled={!started} val="no" />
-                <ButtonYesNo
-                  callback={yesAnswer}
-                  disabled={!started}
-                  val="yes"
-                />
-              </div>
-            </div>
+              </>
+            )}
           </>
         )}
       </div>

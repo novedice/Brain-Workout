@@ -71,7 +71,7 @@ export function App() {
 
   useEffect(() => {
     authUser();
-  }, []);
+  }, [localStorage]);
 
   // TODO updateUser - language
   const handleChangeLang = async () => {

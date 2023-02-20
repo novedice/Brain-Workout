@@ -4,12 +4,14 @@ interface IButtonStartProps {
   started: boolean;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
   startGame: () => void;
+  startName?: string;
 }
 
 export const ButtonStart = ({
   started,
   setStarted,
   startGame,
+  startName = 'start',
 }: IButtonStartProps) => {
   return (
     <>
@@ -27,7 +29,7 @@ export const ButtonStart = ({
         {started ? (
           <FormattedMessage id="stop" />
         ) : (
-          <FormattedMessage id="start" />
+          <FormattedMessage id={startName} />
         )}
       </button>
     </>
