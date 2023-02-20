@@ -3,7 +3,7 @@ const { Session } = require("../models/models");
 class SessionController {
   async create(user, token) {
     if (!user) return;
-    return await Session.create({userId: user.id});;
+    return await Session.create({userId: user.id, token});
   }
   
   async get(id) {

@@ -1,90 +1,156 @@
+import { FormattedMessage } from 'react-intl';
 import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor';
+import NumberMemory from '../components/Games/numberMemory/NumberMemory';
 import { ReactionTime } from '../components/Games/ReactionTime/ReactionTime';
+import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
-import { IGameList } from '../types/interfaces';
+import { IGameList, IGameProps } from '../types/interfaces';
 
 export const allGames: IGameList[] = [
   {
-    name: 'Reaction Time',
+    id: 1,
+    name: <FormattedMessage id="reaction_time" />,
     path: 'reaction-time',
-    category: 'Speed',
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
     game: ReactionTime,
   },
   {
-    name: 'Sequence Memory',
+    id: 2,
+    name: <FormattedMessage id="sequence_memory" />,
     path: 'sequence-memory',
-    category: 'Memory',
-    game: () => {
-      return <></>;
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
-    name: 'Aim Trainer',
+    id: 3,
+    name: <FormattedMessage id="aim_trainer" />,
     path: 'aim-trainer',
-    category: 'Speed',
-    game: () => {
-      return <></>;
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
-    name: 'Chimp test',
+    id: 4,
+    name: <FormattedMessage id="chimp_test" />,
     path: 'chimp-test',
-    category: 'Problem solving',
-    game: () => {
-      return <></>;
+    category: 'problem_solving',
+    categoryName: <FormattedMessage id="problem_solving" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
 
   {
-    name: 'Number Memory',
+    id: 5,
+    name: <FormattedMessage id="number_memory" />,
     path: 'number-memory',
-    category: 'Memory',
-    game: () => {
-      return <></>;
-    },
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
+    game: NumberMemory,
   },
   {
-    name: 'Verbal Memory',
+    id: 6,
+    name: <FormattedMessage id="verbal_memory" />,
     path: 'verbal-memory',
-    category: 'Memory',
-    game: () => {
-      return <></>;
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
-    name: 'Visual memory',
+    id: 7,
+    name: <FormattedMessage id="visual_memory" />,
     path: 'visual-memory',
-    category: 'Memory',
-    game: () => {
-      return <></>;
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
-    name: 'Typing',
+    id: 8,
+    name: <FormattedMessage id="typing" />,
     path: 'typing',
-    category: 'Speed',
-    game: () => {
-      return <></>;
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
-    name: 'Pixel logic',
+    id: 9,
+    name: <FormattedMessage id="pixel_logic" />,
     path: 'pixel-logic',
-    category: 'Problem solving',
-    game: () => {
-      return <></>;
+    category: 'problem_solving',
+    categoryName: <FormattedMessage id="problem_solving" />,
+    game: ({ gameId, gameName }: IGameProps) => {
+      return (
+        <>
+          {gameId}
+          {gameName}
+        </>
+      );
     },
   },
   {
-    name: 'Color Match',
+    id: 10,
+    name: <FormattedMessage id="color_match" />,
     path: 'color-match',
-    category: 'Flexibility',
+    category: 'flexibility',
+    categoryName: <FormattedMessage id="flexibility" />,
     game: MeaningColorGame,
   },
   {
-    name: 'Memory Game',
+    id: 11,
+    name: <FormattedMessage id="memory_game" />,
     path: 'memory-game',
-    category: 'Memory',
+    category: 'memory',
+    categoryName: <FormattedMessage id="memory" />,
     game: MemoryGame,
+  },
+  {
+    id: 12,
+    name: <FormattedMessage id="speed_match" />,
+    path: 'speed-match',
+    category: 'speed',
+    categoryName: <FormattedMessage id="speed" />,
+    game: SpeedMatchGame,
   },
 ];

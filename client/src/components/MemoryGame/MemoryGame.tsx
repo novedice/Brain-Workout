@@ -3,6 +3,9 @@ import { CARD_IMAGES } from './constants';
 import SingleCard from './SingleCard';
 import { ICards } from './types';
 import './MemoryGame.css';
+import { FormattedMessage } from 'react-intl';
+import { IGameProps } from '../../types/interfaces';
+import { FinishGameTable } from '../Games/gamesComponents/FinishGameTable';
 
 const shuffleCards = () => {
   return [...CARD_IMAGES, ...CARD_IMAGES]
@@ -10,12 +13,14 @@ const shuffleCards = () => {
     .map((card) => ({ ...card, id: Math.random() }));
 };
 
-export function MemoryGame() {
+export function MemoryGame({ gameId }: IGameProps) {
   const [cards, setCards] = useState<ICards[]>(shuffleCards());
   const [turns, setTurns] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<ICards | null>(null);
   const [selectTwo, setSelectTwo] = useState<ICards | null>(null);
   const [disabledCard, setDisabledCard] = useState(false);
+  const [finished, setFinished] = useState<boolean>(false);
+  const [started, setStarted] = useState<boolean>(true);
 
   let solvedArray = cards
     .map((elem) => elem.matched)
@@ -37,6 +42,10 @@ export function MemoryGame() {
       setBestScore(newBestScore);
       localStorage.setItem('bestScore', '' + newBestScore);
     }
+    setTimeout(() => {
+      setFinished(true);
+      setStarted(false);
+    }, 2000);
   };
 
   const checkCompletion = () => {
@@ -48,6 +57,8 @@ export function MemoryGame() {
 
   useEffect(() => checkCompletion(), [cards]);
   const resetGame = () => {
+    setFinished(false);
+    setStarted(true);
     setSelectOne(null);
     setSelectTwo(null);
     setCards(shuffleCards());
@@ -92,32 +103,54 @@ export function MemoryGame() {
   // }, []);
 
   return (
-    <div className="game-wrapper flex flex-col items-center">
-      Memory game
-      <button
-        className="mt-2 w-28 rounded-full border p-1 hover:bg-red-200"
-        onClick={resetGame}
-      >
-        New Game
-      </button>
-      <div className="grid-cards mb-4">
-        {cards.map((card) => (
-          <SingleCard
-            card={card}
-            key={card.id}
-            handleSelect={handleSelect}
-            flip={card === selectOne || card === selectTwo || card.matched}
-            disabled={disabledCard}
-          />
-        ))}
-      </div>
-      <p>Moves : {turns}</p>
-      <p>Best Score : {bestScore}</p>
-      {/* {localStorage.getItem('bestScore') && (
+    <>
+      {finished && (
+        <FinishGameTable
+          score={turns}
+          rightAnswers={0}
+          totalAnswers={0}
+          speed={0}
+          startGame={resetGame}
+          started={started}
+          setStarted={setStarted}
+          gameName="memory_game"
+          gameID={gameId}
+          finished={finished}
+        />
+      )}
+      {!finished && (
+        <div className="game-wrapper flex flex-col items-center">
+          <FormattedMessage id="memory_game" />
+          <button
+            className="mt-2 w-28 rounded-full border p-1 hover:bg-red-200"
+            onClick={resetGame}
+          >
+            <FormattedMessage id="new_game" />
+          </button>
+          <div className="grid-cards mb-4">
+            {cards.map((card) => (
+              <SingleCard
+                card={card}
+                key={card.id}
+                handleSelect={handleSelect}
+                flip={card === selectOne || card === selectTwo || card.matched}
+                disabled={disabledCard}
+              />
+            ))}
+          </div>
+          <p>
+            <FormattedMessage id="moves" values={{ n: turns }} />
+          </p>
+          <p>
+            <FormattedMessage id="best_score" values={{ s: bestScore }} />
+          </p>
+          {/* {localStorage.getItem('bestScore') && (
         <div>
           <span>Best score:</span> {bestScore}
         </div>
       )} */}
-    </div>
+        </div>
+      )}
+    </>
   );
 }

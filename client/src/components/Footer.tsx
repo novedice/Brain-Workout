@@ -3,9 +3,23 @@ import '../assets/GitHubLogo1.png';
 
 export function Footer() {
   return (
-    <footer className="flex h-16 w-[100%] items-center justify-between bg-blue-300 px-12 align-baseline text-lg text-white">
-      <div className="github -ml-3 flex">
-        <a className="unlink" href="https://github.com/SergeiBuiko">
+    <footer className="h-18 flex w-[100%] items-center justify-between bg-blue-300 px-12 align-baseline text-lg text-white">
+      <div className="github -ml-3 flex items-center">
+        <a className="unlink" href="https://github.com/novedice/Brain-Workout">
+          <img className="w-[80px]" src="GitHubLogo1.png"></img>
+        </a>
+        <div className="flex flex-col items-center justify-center">
+          <a className="unlink" href="https://github.com/SergeiBuiko">
+            sergeibuiko
+          </a>
+          <a className="unlink" href="https://github.com/novedice">
+            novedice
+          </a>
+          <a className="unlink" href="https://github.com/sluzerpp">
+            sluzerpp
+          </a>
+        </div>
+        {/* <a className="unlink" href="https://github.com/SergeiBuiko">
           <img className="w-[80px]" src="GitHubLogo1.png"></img>
         </a>
         <a className="unlink" href="https://github.com/novedice">
@@ -13,7 +27,7 @@ export function Footer() {
         </a>
         <a className="unlink" href="https://github.com/sluzerpp">
           <img className="w-[80px]" src="GitHubLogo1.png"></img>
-        </a>
+        </a> */}
       </div>
       <div className="year">
         <p className="text-header">2023</p>

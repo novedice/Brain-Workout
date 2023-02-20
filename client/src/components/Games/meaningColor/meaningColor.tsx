@@ -1,11 +1,18 @@
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
+import { IGameProps } from '../../../types/interfaces';
 import { Timer } from '../../Timer';
+// import { writeResults } from '../gameFunctions/finishGame';
+import { ButtonPause } from '../gamesComponents/ButtonPause';
+import { ButtonStart } from '../gamesComponents/ButtonStart';
+import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
+import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
-export const MeaningColorGame = () => {
+export const MeaningColorGame = ({ gameId }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
   const [leftMeaningColor, setLeftMeaninfColor] = useState(0);
   const [rightColor, setRightColor] = useState(0);
@@ -17,6 +24,9 @@ export const MeaningColorGame = () => {
   const [seconds, setSeconds] = useState(20);
   const [howToPlay, setHowToPlay] = useState(true);
   const [, setBackColor] = useState('');
+  const [rightAnswers, setRightAnswers] = useState(0);
+  const [totalAnswers, setTotalAnswers] = useState(0);
+  const [multiple, setMultiple] = useState(1);
 
   const changeColors = () => {
     setLeftColor(getRandom(0, colors.length - 1));
@@ -30,74 +40,74 @@ export const MeaningColorGame = () => {
     setSeconds(20);
     setFinished(false);
     setStarted(true);
-    setSeconds(20);
     changeColors();
   };
 
-  const gameFinish = () => {
-    localStorage.setItem('score', score.toString());
-    setFinished(false);
+  const handleRightAnswer = () => {
+    setBackColor('bg-green-500');
+    setTimeout(() => setBackColor(''), 100);
+    setScore(score + 50 * multiple);
+    setRightAnswers(rightAnswers + 1);
+    setTotalAnswers(totalAnswers + 1);
+    setMultiple(multiple === 10 ? 10 : multiple + 1);
   };
 
-  const noAnswer = async () => {
+  const handleWrongAnswer = () => {
+    setBackColor('bg-red-500');
+    setTimeout(() => setBackColor(''), 100);
+    setTotalAnswers(totalAnswers + 1);
+    setMultiple(1);
+  };
+
+  const noAnswer = () => {
     if (leftMeaningColor !== rightColor) {
-      setScore((prev) => (prev += 100));
-      setBackColor('bg-green-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleRightAnswer();
     } else {
-      setBackColor('bg-red-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleWrongAnswer();
     }
     changeColors();
   };
+
   const yesAnswer = () => {
     if (leftMeaningColor === rightColor) {
-      if (!howToPlay) {
-        setScore((prev) => (prev += 100));
-      }
-      setBackColor('bg-green-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleRightAnswer();
     } else {
-      setBackColor('bg-red-500');
-      setTimeout(() => setBackColor(''), 100);
+      handleWrongAnswer();
     }
-
     changeColors();
   };
-  if (finished) {
-    setFinished(false);
-    gameFinish();
-  }
 
   return (
     <>
       <div
         className={`game-wrap mr-auto ml-auto flex h-full w-[90%] flex-col align-middle `}
       >
+        {finished && (
+          <FinishGameTable
+            score={score}
+            rightAnswers={rightAnswers}
+            totalAnswers={totalAnswers}
+            speed={0}
+            started={started}
+            setStarted={setStarted}
+            startGame={startGame}
+            gameName={'color_match'}
+            gameID={gameId}
+            finished={finished}
+          />
+        )}
         {howToPlay && (
           <ColorDemo howToPlay={howToPlay} setHowToPlay={setHowToPlay} />
         )}
-        {!howToPlay && (
+        {!howToPlay && !finished && (
           <>
             <div className="head-game width-[100%] flex self-end">
-              <button
-                className="mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-blue-300"
-                onClick={() => {
-                  if (!started) {
-                    startGame();
-                  } else {
-                    setStarted(false);
-                  }
-                }}
-              >
-                {started ? 'STOP' : 'START'}
-              </button>
-              <button
-                className="mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-blue-300"
-                onClick={() => setPaused(!paused)}
-              >
-                {paused ? 'PLAY' : 'PAUSE'}
-              </button>
+              <ButtonStart
+                started={started}
+                setStarted={setStarted}
+                startGame={startGame}
+              />
+              <ButtonPause paused={paused} setPaused={setPaused} />
               <div className="m-5">
                 <Timer
                   seconds={seconds}
@@ -109,7 +119,11 @@ export const MeaningColorGame = () => {
                   setSeconds={setSeconds}
                 />
               </div>
-              <p className="m-5">SCORE: {score}</p>
+
+              <p className="m-5">
+                <FormattedMessage id="score" values={{ n: score }} />
+              </p>
+              <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
             </div>
             <div className="inside-wrap flex h-full flex-col justify-center">
               <div className="mb-10 flex justify-center">
@@ -119,7 +133,7 @@ export const MeaningColorGame = () => {
                   <p
                     className={`flex  items-center justify-center text-center text-5xl uppercase ${colors[leftColor].color}`}
                   >
-                    {colors[leftMeaningColor].meaning}
+                    <FormattedMessage id={colors[leftMeaningColor].meaning} />
                   </p>
                 </div>
                 <div
@@ -128,25 +142,17 @@ export const MeaningColorGame = () => {
                   <p
                     className={`flex items-center justify-center text-center text-5xl uppercase ${colors[rightColor].color}`}
                   >
-                    {colors[rightMeaningColor].meaning}
+                    <FormattedMessage id={colors[rightMeaningColor].meaning} />
                   </p>
                 </div>
               </div>
               <div className="buttons flex w-[100%] justify-center">
-                <button
-                  className="mr-3 h-[50px] w-[80px] rounded-lg border bg-blue-400"
-                  onClick={noAnswer}
+                <ButtonYesNo callback={noAnswer} disabled={!started} val="no" />
+                <ButtonYesNo
+                  callback={yesAnswer}
                   disabled={!started}
-                >
-                  NO
-                </button>
-                <button
-                  className="h-[50px] w-[80px] rounded-lg border bg-blue-400"
-                  onClick={yesAnswer}
-                  disabled={!started}
-                >
-                  YES
-                </button>
+                  val="yes"
+                />
               </div>
             </div>
           </>

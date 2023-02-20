@@ -1,5 +1,6 @@
 // import { useState } from 'react';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
 import CATEGORIES from '../game-content/game-categories';
 import { useCategory } from '../hooks/ChooseCategory';
@@ -23,7 +24,7 @@ export function GameCategories() {
               <label
                 htmlFor={category}
                 className="category"
-                onClick={() => console.log(category)}
+                // onClick={() => console.log(category)}
               >
                 <input
                   type="radio"
@@ -37,7 +38,8 @@ export function GameCategories() {
                     // hasCategories(category);
                   }}
                 />
-                {category}
+                <FormattedMessage id={category} />
+                {/* {category} */}
               </label>
             </React.Fragment>
           );
