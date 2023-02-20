@@ -36,6 +36,15 @@ export const datesForCalendar = (currentDate: Date) => {
       currentDate,
       currentDate,
     ],
+    [
+      currentDate,
+      currentDate,
+      currentDate,
+      currentDate,
+      currentDate,
+      currentDate,
+      currentDate,
+    ],
   ];
   const msInDay = 86307444;
   // const currentYear = currentDate.getFullYear();
