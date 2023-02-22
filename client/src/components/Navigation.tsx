@@ -79,7 +79,7 @@ export function Navigation({
         </div>
       )}
       {loggedIn && (
-        <Link to="/account_settings" className="mr-5 hover:text-red-200">
+        <Link to="/account-settings" className="mr-5 hover:text-red-200">
           <FormattedMessage id="to_settings" />
         </Link>
       )}
