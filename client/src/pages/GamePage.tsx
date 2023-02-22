@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
 import { allGames } from '../game-content/allGames';
+import './GamePage.css';
 
 export function GamePage() {
   const [searchParams] = useSearchParams();
@@ -17,12 +18,12 @@ export function GamePage() {
 
   return (
     <>
-      <div className="wrap m-3 flex h-full">
-        <aside className="width-[20%] mr-5 border">
+      <div className="game-page__container wrap flex h-full justify-center p-3">
+        <aside className="width-[20%] game-aside mr-14">
           <GameCategories />
         </aside>
 
-        <main className="flex w-[80%] flex-col justify-around">
+        <main className="game-main flex w-[70%] flex-col justify-around">
           <div className="flex flex-wrap justify-around">
             {filteredGames().map((game) => {
               return (

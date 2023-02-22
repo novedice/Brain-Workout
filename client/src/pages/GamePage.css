@@ -1,0 +1,11 @@
+.game-page__container {
+    background-color: #e6e8f4;
+}
+
+.game-aside,
+.game-main {
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+    border-radius: 5px;
+    padding: 30px;
+}

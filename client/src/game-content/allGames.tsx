@@ -13,6 +13,7 @@ export const allGames: IGameList[] = [
     name: <FormattedMessage id="reaction_time" />,
     path: 'reaction-time',
     category: 'speed',
+    image: '12',
     categoryName: <FormattedMessage id="speed" />,
     game: ReactionTime,
   },

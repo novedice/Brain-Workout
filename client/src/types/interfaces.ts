@@ -70,6 +70,7 @@ export interface IGameList {
   path: string;
   category: string;
   categoryName: ReactElement;
+  image?: string;
   game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
