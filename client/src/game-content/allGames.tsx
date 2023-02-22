@@ -3,6 +3,7 @@ import { MeaningColorGame } from '../components/Games/meaningColor/meaningColor'
 import NumberMemory from '../components/Games/numberMemory/NumberMemory';
 import { ReactionTime } from '../components/Games/ReactionTime/ReactionTime';
 import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
+import { TypingSpeed } from '../components/Games/TypingSpeed/TypingSpeed';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList, IGameProps } from '../types/interfaces';
 
@@ -105,14 +106,7 @@ export const allGames: IGameList[] = [
     path: 'typing',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
-    game: ({ gameId, gameName }: IGameProps) => {
-      return (
-        <>
-          {gameId}
-          {gameName}
-        </>
-      );
-    },
+    game: TypingSpeed,
   },
   {
     id: 9,
