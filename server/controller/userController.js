@@ -102,7 +102,10 @@ class UserController {
     }
     if (nickname) await user.update({ nickname });
     if (email) await user.update({ email });
-    if (password) await user.update({ password });
+    if (password) {
+      const hashPassword = await bcrypt.hash(password, 5);
+      await user.update({ hashPassword });
+    }
     if (lang) await user.update({ lang });
     const token = generateJWT(
       user.id,
