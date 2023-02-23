@@ -15,9 +15,10 @@ import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
 import jwt_decode from 'jwt-decode';
 import { IUser } from '../types/interfaces';
 import { UPDATE_TOKEN, UPDATE_USER } from '../constants';
+import { DeleteUserBlock } from './DeleteUser';
 
 interface IChangeUserDataProps {
-  typeOfChanges: '' | 'name' | 'email' | 'password';
+  typeOfChanges: '' | 'name' | 'email' | 'password' | 'delete';
   setOpenChanges: React.Dispatch<SetStateAction<boolean>>;
 }
 
@@ -39,12 +40,9 @@ export const ChangeUserData = ({
           })
         : await updateUser({
             email: typeOfChanges === 'email' ? value : user.email,
-            // password: changePassword ? value : ,
             nickname: typeOfChanges === 'name' ? value : user.nickname,
-            // lang: user.lang,
           });
 
-    console.log('changings data', responseChanges);
     if (responseChanges) {
       console.log('token data', jwt_decode<IUser>(responseChanges.token));
       dispatch({
@@ -52,7 +50,7 @@ export const ChangeUserData = ({
           id: jwt_decode<IUser>(responseChanges.token).id,
           nickname: jwt_decode<IUser>(responseChanges.token).nickname,
           loggedIn: true,
-          language: user.lang,
+          language: jwt_decode<IUser>(responseChanges.token).lang,
           email: jwt_decode<IUser>(responseChanges.token).email,
           alwaysSignIn: true,
         },
@@ -68,7 +66,7 @@ export const ChangeUserData = ({
 
       document.cookie = `auth=Bearer ${responseChanges.token}`;
       console.log('user after changes', user);
-      // console.log('cookies', document.cookie);
+      typeOfChanges = '';
       setOpenChanges(false);
     } else {
       setError(<FormattedMessage id="user_exists" />);
@@ -79,8 +77,6 @@ export const ChangeUserData = ({
   const submitChanges = (event: React.FormEvent) => {
     event.preventDefault();
     let numberOfErr = 0;
-    // prevent
-    console.log('type', typeOfChanges);
     setError('');
     switch (typeOfChanges) {
       case 'name':
@@ -114,8 +110,6 @@ export const ChangeUserData = ({
         break;
     }
 
-    console.log('er', error?.toString());
-
     if (numberOfErr !== 0) {
       console.log('error in if:', error);
       return;
@@ -135,36 +129,41 @@ export const ChangeUserData = ({
 
   return (
     <>
-      <div className="block-changing">
-        <label className={`label__settings ${styleLabel} ${styleText}`}>
-          <FormattedMessage id={typeOfChanges} />
-          <input
-            type={typeOfChanges === 'name' ? 'text' : typeOfChanges}
-            name={typeOfChanges}
-            className={`mb-1 w-full ${styleInput}`}
-            onChange={valueHandler}
-          />
-        </label>
-        {typeOfChanges === 'password' && (
-          <label className={`label__settings ${styleLabel} ${styleText}`}>
-            <FormattedMessage id="confirm_password" />
-            <input
-              type="password"
-              name="password"
-              className={`mb-1 w-full ${styleInput}`}
-              onChange={confirmValueHandler}
-            />
-          </label>
-        )}
-        {error && <div className={styleErrorMes}>{error}</div>}
-        <button
-          type="submit"
-          className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
-          onClick={submitChanges}
-        >
-          <FormattedMessage id="submit" />
-        </button>
-      </div>
+      {typeOfChanges === 'delete' && <DeleteUserBlock />}
+      {typeOfChanges !== 'delete' && (
+        <>
+          <div className="block-changing">
+            <label className={`label__settings ${styleLabel} ${styleText}`}>
+              <FormattedMessage id={typeOfChanges} />
+              <input
+                type={typeOfChanges === 'name' ? 'text' : typeOfChanges}
+                name={typeOfChanges}
+                className={`mb-1 w-full ${styleInput}`}
+                onChange={valueHandler}
+              />
+            </label>
+            {typeOfChanges === 'password' && (
+              <label className={`label__settings ${styleLabel} ${styleText}`}>
+                <FormattedMessage id="confirm_password" />
+                <input
+                  type="password"
+                  name="password"
+                  className={`mb-1 w-full ${styleInput}`}
+                  onChange={confirmValueHandler}
+                />
+              </label>
+            )}
+            {error && <div className={styleErrorMes}>{error}</div>}
+            <button
+              type="submit"
+              className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
+              onClick={submitChanges}
+            >
+              <FormattedMessage id="submit" />
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 };

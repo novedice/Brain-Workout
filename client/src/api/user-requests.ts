@@ -13,6 +13,10 @@ interface IDataUser {
   lang?: string;
 }
 
+// interface IDataDelete {
+//   password: string;
+// }
+
 export const updateUser = async (data: IDataUser) => {
   try {
     const response = await $host.put<IToken>(`${BaseUrl}/${users}/`, data, {
@@ -27,9 +31,13 @@ export const updateUser = async (data: IDataUser) => {
 
 export const deleteUser = async () => {
   try {
-    const response = await $host.delete(`${BaseUrl}/${users}`, {
-      withCredentials: true,
-    });
+    const response = await $host.delete<{ message: string }>(
+      `${BaseUrl}/${users}`,
+      // data
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (e) {
     console.log(e);

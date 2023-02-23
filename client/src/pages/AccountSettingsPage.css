@@ -113,3 +113,28 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+.category-in-favorites {
+  padding: 10px;
+  background-color: gray;
+  margin-bottom: 5px;
+  display: flex;
+  color: white;
+}
+
+.category-in-favorites:hover {
+  cursor: pointer;
+  background-color: rgb(227, 198, 143);
+}
+
+.choosen-category {
+  background-color: rgb(86, 136, 177);
+}
+
+.choosen-category > img {
+  display: block;
+}
+
+.checked {
+  display: none;
+}

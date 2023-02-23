@@ -23,7 +23,7 @@ export interface IGame {
 export interface ICategory {
   id: number;
   category: string;
-  userId: number;
+  userId?: number;
 }
 
 export interface IResult {
