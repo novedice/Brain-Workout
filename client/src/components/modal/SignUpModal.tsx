@@ -95,25 +95,22 @@ const SignUpModal = () => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    let numOfErr = emailError ? 1 : 0;
 
-    setPasswordEr(isValidPassword(password));
-    setNameError(isNameValid(nickname));
-    setEmailError(isEmailValid(email));
-    setConfirmPassErr(isPasswordsEquial(confirmPass, password));
+    setPasswordEr(isValidPassword(password, numOfErr).err);
+    numOfErr = isValidPassword(password, numOfErr).n;
+    setNameError(isNameValid(nickname, numOfErr).err);
+    numOfErr = isNameValid(nickname, numOfErr).n;
+    setEmailError(isEmailValid(email, numOfErr).err);
+    numOfErr = isEmailValid(email, numOfErr).n;
+    setConfirmPassErr(isPasswordsEquial(confirmPass, password, numOfErr).err);
+    numOfErr = isEmailValid(email, numOfErr).n;
 
-    if (
-      passwordEr !== '' ||
-      emailError !== '' ||
-      confirmPassErr !== '' ||
-      nameError !== '' ||
-      !nickname ||
-      !email ||
-      !password ||
-      !confirmPass
-    ) {
+    if (numOfErr !== 0) {
+      console.log('numbers in sign up', numOfErr);
       return;
     } else {
-      console.log(passwordEr, emailError, confirmPassErr, nameError);
+      // console.log(passwordEr, emailError, confirmPassErr, nameError);
 
       sigInComplete();
       return;

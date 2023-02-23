@@ -60,8 +60,10 @@ const LogInWindow = () => {
       });
       localStorage.setItem('token', JSON.stringify(loginResponse.token));
 
-      document.cookie = `auth=Bearer ${loginResponse.token};path=/;max-age=${checked ? (24 * 60 * 60) : 'session'}`;
-      console.log(loginResponse.token)
+      document.cookie = `auth=Bearer ${loginResponse.token};path=/;max-age=${
+        checked ? 24 * 60 * 60 : 'session'
+      }`;
+      console.log(loginResponse.token);
       modalHide();
       dispatch({ type: LOGGINUSER });
 
@@ -80,7 +82,9 @@ const LogInWindow = () => {
     setPasswordEr('');
     setEmailError('');
 
-    if (!password || !email || passwordEr || emailError) {
+    if (!password || !email) {
+      setPasswordEr(<p>Please enter your email and password</p>);
+      return;
     } else {
       loginComplete();
     }

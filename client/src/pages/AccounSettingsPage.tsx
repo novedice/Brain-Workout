@@ -1,43 +1,44 @@
-import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { styleLabel, styleText, styleInput } from '../constants/styleConstants';
+import { useEffect, useState } from 'react';
+import { ChangeUserData } from '../components/ChangeUserData';
+// import { FormattedMessage } from 'react-intl';
+// import { updateUser } from '../api/user-requests';
+// import { UPDATE_TOKEN, UPDATE_USER } from '../constants';
+// import { styleLabel, styleText, styleInput } from '../constants/styleConstants';
 import { useTypeSelector } from '../hooks/useTypeSelector';
+// import { IUser } from '../types/interfaces';
 import './AccountSettingsPage.css';
+// import jwt_decode from 'jwt-decode';
+// import { isValidPassword } from '../functions/validPassword';
+// import { isPasswordsEquial } from '../functions/validPasswordConfirm';
+// import { isEmailValid } from '../functions/validEmail';
+// import { isNameValid } from '../functions/validName';
 
 export function AccounSettingsPage() {
+  // const dispatch = useAppDispatch();
   const user = useTypeSelector((state) => state.userInfo);
+  const token = useTypeSelector((state) => state.tokenInfo);
   const [changingsIn, setChangingsIn] = useState<'account' | 'training'>(
     'account'
   );
-  const [changeName, setChangeName] = useState<boolean>(false);
-  const [changeEmail, setChangeEmail] = useState<boolean>(false);
-  const [changePassword, setChangePassword] = useState<boolean>(false);
-  const [newName, setNewName] = useState<string>('');
-  const [newEmail, setNewEmail] = useState<string>('');
-  const [newPassword, setNewPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [openChanges, setOpenChanges] = useState(false);
+  const [typeOfChanges, setTypeOfChanges] = useState<
+    'name' | 'email' | 'password' | ''
+  >('');
+  // const [changeName, setChangeName] = useState<boolean>(false);
+  // const [changeEmail, setChangeEmail] = useState<boolean>(false);
+  // const [changePassword, setChangePassword] = useState<boolean>(false);
+  // const [newName, setNewName] = useState<string>('');
+  // const [newEmail, setNewEmail] = useState<string>('');
+  // const [newPassword, setNewPassword] = useState<string>('');
+  // const [confirmPassword, setConfirmPassword] = useState<string>('');
+  // const [error, setError] = useState<ReactElement | string>();
+  const [currentName, setCurrentName] = useState(user.nickname);
+  const [curentEmail, setCurrentEmail] = useState(user.email);
 
-  const nameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewName(event.target.value);
-    console.log(newName);
-  };
-
-  const emailHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewEmail(event.target.value);
-    console.log(newEmail);
-  };
-
-  const passwordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassword(event.target.value);
-    console.log(newPassword);
-  };
-
-  const confirmPasswordHandler = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPassword(event.target.value);
-    console.log(confirmPassword);
-  };
+  useEffect(() => {
+    setCurrentEmail(user.email);
+    setCurrentName(user.nickname);
+  }, [token]);
 
   return (
     <>
@@ -63,22 +64,35 @@ export function AccounSettingsPage() {
           </aside>
           <main>
             {changingsIn === 'account' && (
-              <article className="account-info">
-                <section className="section">
-                  <h2 className="h2-account">Account</h2>
-                  <div className="info-block">
-                    <div className="info">
-                      <p className="name-email">your name</p>
-                      <p className="user-name-email">{user.nickname}</p>
-                    </div>
-                    <div className="change-in-process">
-                      <p
-                        className="name-email change-info"
-                        onClick={() => setChangeName(true)}
-                      >
-                        change name
-                      </p>
-                      {changeName && (
+              <>
+                <article className="account-info">
+                  {openChanges && (
+                    <ChangeUserData
+                      typeOfChanges={typeOfChanges}
+                      setOpenChanges={setOpenChanges}
+                    />
+                  )}
+                  {!openChanges && (
+                    <>
+                      {' '}
+                      <section className="section">
+                        <h2 className="h2-account">Account</h2>
+                        <div className="info-block">
+                          <div className="info">
+                            <p className="name-email">your name</p>
+                            <p className="user-name-email">{currentName}</p>
+                          </div>
+                          <div className="change-in-process">
+                            <p
+                              className="name-email change-info"
+                              onClick={() => {
+                                setTypeOfChanges('name');
+                                setOpenChanges(true);
+                              }}
+                            >
+                              change name
+                            </p>
+                            {/* {changeName && (
                         <div className="block-changing">
                           <label
                             className={`label__settings ${styleLabel} ${styleText}`}
@@ -91,33 +105,38 @@ export function AccounSettingsPage() {
                               onChange={nameHandler}
                             />
                           </label>
+                          {error && <p>{error}</p>}
                           <button
                             type="submit"
                             className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
+                            onClick={submitChanges}
                           >
                             <FormattedMessage id="registration" />
                           </button>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                </section>
-                <section className="section">
-                  <h3 className="h3-account">Login information</h3>
-                  <div className="info-block">
-                    <div className="info">
-                      <p className="name-email">Your email</p>
-                      <p className="user-name-email">{user.email}</p>
-                    </div>
-                    <div className="change-info">
-                      <div className="change-in-process">
-                        <p
-                          className="name-email"
-                          onClick={() => setChangeEmail(true)}
-                        >
-                          change email
-                        </p>
-                        {changeEmail && (
+                      )} */}
+                          </div>
+                        </div>
+                      </section>
+                      <section className="section">
+                        <h3 className="h3-account">Login information</h3>
+                        <div className="info-block">
+                          <div className="info">
+                            <p className="name-email">Your email</p>
+                            <p className="user-name-email">{curentEmail}</p>
+                          </div>
+                          <div className="change-info">
+                            <div className="change-in-process">
+                              <p
+                                className="name-email"
+                                onClick={() => {
+                                  setTypeOfChanges('email');
+                                  setOpenChanges(true);
+                                }}
+                              >
+                                change email
+                              </p>
+                              {/* {changeEmail && (
                           <div className="block-changing">
                             <label
                               className={`label__settings ${styleLabel} ${styleText}`}
@@ -133,20 +152,24 @@ export function AccounSettingsPage() {
                             <button
                               type="submit"
                               className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
+                              onClick={submitChanges}
                             >
                               <FormattedMessage id="registration" />
                             </button>
                           </div>
-                        )}
-                      </div>
-                      <div className="change-in-process">
-                        <p
-                          className="name-email"
-                          onClick={() => setChangePassword(true)}
-                        >
-                          change password
-                        </p>
-                        {changePassword && (
+                        )} */}
+                            </div>
+                            <div className="change-in-process">
+                              <p
+                                className="name-email"
+                                onClick={() => {
+                                  setTypeOfChanges('password');
+                                  setOpenChanges(true);
+                                }}
+                              >
+                                change password
+                              </p>
+                              {/* {changePassword && (
                           <div className="block-changing">
                             <label
                               className={`label__settings ${styleLabel} ${styleText}`}
@@ -173,21 +196,25 @@ export function AccounSettingsPage() {
                             <button
                               type="submit"
                               className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
+                              onClick={submitChanges}
                             >
                               <FormattedMessage id="registration" />
                             </button>
+                          </div> */}
+                              {/* )} */}
+                            </div>
                           </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section className="section">
-                  <div className="info-block">
-                    <div className="change-info">delete account</div>
-                  </div>
-                </section>
-              </article>
+                        </div>
+                      </section>
+                      <section className="section">
+                        <div className="info-block">
+                          <div className="change-info">delete account</div>
+                        </div>
+                      </section>
+                    </>
+                  )}
+                </article>
+              </>
             )}
             {changingsIn === 'training' && (
               <article className="account-info">

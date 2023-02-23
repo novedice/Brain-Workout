@@ -105,9 +105,11 @@ main {
 
 .label__settings {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
 .block-changing {
   display: flex;
+  flex-direction: column;
 }
