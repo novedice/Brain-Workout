@@ -134,7 +134,7 @@ export const ChangeUserData = ({
         <>
           <div className="block-changing">
             <label className={`label__settings ${styleLabel} ${styleText}`}>
-              <FormattedMessage id={typeOfChanges} />
+              <FormattedMessage id={`new_${typeOfChanges}`} />
               <input
                 type={typeOfChanges === 'name' ? 'text' : typeOfChanges}
                 name={typeOfChanges}
@@ -144,7 +144,7 @@ export const ChangeUserData = ({
             </label>
             {typeOfChanges === 'password' && (
               <label className={`label__settings ${styleLabel} ${styleText}`}>
-                <FormattedMessage id="confirm_password" />
+                <FormattedMessage id="confirm_new_password" />
                 <input
                   type="password"
                   name="password"
@@ -159,7 +159,7 @@ export const ChangeUserData = ({
               className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
               onClick={submitChanges}
             >
-              <FormattedMessage id="submit" />
+              <FormattedMessage id="submit_changes" />
             </button>
           </div>
         </>

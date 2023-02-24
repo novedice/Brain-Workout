@@ -62,7 +62,7 @@ export const ChooseFavoriteCategory = () => {
     <>
       <div className="flex flex-col">
         <p className="mb-10">
-          Choose your favorite categories. You can choose up to 2 categories
+          <FormattedMessage id="choose_favorite_categories" />
         </p>
         {CATEGORIES.map((category) => {
           if (category !== 'all_categories') {

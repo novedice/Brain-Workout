@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { ChangeUserData } from '../components/ChangeUserData';
 import { ChooseFavoriteCategory } from '../components/ChooseFavoriteCategore';
 import { useTypeSelector } from '../hooks/useTypeSelector';
@@ -33,7 +34,7 @@ export function AccounSettingsPage() {
               }`}
               onClick={() => setChangingsIn('account')}
             >
-              Account settings
+              <FormattedMessage id="to_settings" />
             </div>
             <div
               className={`aside-nav-list ${
@@ -41,7 +42,7 @@ export function AccounSettingsPage() {
               }`}
               onClick={() => setChangingsIn('training')}
             >
-              Training Preferences
+              <FormattedMessage id="training_preferences" />
             </div>
           </aside>
           <main>
@@ -58,10 +59,14 @@ export function AccounSettingsPage() {
                     <>
                       {' '}
                       <section className="section">
-                        <h2 className="h2-account">Account</h2>
+                        <h2 className="h2-account">
+                          <FormattedMessage id="account" />
+                        </h2>
                         <div className="info-block">
                           <div className="info">
-                            <p className="name-email">your name</p>
+                            <p className="name-email">
+                              <FormattedMessage id="your_name" />
+                            </p>
                             <p className="user-name-email">{currentName}</p>
                           </div>
                           <div className="change-in-process">
@@ -72,16 +77,20 @@ export function AccounSettingsPage() {
                                 setOpenChanges(true);
                               }}
                             >
-                              change name
+                              <FormattedMessage id="change_name" />
                             </p>
                           </div>
                         </div>
                       </section>
                       <section className="section">
-                        <h3 className="h3-account">Login information</h3>
+                        <h3 className="h3-account">
+                          <FormattedMessage id="login_information" />
+                        </h3>
                         <div className="info-block">
                           <div className="info">
-                            <p className="name-email">Your email</p>
+                            <p className="name-email">
+                              <FormattedMessage id="your_email" />
+                            </p>
                             <p className="user-name-email">{curentEmail}</p>
                           </div>
                           <div className="change-info">
@@ -93,7 +102,7 @@ export function AccounSettingsPage() {
                                   setOpenChanges(true);
                                 }}
                               >
-                                change email
+                                <FormattedMessage id="change_email" />
                               </p>
                             </div>
                             <div className="change-in-process">
@@ -104,7 +113,7 @@ export function AccounSettingsPage() {
                                   setOpenChanges(true);
                                 }}
                               >
-                                change password
+                                <FormattedMessage id="change_password" />
                               </p>
                             </div>
                           </div>
@@ -119,7 +128,7 @@ export function AccounSettingsPage() {
                               setOpenChanges(true);
                             }}
                           >
-                            delete account
+                            <FormattedMessage id="delete_account" />
                           </div>
                         </div>
                       </section>

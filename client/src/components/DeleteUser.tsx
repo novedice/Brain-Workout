@@ -27,11 +27,10 @@ export const DeleteUserBlock = () => {
       {!deleted && (
         <div className="block-changing">
           <div className="mb-8">
-            Delete Account By deleting your account, you'll lose all of your
-            data, including: Training Progress, History Game Scores and History
+            <FormattedMessage id="in_case_of_delete" />
           </div>
           <label className={`label__settings ${styleLabel} ${styleText}`}>
-            <FormattedMessage id="confirm_password" />
+            <FormattedMessage id="confirm_password_delete" />
             <input
               type="password"
               name="password"
@@ -44,11 +43,15 @@ export const DeleteUserBlock = () => {
             className="mb-3 w-[full] rounded-full border bg-blue-400 p-1 px-3 hover:bg-red-200"
             onClick={submitDelete}
           >
-            <FormattedMessage id="submit" />
+            <FormattedMessage id="submit_changes" />
           </button>
         </div>
       )}
-      {deleted && <div>Your account was successfully deleted</div>}
+      {deleted && (
+        <div>
+          <FormattedMessage id="account_deleted" />
+        </div>
+      )}
     </>
   );
 };
