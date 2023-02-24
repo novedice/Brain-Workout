@@ -57,7 +57,7 @@ export interface IColorMeaning {
 export interface ILeader {
   id: number;
   nickname: string;
-  result: number;
+  value: number;
 }
 
 export type QParam = {

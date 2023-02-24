@@ -131,6 +131,10 @@ export const messages = {
     confirm_password_delete: 'Please enter your password',
     choose_favorite_categories:
       'Choose your favorite categories. You can choose up to 2 categories',
+    category_error:
+      'If you want add category to choosen, please delete one of ypur favorite categories before.',
+    you_are_not_loggin:
+      'You are not logged in. If you have an account, please ',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -266,5 +270,9 @@ export const messages = {
     confirm_password_delete: 'Пожалуйста, введите ваш пароль',
     choose_favorite_categories:
       'Выберите ваши любимые категории. Вы можете выбрать до двух категорий.',
+    category_error:
+      'Чтобы добавить категорию в выбранные, пожалуйста, удалите одну из выбранных категорий',
+    you_are_not_loggin:
+      'Вы не зарегистрированы в системе. Если у вас уже есть аккаунт, пожалуйста, ',
   },
 };

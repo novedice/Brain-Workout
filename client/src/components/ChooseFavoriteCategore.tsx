@@ -8,23 +8,22 @@ import {
 import CATEGORIES from '../game-content/game-categories';
 import { ICategory } from '../types/interfaces';
 import '../assets/i.png';
+import { styleErrorMes } from '../constants/styleConstants';
 
 export const ChooseFavoriteCategory = () => {
   const [favoriteCategories, setFavoriteCategories] = useState<ICategory[]>([]);
+  const [error, setError] = useState('');
 
   const recieveCategories = async () => {
-    let responseCategories = await getCategory();
-    console.log('response all categories', responseCategories);
-
+    const responseCategories = await getCategory();
     if (responseCategories?.length) {
       setFavoriteCategories(responseCategories);
-      console.log('response all categories', responseCategories);
     }
   };
 
   const addDeleteFavorites = async (category: string) => {
+    setError('');
     let categoryId: number = 0;
-    console.log('add - delete category', category);
     if (favoriteCategories?.length) {
       for (let oneCategory of favoriteCategories) {
         if (oneCategory.category === category) {
@@ -34,19 +33,25 @@ export const ChooseFavoriteCategory = () => {
       }
     }
     if (categoryId === 0) {
-      console.log('create');
-      const resCreateCat = await createCategory(category);
-      console.log(resCreateCat);
-      if (resCreateCat) {
-        setFavoriteCategories([...favoriteCategories, resCreateCat]);
-        console.log('favorite cat:', favoriteCategories);
+      if (favoriteCategories.length < 2) {
+        const resCreateCat = await createCategory(category);
+        console.log(resCreateCat);
+        if (resCreateCat) {
+          setFavoriteCategories([...favoriteCategories, resCreateCat]);
+          console.log('favorite cat:', favoriteCategories);
+        } else {
+          console.log('something create got wrong');
+        }
       } else {
-        console.log('something create got wrong');
+        setError('category_error');
       }
     } else {
       console.log('delete');
-      const resDelCat = await deleteCategory(categoryId.toString());
+      const resDelCat = await deleteCategory(categoryId);
       if (resDelCat) {
+        setFavoriteCategories(
+          favoriteCategories.filter((cat) => cat.id !== categoryId)
+        );
         return;
       } else {
         console.log('something delete went wrong');
@@ -56,7 +61,7 @@ export const ChooseFavoriteCategory = () => {
 
   useEffect(() => {
     recieveCategories();
-  }, [favoriteCategories]);
+  }, []);
 
   return (
     <>
@@ -78,18 +83,21 @@ export const ChooseFavoriteCategory = () => {
                   }`}
                   onClick={() => addDeleteFavorites(category)}
                 >
-                  {/* <p> */}
                   <FormattedMessage id={category} />
                   <img
                     className="checked mr-4 h-[auto] w-[20px]"
                     src="i.png"
                   ></img>
-                  {/* </p> */}
                 </div>
               </React.Fragment>
             );
           }
         })}
+        {error && (
+          <div className={styleErrorMes}>
+            <FormattedMessage id={error} />
+          </div>
+        )}
       </div>
     </>
   );

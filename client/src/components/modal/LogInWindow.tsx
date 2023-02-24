@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import {
   /* refreshToken, checkToken,*/ registrAuthUser,
@@ -64,13 +64,14 @@ const LogInWindow = () => {
         checked ? 24 * 60 * 60 : 'session'
       }`;
       console.log(loginResponse.token);
-      modalHide();
       dispatch({ type: LOGGINUSER });
+      modalHide();
 
       if (checked) {
         localStorage.setItem('user', JSON.stringify(user));
       } else {
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
       }
     } else {
       setPasswordEr(<FormattedMessage id="wrong_password" />);
@@ -170,12 +171,12 @@ const LogInWindow = () => {
               </label>
             </div>
           </form>
-          <p className="mb-2">
+          {/* <p className="mb-2">
             <FormattedMessage id="forgot_password" />
             <Link to="/reset" className="link__signup">
               <FormattedMessage id="reset_password" />
             </Link>
-          </p>
+          </p> */}
         </div>
       </div>
     </>
