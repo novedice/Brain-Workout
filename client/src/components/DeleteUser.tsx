@@ -34,7 +34,7 @@ export const DeleteUserBlock = () => {
             <input
               type="password"
               name="password"
-              className={`mb-1 w-full ${styleInput}`}
+              className={`mt-[10px] mb-4 w-full ${styleInput}`}
               onChange={passwordHandler}
             />
           </label>

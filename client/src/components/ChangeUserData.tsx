@@ -138,7 +138,7 @@ export const ChangeUserData = ({
               <input
                 type={typeOfChanges === 'name' ? 'text' : typeOfChanges}
                 name={typeOfChanges}
-                className={`mb-1 w-full ${styleInput}`}
+                className={`mt-[10px] mb-4 w-full ${styleInput}`}
                 onChange={valueHandler}
               />
             </label>
@@ -148,7 +148,7 @@ export const ChangeUserData = ({
                 <input
                   type="password"
                   name="password"
-                  className={`mb-1 w-full ${styleInput}`}
+                  className={`mt-[10px] mb-4 w-full ${styleInput}`}
                   onChange={confirmValueHandler}
                 />
               </label>

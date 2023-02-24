@@ -111,6 +111,7 @@ export const messages = {
     fri: 'fri',
     sat: 'sat',
     training_preferences: 'training preferences',
+    back_to_settings: 'Back to account settings',
     account: 'account',
     your_name: 'your name',
     change_name: 'change name',
@@ -245,6 +246,7 @@ export const messages = {
     fri: 'пт',
     sat: 'сб',
     training_preferences: 'предпочтения по категориям',
+    back_to_settings: 'вернуться к настройкам аккаунта',
     account: 'аккаунт',
     your_name: 'ваше имя',
     change_name: 'изменить имя',
@@ -259,7 +261,7 @@ export const messages = {
     confirm_new_password: 'подтвердите новый пароль',
     submit_changes: 'подтвердить',
     in_case_of_delete:
-      'Если вы удалите свой аккаунт, вы потеряете все данные, включая ваш прогресс, историю ваших рекордов и историю тренирововк.',
+      'Если вы удалите свой аккаунт, вы потеряете все данные, включая ваш прогресс, историю ваших рекордов и историю тренировок.',
     account_deleted: 'Ваш аккаунт был успешно удален.',
     confirm_password_delete: 'Пожалуйста, введите ваш пароль',
     choose_favorite_categories:

@@ -28,16 +28,31 @@ export function AccounSettingsPage() {
       <div className="account-page">
         <div className="account-container">
           <aside className="aside-nav-account">
+            {(!openChanges || (changingsIn === 'training' && openChanges)) && (
+              <div
+                className={`aside-nav-list upper-case ${
+                  changingsIn === 'account' ? 'open-now' : ''
+                }`}
+                onClick={() => setChangingsIn('account')}
+              >
+                <FormattedMessage id="to_settings" />
+              </div>
+            )}
+            {openChanges && changingsIn !== 'training' && (
+              <div
+                className={`aside-nav-list upper-case ${
+                  changingsIn === 'account' ? 'open-now' : ''
+                }`}
+                onClick={() => {
+                  setChangingsIn('account');
+                  setOpenChanges(false);
+                }}
+              >
+                <FormattedMessage id="back_to_settings" />
+              </div>
+            )}
             <div
-              className={`aside-nav-list ${
-                changingsIn === 'account' ? 'open-now' : ''
-              }`}
-              onClick={() => setChangingsIn('account')}
-            >
-              <FormattedMessage id="to_settings" />
-            </div>
-            <div
-              className={`aside-nav-list ${
+              className={`aside-nav-list upper-case ${
                 changingsIn === 'training' ? 'open-now' : ''
               }`}
               onClick={() => setChangingsIn('training')}
@@ -59,7 +74,7 @@ export function AccounSettingsPage() {
                     <>
                       {' '}
                       <section className="section">
-                        <h2 className="h2-account">
+                        <h2 className="h2-account upper-case">
                           <FormattedMessage id="account" />
                         </h2>
                         <div className="info-block">
@@ -122,7 +137,7 @@ export function AccounSettingsPage() {
                       <section className="section">
                         <div className="info-block">
                           <div
-                            className="change-info"
+                            className="change-info name-email"
                             onClick={() => {
                               setTypeOfChanges('delete');
                               setOpenChanges(true);
