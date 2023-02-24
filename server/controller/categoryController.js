@@ -7,16 +7,16 @@ class CategoryController {
     if (!category) {
       return next(ApiError.badRequest('Invalid category!'));
     }
-    const candidate = Category.findOne({where: {category, userId: req.user.id}});
+    const candidate = await Category.findOne({where: {category, userId: req.user.id}});
     if (candidate) {
       return res.json(candidate);
     }
-    const categoryObj = Category.create({category, userId: req.user.id});
+    const categoryObj = await Category.create({category, userId: req.user.id});
     res.json(categoryObj);
   }
 
   async get(req, res, next) {
-    const categories = Category.findAll({attributes: ['id', 'category'], where: {userId: req.user.id}});
+    const categories = await Category.findAll({attributes: ['id', 'category'], where: {userId: req.user.id}});
     res.json(categories);
   }
 
@@ -25,7 +25,7 @@ class CategoryController {
     if (isNaN(id) || id < 1) {
       return next(ApiError.badRequest('Invalid id!'));
     }
-    const category = Category.findOne({where: {id, userId: req.user.id}});
+    const category = await Category.findOne({where: {id, userId: req.user.id}});
     if (!category) {
       return next(ApiError.notFound('Category not found!'));
     }

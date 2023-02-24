@@ -121,7 +121,7 @@ class UserController {
   }
 
   async delete(req, res, next) {
-    const user = User.findByPk(req.user.id);
+    const user = await User.findByPk(req.user.id);
     if (!user) {
       return next(ApiError.notFound("User not found!"));
     }
