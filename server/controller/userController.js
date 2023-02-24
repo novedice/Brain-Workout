@@ -17,6 +17,7 @@ const generateJWT = (id, nickname, email, sessionId, lang) => {
 class UserController {
   async registration(req, res, next) {
     let { nickname, password, email, lang } = req.body;
+    console.log(email);
     if (!lang) lang = "rus";
     if (!nickname && !password && !email && !isValidEmail(email)) {
       return next(ApiError.badRequest("Invalid email, nickname or password!"));
@@ -103,8 +104,9 @@ class UserController {
     if (nickname) await user.update({ nickname });
     if (email) await user.update({ email });
     if (password) {
+      console.log(password);
       const hashPassword = await bcrypt.hash(password, 5);
-      await user.update({ hashPassword });
+      await user.update({ password: hashPassword });
     }
     if (lang) await user.update({ lang });
     const token = generateJWT(
@@ -119,7 +121,7 @@ class UserController {
   }
 
   async delete(req, res, next) {
-    const user = User.findByPk(req.user.id);
+    const user = await User.findByPk(req.user.id);
     if (!user) {
       return next(ApiError.notFound("User not found!"));
     }
