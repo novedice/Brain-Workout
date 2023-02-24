@@ -6,15 +6,17 @@ import { findActiveDays } from '../functions/findActiveDays';
 import { findStreaks } from '../functions/findStreaks';
 import { resultsForStatistic } from '../functions/resultsForStatistic';
 import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
-import { IOrderedArray } from '../types/interfaces';
+import { ILeader, IOrderedArray } from '../types/interfaces';
 import '../assets/statistic/fire-blue.jpeg';
 import '../assets/statistic/fire-red.jpeg';
 import { FormattedMessage } from 'react-intl';
+import { getLeaders } from '../api/leaders-requests';
 
 export function StatisticPage() {
   const user = useTypeSelector((state) => state.userInfo);
   const [orderedRes, setOrderedRes] = useState<IOrderedArray[]>([]);
   const [streaks, setStreaks] = useState([0, 0]);
+  const [curLead, setCurLead] = useState<ILeader[]>([]);
   const dispatch = useAppDispatch();
 
   const reciveResults = async () => {
@@ -25,9 +27,17 @@ export function StatisticPage() {
       setStreaks(findStreaks(findActiveDays(response)));
     }
   };
+  const leaders = async () => {
+    const leadRes = await getLeaders(11);
+    if (leadRes) {
+      console.log('leaders', leadRes);
+      setCurLead(leadRes);
+    }
+  };
 
   useEffect(() => {
     reciveResults();
+    leaders();
   }, []);
 
   return (
@@ -58,6 +68,16 @@ export function StatisticPage() {
                 />
               </p>
               <img className="max-h-5 w-[17px]" src="fire-red.jpeg"></img>
+            </div>
+          </div>
+          <div>
+            <div>leaders</div>
+            <div>
+              {curLead.map((lead) => (
+                <p>
+                  {lead.id} {lead.nickname} {lead.result}
+                </p>
+              ))}
             </div>
           </div>
           {orderedRes

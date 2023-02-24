@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+// import { getLeaders } from '../api/leaders-requests';
 import { ChangeUserData } from '../components/ChangeUserData';
 import { ChooseFavoriteCategory } from '../components/ChooseFavoriteCategore';
 import { useTypeSelector } from '../hooks/useTypeSelector';
