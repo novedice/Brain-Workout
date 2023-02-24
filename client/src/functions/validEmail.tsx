@@ -1,7 +1,10 @@
 import { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-export const isEmailValid = (str: string): ReactElement | string => {
+export const isEmailValid = (
+  str: string,
+  num: number
+): { err: ReactElement | string; n: number } => {
   if (
     str.length < 4 ||
     !str.includes('@') ||
@@ -9,7 +12,8 @@ export const isEmailValid = (str: string): ReactElement | string => {
     str.startsWith('@') ||
     str.lastIndexOf('.') < str.lastIndexOf('@')
   ) {
-    return <FormattedMessage id="email_error" />;
+    num += 1;
+    return { err: <FormattedMessage id="email_error" />, n: num };
   }
-  return '';
+  return { err: '', n: num };
 };

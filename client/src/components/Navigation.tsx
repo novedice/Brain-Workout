@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 import '../assets/Logo.png';
 import { LOGOUT, SHOW_MODAL, SHOW_SIGNUP, UPDATE_USER } from '../constants';
 import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
-import { IUser } from '../types/interfaces';
+import { IToken, IUser } from '../types/interfaces';
 import '../assets/speed-match-game/logout.png';
 import { FormattedMessage } from 'react-intl';
+import { useEffect, useState } from 'react';
 
 interface INavigationProps {
   currentLang: string;
@@ -16,7 +17,10 @@ export function Navigation({
   handleChangeLang,
 }: INavigationProps) {
   const user: IUser = useTypeSelector((state) => state.userInfo);
+  const token: IToken = useTypeSelector((state) => state.tokenInfo);
   const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
+  const [userName, setUserName] = useState(user.nickname);
+
   const dispatch = useAppDispatch();
 
   const modalShow = () => {
@@ -36,12 +40,19 @@ export function Navigation({
         loggedIn: false,
         email: '',
         language: 'en',
-        alwaysSignIn: true,
+        alwaysSignIn: false,
       },
       type: UPDATE_USER,
     });
     localStorage.removeItem('user');
   };
+
+  console.log('user in user main', user.nickname);
+  console.log('cur user in main', userName);
+
+  useEffect(() => {
+    setUserName(user.nickname);
+  }, [token]);
 
   return (
     <nav className="upper-case mb-3 flex h-16 w-[100%] items-center justify-between bg-blue-300 px-12 text-center text-lg text-white">
@@ -79,7 +90,7 @@ export function Navigation({
         </div>
       )}
       {loggedIn && (
-        <Link to="/account_settings" className="mr-5 hover:text-red-200">
+        <Link to="/account-settings" className="mr-5 hover:text-red-200">
           <FormattedMessage id="to_settings" />
         </Link>
       )}
@@ -92,7 +103,7 @@ export function Navigation({
       {loggedIn && (
         <>
           {' '}
-          <p>{user.nickname}</p>
+          <p>{userName}</p>
           <Link to="/">
             <div
               onClick={() => {

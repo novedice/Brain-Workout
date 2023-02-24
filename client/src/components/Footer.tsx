@@ -20,7 +20,7 @@ export function Footer() {
           </a>
         </div>
       </div>
-      <div className="year">
+      <div className="year-main">
         <p className="text-header">2023</p>
       </div>
       <div className="rs-school">
