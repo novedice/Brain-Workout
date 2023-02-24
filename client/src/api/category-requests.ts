@@ -34,7 +34,7 @@ export const getCategory = async () => {
   }
 };
 
-export const deleteCategory = async (id: string) => {
+export const deleteCategory = async (id: number) => {
   try {
     const response = await $host.delete<IResultResponse>(
       `${BaseUrl}/${users}/${categories}/${id}`,

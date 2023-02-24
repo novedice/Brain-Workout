@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { BlockNotLoggedIn } from '../components/BlockNotLoggedIn';
 // import { getLeaders } from '../api/leaders-requests';
 import { ChangeUserData } from '../components/ChangeUserData';
 import { ChooseFavoriteCategory } from '../components/ChooseFavoriteCategore';
@@ -8,6 +9,7 @@ import './AccountSettingsPage.css';
 
 export function AccounSettingsPage() {
   const user = useTypeSelector((state) => state.userInfo);
+  const loggedIn = useTypeSelector((state) => state.loggedInInfo);
   const token = useTypeSelector((state) => state.tokenInfo);
   const [changingsIn, setChangingsIn] = useState<'account' | 'training'>(
     'account'
@@ -22,147 +24,153 @@ export function AccounSettingsPage() {
   useEffect(() => {
     setCurrentEmail(user.email);
     setCurrentName(user.nickname);
+    console.log(loggedIn);
   }, [token]);
 
   return (
     <>
-      <div className="account-page">
-        <div className="account-container">
-          <aside className="aside-nav-account">
-            {(!openChanges || (changingsIn === 'training' && openChanges)) && (
+      {!loggedIn.loggedIn && <BlockNotLoggedIn />}
+
+      {loggedIn.loggedIn && (
+        <div className="account-page">
+          <div className="account-container">
+            <aside className="aside-nav-account">
+              {(!openChanges ||
+                (changingsIn === 'training' && openChanges)) && (
+                <div
+                  className={`aside-nav-list upper-case ${
+                    changingsIn === 'account' ? 'open-now' : ''
+                  }`}
+                  onClick={() => setChangingsIn('account')}
+                >
+                  <FormattedMessage id="to_settings" />
+                </div>
+              )}
+              {openChanges && changingsIn !== 'training' && (
+                <div
+                  className={`aside-nav-list upper-case ${
+                    changingsIn === 'account' ? 'open-now' : ''
+                  }`}
+                  onClick={() => {
+                    setChangingsIn('account');
+                    setOpenChanges(false);
+                  }}
+                >
+                  <FormattedMessage id="back_to_settings" />
+                </div>
+              )}
               <div
                 className={`aside-nav-list upper-case ${
-                  changingsIn === 'account' ? 'open-now' : ''
+                  changingsIn === 'training' ? 'open-now' : ''
                 }`}
-                onClick={() => setChangingsIn('account')}
+                onClick={() => setChangingsIn('training')}
               >
-                <FormattedMessage id="to_settings" />
+                <FormattedMessage id="training_preferences" />
               </div>
-            )}
-            {openChanges && changingsIn !== 'training' && (
-              <div
-                className={`aside-nav-list upper-case ${
-                  changingsIn === 'account' ? 'open-now' : ''
-                }`}
-                onClick={() => {
-                  setChangingsIn('account');
-                  setOpenChanges(false);
-                }}
-              >
-                <FormattedMessage id="back_to_settings" />
-              </div>
-            )}
-            <div
-              className={`aside-nav-list upper-case ${
-                changingsIn === 'training' ? 'open-now' : ''
-              }`}
-              onClick={() => setChangingsIn('training')}
-            >
-              <FormattedMessage id="training_preferences" />
-            </div>
-          </aside>
-          <main>
-            {changingsIn === 'account' && (
-              <>
-                <article className="account-info">
-                  {openChanges && (
-                    <ChangeUserData
-                      typeOfChanges={typeOfChanges}
-                      setOpenChanges={setOpenChanges}
-                    />
-                  )}
-                  {!openChanges && (
-                    <>
-                      {' '}
-                      <section className="section">
-                        <h2 className="h2-account upper-case">
-                          <FormattedMessage id="account" />
-                        </h2>
-                        <div className="info-block">
-                          <div className="info">
-                            <p className="name-email">
-                              <FormattedMessage id="your_name" />
-                            </p>
-                            <p className="user-name-email">{currentName}</p>
+            </aside>
+            <main>
+              {changingsIn === 'account' && (
+                <>
+                  <article className="account-info">
+                    {openChanges && (
+                      <ChangeUserData
+                        typeOfChanges={typeOfChanges}
+                        setOpenChanges={setOpenChanges}
+                      />
+                    )}
+                    {!openChanges && (
+                      <>
+                        {' '}
+                        <section className="section">
+                          <h2 className="h2-account upper-case">
+                            <FormattedMessage id="account" />
+                          </h2>
+                          <div className="info-block">
+                            <div className="info">
+                              <p className="name-email">
+                                <FormattedMessage id="your_name" />
+                              </p>
+                              <p className="user-name-email">{currentName}</p>
+                            </div>
+                            <div className="change-in-process">
+                              <p
+                                className="name-email change-info"
+                                onClick={() => {
+                                  setTypeOfChanges('name');
+                                  setOpenChanges(true);
+                                }}
+                              >
+                                <FormattedMessage id="change_name" />
+                              </p>
+                            </div>
                           </div>
-                          <div className="change-in-process">
-                            <p
-                              className="name-email change-info"
+                        </section>
+                        <section className="section">
+                          <h3 className="h3-account">
+                            <FormattedMessage id="login_information" />
+                          </h3>
+                          <div className="info-block">
+                            <div className="info">
+                              <p className="name-email">
+                                <FormattedMessage id="your_email" />
+                              </p>
+                              <p className="user-name-email">{curentEmail}</p>
+                            </div>
+                            <div className="change-info">
+                              <div className="change-in-process">
+                                <p
+                                  className="name-email"
+                                  onClick={() => {
+                                    setTypeOfChanges('email');
+                                    setOpenChanges(true);
+                                  }}
+                                >
+                                  <FormattedMessage id="change_email" />
+                                </p>
+                              </div>
+                              <div className="change-in-process">
+                                <p
+                                  className="name-email"
+                                  onClick={() => {
+                                    setTypeOfChanges('password');
+                                    setOpenChanges(true);
+                                  }}
+                                >
+                                  <FormattedMessage id="change_password" />
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                        <section className="section">
+                          <div className="info-block">
+                            <div
+                              className="change-info name-email"
                               onClick={() => {
-                                setTypeOfChanges('name');
+                                setTypeOfChanges('delete');
                                 setOpenChanges(true);
                               }}
                             >
-                              <FormattedMessage id="change_name" />
-                            </p>
-                          </div>
-                        </div>
-                      </section>
-                      <section className="section">
-                        <h3 className="h3-account">
-                          <FormattedMessage id="login_information" />
-                        </h3>
-                        <div className="info-block">
-                          <div className="info">
-                            <p className="name-email">
-                              <FormattedMessage id="your_email" />
-                            </p>
-                            <p className="user-name-email">{curentEmail}</p>
-                          </div>
-                          <div className="change-info">
-                            <div className="change-in-process">
-                              <p
-                                className="name-email"
-                                onClick={() => {
-                                  setTypeOfChanges('email');
-                                  setOpenChanges(true);
-                                }}
-                              >
-                                <FormattedMessage id="change_email" />
-                              </p>
-                            </div>
-                            <div className="change-in-process">
-                              <p
-                                className="name-email"
-                                onClick={() => {
-                                  setTypeOfChanges('password');
-                                  setOpenChanges(true);
-                                }}
-                              >
-                                <FormattedMessage id="change_password" />
-                              </p>
+                              <FormattedMessage id="delete_account" />
                             </div>
                           </div>
-                        </div>
-                      </section>
-                      <section className="section">
-                        <div className="info-block">
-                          <div
-                            className="change-info name-email"
-                            onClick={() => {
-                              setTypeOfChanges('delete');
-                              setOpenChanges(true);
-                            }}
-                          >
-                            <FormattedMessage id="delete_account" />
-                          </div>
-                        </div>
-                      </section>
-                    </>
-                  )}
+                        </section>
+                      </>
+                    )}
+                  </article>
+                </>
+              )}
+              {changingsIn === 'training' && (
+                <article className="account-info">
+                  <section className="section">
+                    <ChooseFavoriteCategory />
+                  </section>
                 </article>
-              </>
-            )}
-            {changingsIn === 'training' && (
-              <article className="account-info">
-                <section className="section">
-                  <ChooseFavoriteCategory />
-                </section>
-              </article>
-            )}
-          </main>
+              )}
+            </main>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
