@@ -152,6 +152,8 @@ export const messages = {
     new_test: 'New test',
     words_per_minute: 'Words per minute: ',
     accuracy_simple: 'Accuracy',
+    sequence_memory_description: 'Memorize the pattern',
+    'sequence-memory': 'Sequence memory',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -291,6 +293,8 @@ export const messages = {
       'Чтобы добавить категорию в выбранные, пожалуйста, удалите одну из выбранных категорий',
     you_are_not_loggin:
       'Вы не зарегистрированы в системе. Если у вас уже есть аккаунт, пожалуйста, ',
+    sequence_memory_description: 'Запомни паттерн',
+    'sequence-memory': 'Sequence memory',
     reaction_time_test: 'Тест на время реакции',
     reaction_time_description:
       'Когда красный цвет сменится зеленым, нажмите так быстро, как сможете.',
