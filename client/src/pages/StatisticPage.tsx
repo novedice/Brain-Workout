@@ -32,7 +32,6 @@ export function StatisticPage() {
   const leaders = async () => {
     const leadRes = await getLeaders(11);
     if (leadRes) {
-      // console.log('leaders', leadRes);
       setCurLead(leadRes);
     }
   };

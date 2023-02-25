@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import './ReactionTime.css';
 import '../../../assets/clock.png';
 import '../../../assets/lightning.png';
+import { IGameProps } from '../../../types/interfaces';
+import { FormattedMessage } from 'react-intl';
 
 enum ScreenType {
   StartGame = 1,
@@ -14,7 +16,7 @@ enum ScreenType {
 
 const TOTAL_ROUNDS = 5;
 
-export function ReactionTime() {
+export function ReactionTime({ gameId }: IGameProps) {
   const timeoutRef = useRef<any>(null);
   const [time, setTime] = useState<Date | null>(null);
   const [currentScreen, setCurrentScreen] = useState(ScreenType.StartGame);
@@ -59,6 +61,7 @@ export function ReactionTime() {
   const newGame = () => {
     setResultArray([]);
     setCurrentScreen(ScreenType.StartGame);
+    console.log(gameId);
   };
 
   const wrongClicked = () => {
@@ -85,10 +88,14 @@ export function ReactionTime() {
         >
           <h1 className="flex items-center">
             <img src="lightning.png" alt="121" width={100} className="mb-5" />{' '}
-            Reaction Time Test
+            <FormattedMessage id="reaction_time_test" />
           </h1>
-          <h2>When the red box turns green, click as quickly as you can.</h2>
-          <h3>Click for starting game</h3>
+          <h2>
+            <FormattedMessage id="reaction_time_description" />
+          </h2>
+          <h3>
+            <FormattedMessage id="click_for_start" />
+          </h3>
         </div>
       )}
       {currentScreen === ScreenType.WaitClick && (
@@ -97,7 +104,9 @@ export function ReactionTime() {
           style={{ background: 'red' }}
           onClick={() => wrongClicked()}
         >
-          <p className="click-text">Wait for green...</p>
+          <p className="click-text">
+            <FormattedMessage id="wait_for_green" />
+          </p>
         </div>
       )}
       {currentScreen === ScreenType.MissClick && (
@@ -107,8 +116,12 @@ export function ReactionTime() {
           onClick={() => gameStart()}
         >
           <div className="flex flex-col items-center">
-            <p className="click-text">To soon!</p>
-            <p className="click-text">Click to try again!</p>
+            <p className="click-text">
+              <FormattedMessage id="too_soon" />
+            </p>
+            <p className="click-text">
+              <FormattedMessage id="click_to_try_again" />
+            </p>
           </div>
         </div>
       )}
@@ -130,10 +143,15 @@ export function ReactionTime() {
           <div className="time-container">
             <img src="clock.png" alt="121" className="mb-5" />
             <p>
-              Your reaction time: {resultArray[resultArray.length - 1] + ' ms'}
+              <FormattedMessage
+                id="your_reaction_time"
+                values={{ n: resultArray[resultArray.length - 1] }}
+              />
             </p>
             <p></p>
-            <p className="small-text">Click to keep going</p>
+            <p className="small-text">
+              <FormattedMessage id="click_to_keep_going" />
+            </p>
           </div>
         </div>
       )}
@@ -143,20 +161,26 @@ export function ReactionTime() {
           style={{ background: 'rgb(59 130 246 / 0.5)' }}
         >
           <p>
-            You best reaction time:{' '}
-            {resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))} ms
+            <FormattedMessage
+              id="your_best_reaction_time"
+              values={{
+                n: resultArray.reduce((acc, elem) => (acc < elem ? acc : elem)),
+              }}
+            />
+            {/* You best reaction time:{' '}
+            {resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))} ms */}
           </p>
           <button
             className="mt-2 rounded-full border px-4 text-xl hover:bg-red-200"
             onClick={() => newGame()}
           >
-            Try again
+            <FormattedMessage id="try_again" />
           </button>
           <button
             className="m-2 rounded-full border px-4 text-xl hover:bg-red-200"
             onClick={() => saveResult()}
           >
-            Save score
+            <FormattedMessage id="save_result" />
           </button>
         </div>
       )}

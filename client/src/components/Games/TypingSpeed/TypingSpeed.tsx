@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import randomWords from 'random-words';
 import './TypingSpeed.css';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 const NUMB_WORDS = 100;
 const SECONDS = 60;
 
@@ -114,9 +115,12 @@ export function TypingSpeed() {
 
   return (
     <div className="container-game">
-      <h1 className="game-name">Typing Speed Test</h1>
+      <h1 className="game-name">
+        <FormattedMessage id="typing_speed_test" />
+      </h1>
       <h2 className="time-left">
-        Time left: <span className="important-text">{timeLeft}</span>
+        <FormattedMessage id="time_left_typing" />
+        <span className="important-text">{timeLeft}</span>
       </h2>
 
       {statusGame === 'Started' && (
@@ -161,7 +165,7 @@ export function TypingSpeed() {
           className="btn mb-4 w-28 rounded-full border p-1 text-xl hover:bg-red-200"
           onClick={startTime}
         >
-          Start
+          <FormattedMessage id="start" />
         </button>
       )}
 
@@ -169,11 +173,11 @@ export function TypingSpeed() {
         <div className="section result-section">
           <div className="result-container content">
             <p>
-              Words per minute:{' '}
+              <FormattedMessage id="words_per_minute" />{' '}
               <span className="important-text">{correct}</span>
             </p>
             <p>
-              Accuracy:{' '}
+              <FormattedMessage id="accuracy_simple" />:{' '}
               <span className="important-text">
                 {Math.round((correct / (correct + inCorrect)) * 100)}%
               </span>
@@ -184,13 +188,13 @@ export function TypingSpeed() {
               className="btn mr-4 rounded-full border p-1 px-4 text-xl hover:bg-red-200"
               onClick={() => saveResult()}
             >
-              Save score
+              <FormattedMessage id="save_result" />
             </button>
             <button
               className="btn rounded-full border p-1 px-4 text-xl hover:bg-red-200"
               onClick={startTime}
             >
-              New test
+              <FormattedMessage id="new_test" />
             </button>
           </div>
         </div>
