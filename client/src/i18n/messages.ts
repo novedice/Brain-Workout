@@ -135,6 +135,8 @@ export const messages = {
       'If you want add category to choosen, please delete one of ypur favorite categories before.',
     you_are_not_loggin:
       'You are not logged in. If you have an account, please ',
+    sequence_memory_description: 'Memorize the pattern',
+    'sequence-memory': 'Sequence memory',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -274,5 +276,7 @@ export const messages = {
       'Чтобы добавить категорию в выбранные, пожалуйста, удалите одну из выбранных категорий',
     you_are_not_loggin:
       'Вы не зарегистрированы в системе. Если у вас уже есть аккаунт, пожалуйста, ',
+    sequence_memory_description: 'Запомни паттерн',
+    'sequence-memory': 'Sequence memory'
   },
 };
