@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
 import { IGameProps } from '../../../types/interfaces';
+import { StatusGameType } from '../../../types/types';
 import { Timer } from '../../Timer';
-// import { writeResults } from '../gameFunctions/finishGame';
 import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { ButtonStart } from '../gamesComponents/ButtonStart';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
@@ -13,15 +13,15 @@ import { GamePaused } from '../gamesComponents/PauseComponent';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
+const GAME_DURATION = 20;
+
 export const MeaningColorGame = ({ gameId }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
   const [leftMeaningColor, setLeftMeaninfColor] = useState(0);
   const [rightColor, setRightColor] = useState(0);
   const [rightMeaningColor, setRightMeamingColor] = useState(0);
   const [score, setScore] = useState(0);
-  const [started, setStarted] = useState(false);
-  const [finished, setFinished] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [seconds, setSeconds] = useState(20);
   const [howToPlay, setHowToPlay] = useState(true);
   const [, setBackColor] = useState('');
@@ -38,9 +38,9 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
 
   const startGame = () => {
     setScore(0);
-    setSeconds(20);
-    setFinished(false);
-    setStarted(true);
+    setSeconds(GAME_DURATION);
+    setMultiple(1);
+    setStatusGame('Started');
     changeColors();
   };
 
@@ -83,51 +83,49 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
       <div
         className={`game-wrap mr-auto ml-auto flex h-full w-[90%] flex-col align-middle `}
       >
-        {finished && (
+        {statusGame === 'Finished' && (
           <FinishGameTable
             score={score}
             rightAnswers={rightAnswers}
             totalAnswers={totalAnswers}
             speed={0}
-            started={started}
-            setStarted={setStarted}
+            statusGame={statusGame}
+            setStatusGame={setStatusGame}
             startGame={startGame}
             gameName={'color_match'}
             gameID={gameId}
-            finished={finished}
+            // finished={finished}
           />
         )}
         {howToPlay && (
           <ColorDemo howToPlay={howToPlay} setHowToPlay={setHowToPlay} />
         )}
-        {!howToPlay && !finished && (
+        {!howToPlay && statusGame !== 'Finished' && (
           <>
-            {paused && (
+            {statusGame === 'Paused' && (
               <GamePaused
-                paused={paused}
-                setPaused={setPaused}
-                // started={started}
-                setStarted={setStarted}
+                statusGame={statusGame}
+                setStatusGame={setStatusGame}
                 startGame={startGame}
               />
             )}
-            {!paused && (
+            {statusGame !== 'Paused' && (
               <>
                 <div className="head-game width-[100%] flex self-end">
                   <ButtonStart
-                    started={started}
-                    setStarted={setStarted}
+                    statusGame={statusGame}
+                    setStatusGame={setStatusGame}
                     startGame={startGame}
                   />
-                  <ButtonPause paused={paused} setPaused={setPaused} />
+                  <ButtonPause
+                    statusGame={statusGame}
+                    setStatusGame={setStatusGame}
+                  />
                   <div className="m-5">
                     <Timer
                       seconds={seconds}
-                      started={started}
-                      paused={paused}
-                      finished={finished}
-                      setFinished={setFinished}
-                      setStarted={setStarted}
+                      statusGame={statusGame}
+                      setStatusGame={setStatusGame}
                       setSeconds={setSeconds}
                     />
                   </div>
@@ -165,12 +163,12 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
                   <div className="buttons flex w-[100%] justify-center">
                     <ButtonYesNo
                       callback={noAnswer}
-                      disabled={!started}
+                      disabled={statusGame !== 'Started'}
                       val="no"
                     />
                     <ButtonYesNo
                       callback={yesAnswer}
-                      disabled={!started}
+                      disabled={statusGame !== 'Started'}
                       val="yes"
                     />
                   </div>

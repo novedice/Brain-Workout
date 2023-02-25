@@ -41,7 +41,10 @@ export const CurrentGamePage = () => {
           })}
       </div> */}
       <div className="game-wrap ml-[10%] mr-[10%] flex h-screen flex-col  ">
-        <Link to="/games" className="mb-5 w-fit rounded bg-blue-300 p-4">
+        <Link
+          to="/games"
+          className="upper-case mb-5 w-fit rounded bg-blue-300 p-4 text-white"
+        >
           <FormattedMessage id="all_games" />
         </Link>
         <div className="game mb-8  h-full border-8 border-sky-800 bg-[url('./assets/backgroud.jpeg')] p-[3%]">

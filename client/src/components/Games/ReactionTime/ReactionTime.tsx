@@ -4,6 +4,8 @@ import '../../../assets/clock.png';
 import '../../../assets/lightning.png';
 import { IGameProps } from '../../../types/interfaces';
 import { FormattedMessage } from 'react-intl';
+import { StatusGameType } from '../../../types/types';
+import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 
 enum ScreenType {
   StartGame = 1,
@@ -21,6 +23,7 @@ export function ReactionTime({ gameId }: IGameProps) {
   const [time, setTime] = useState<Date | null>(null);
   const [currentScreen, setCurrentScreen] = useState(ScreenType.StartGame);
   const [resultArray, setResultArray] = useState<number[]>([]);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
 
   const getRandomTime = (min: number, max: number) => {
     let result = Math.floor(Math.random() * Math.floor(max)) + min;
@@ -29,6 +32,7 @@ export function ReactionTime({ gameId }: IGameProps) {
   };
 
   const gameStart = () => {
+    setStatusGame('Started');
     setCurrentScreen(ScreenType.WaitClick);
     timeoutRef.current = setTimeout(() => {
       setCurrentScreen(ScreenType.Click);
@@ -46,9 +50,20 @@ export function ReactionTime({ gameId }: IGameProps) {
     setCurrentScreen(ScreenType.ClickResult);
   };
 
+  const saveResult = () => {
+    localStorage.setItem(
+      'bestReactionScore',
+      JSON.stringify(
+        resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))
+      )
+    );
+  };
+
   const checkNextRound = () => {
     if (resultArray.length === TOTAL_ROUNDS) {
+      setStatusGame('Finished');
       setCurrentScreen(ScreenType.TotalResult);
+      saveResult();
     } else {
       timeoutRef.current = setTimeout(() => {
         setCurrentScreen(ScreenType.Click);
@@ -59,6 +74,7 @@ export function ReactionTime({ gameId }: IGameProps) {
   };
 
   const newGame = () => {
+    setStatusGame('Started');
     setResultArray([]);
     setCurrentScreen(ScreenType.StartGame);
     console.log(gameId);
@@ -67,15 +83,6 @@ export function ReactionTime({ gameId }: IGameProps) {
   const wrongClicked = () => {
     clearTimeout(timeoutRef.current);
     setCurrentScreen(ScreenType.MissClick);
-  };
-
-  const saveResult = () => {
-    localStorage.setItem(
-      'bestReactionScore',
-      JSON.stringify(
-        resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))
-      )
-    );
   };
 
   return (
@@ -160,29 +167,45 @@ export function ReactionTime({ gameId }: IGameProps) {
           className="click-area time-container"
           style={{ background: 'rgb(59 130 246 / 0.5)' }}
         >
-          <p>
-            <FormattedMessage
-              id="your_best_reaction_time"
-              values={{
-                n: resultArray.reduce((acc, elem) => (acc < elem ? acc : elem)),
-              }}
-            />
-            {/* You best reaction time:{' '}
-            {resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))} ms */}
-          </p>
-          <button
-            className="mt-2 rounded-full border px-4 text-xl hover:bg-red-200"
-            onClick={() => newGame()}
-          >
-            <FormattedMessage id="try_again" />
-          </button>
-          <button
-            className="m-2 rounded-full border px-4 text-xl hover:bg-red-200"
-            onClick={() => saveResult()}
-          >
-            <FormattedMessage id="save_result" />
-          </button>
+          <FinishGameTable
+            score={resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))}
+            speed={0}
+            startGame={newGame}
+            statusGame={statusGame}
+            setStatusGame={setStatusGame}
+            rightAnswers={0}
+            totalAnswers={0}
+            gameID={gameId}
+            gameName={'reaction_time_test'}
+            resultsName="your_best_reaction_time"
+          />
         </div>
+        //   className="click-area time-container"
+        //   style={{ background: 'rgb(59 130 246 / 0.5)' }}
+        // >
+        //   <p>
+        //     <FormattedMessage
+        //       id="your_best_reaction_time"
+        //       values={{
+        //         n: resultArray.reduce((acc, elem) => (acc < elem ? acc : elem)),
+        //       }}
+        //     />
+        //     {/* You best reaction time:{' '}
+        //     {resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))} ms */}
+        //   </p>
+        //   <button
+        //     className="mt-2 rounded-full border px-4 text-xl hover:bg-red-200"
+        //     onClick={() => newGame()}
+        //   >
+        //     <FormattedMessage id="try_again" />
+        //   </button>
+        //   <button
+        //     className="m-2 rounded-full border px-4 text-xl hover:bg-red-200"
+        //     onClick={() => saveResult()}
+        //   >
+        //     <FormattedMessage id="save_result" />
+        //   </button>
+        // </div>
       )}
     </div>
   );

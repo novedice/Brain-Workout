@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { IGameProps } from '../../../types/interfaces';
+import { StatusGameType } from '../../../types/types';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { ButtonNumber } from '../numberMemory/ButtonStart';
 import './SequenceMemory.css';
@@ -11,11 +12,15 @@ function getRandomNumber() {
   return num;
 }
 
-export default function SequenceMemory({gameId, gameName}: IGameProps) {
+export default function SequenceMemory({ gameId }: IGameProps) {
   const [currentSequence, setCurrentSequence] = useState<number[]>([]);
-  const [currentNumber, setCurrentNumber] = useState<{num: number, id: number}>({num: 0, id: 0});
-  const [isStart, setIsStart] = useState(false);
-  const [isEnd, setIsEnd] = useState(false);
+  const [currentNumber, setCurrentNumber] = useState<{
+    num: number;
+    id: number;
+  }>({ num: 0, id: 0 });
+  // const [isStart, setIsStart] = useState(false);
+  // const [isEnd, setIsEnd] = useState(false);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [score, setScore] = useState(1);
   const btnRefs = [
     useRef<HTMLButtonElement>(null),
@@ -35,7 +40,7 @@ export default function SequenceMemory({gameId, gameName}: IGameProps) {
     btn.classList.add('active');
     setTimeout(() => {
       btn.classList.remove('active');
-    }, 350)
+    }, 350);
   }
 
   function animateCurrentSequence(sequence: number[]) {
@@ -43,10 +48,10 @@ export default function SequenceMemory({gameId, gameName}: IGameProps) {
     field.current.classList.add('disabled');
     sequence.forEach((el, index) => {
       setTimeout(() => {
-        console.log('here');
+        // console.log('here');
         animateBtn(btnRefs[el].current);
       }, 750 * index);
-    })
+    });
     setTimeout(() => {
       if (field.current) {
         field.current.classList.remove('disabled');
@@ -55,44 +60,45 @@ export default function SequenceMemory({gameId, gameName}: IGameProps) {
   }
 
   function start() {
-    setIsStart(true);
-    setIsEnd(false);
+    setStatusGame('Started');
+    // setIsStart(true);
+    // setIsEnd(false);
     setScore(1);
     setCurrentSequence((prev) => {
       const num = getRandomNumber();
       prev.push(num);
-      setCurrentNumber({num, id: 0});
+      setCurrentNumber({ num, id: 0 });
       setTimeout(() => {
         animateCurrentSequence(prev);
-      }, 500)
+      }, 500);
       return prev;
     });
-    
   }
 
   function nextLevel() {
-    setScore(prev => prev + 1);
+    setScore((prev) => prev + 1);
     setCurrentSequence((prev) => {
       const num = getRandomNumber();
       prev.push(num);
-      setCurrentNumber({num: prev[0], id: 0});
+      setCurrentNumber({ num: prev[0], id: 0 });
       setTimeout(() => {
         animateCurrentSequence(prev);
-      }, 1000)
+      }, 1000);
       return prev;
     });
   }
 
   function stop() {
-    setIsStart(false);
-    setIsEnd(true);
-    setCurrentNumber({num: 0, id: 0});
+    setStatusGame('Finished');
+    // setIsStart(false);
+    // setIsEnd(true);
+    setCurrentNumber({ num: 0, id: 0 });
     setCurrentSequence([]);
   }
 
   function createBtnHandler(num: number) {
     return () => {
-      animateBtn(btnRefs[num].current)
+      animateBtn(btnRefs[num].current);
       if (currentNumber.num === num) {
         if (currentNumber.id === currentSequence.length - 1) {
           return nextLevel();
@@ -105,64 +111,69 @@ export default function SequenceMemory({gameId, gameName}: IGameProps) {
       } else {
         stop();
       }
-    }
+    };
   }
-  
-  
 
   return (
     <>
-      {
-        !isEnd &&
-        <div className='sequence-memory__warp'>
+      {statusGame !== 'Finished' && (
+        <div className="sequence-memory__warp">
           <div className="sequence-memory__header">
-              <div className="sequence-memory__title first-letter:uppercase">
-                Sequence memory
-              </div>
-              <div className="sequence-memory__description">
-                <FormattedMessage id="sequence_memory_description" />
-              </div>
+            <div className="sequence-memory__title first-letter:uppercase">
+              Sequence memory
             </div>
-            {
-              isStart && !isEnd &&
-                <div className="sequence-memory__container">
-                  {(isStart || isEnd) && (
-                    <div className="sequence-memory__score">
-                      <FormattedMessage id="level" /> {score}
-                    </div>
-                  )}
-                  <div ref={field} className="sequence-memory__field">
-                    {
-                      [0,1,2,3,4,5,6,7,8].map((num) => {
-                        return <button key={num} ref={btnRefs[num]} onClick={createBtnHandler(num)} className='sequence-memory__field-btn'></button>
-                      })
-                    }
+            <div className="sequence-memory__description">
+              <FormattedMessage id="sequence_memory_description" />
+            </div>
+          </div>
+          {
+            // isStart && !isEnd &&
+            statusGame === 'Started' && (
+              <div className="sequence-memory__container">
+                {(statusGame === 'Started' || statusGame === 'Finished') && (
+                  <div className="sequence-memory__score">
+                    <FormattedMessage id="level" /> {score}
                   </div>
+                )}
+                <div ref={field} className="sequence-memory__field">
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((num) => {
+                    return (
+                      <button
+                        key={num}
+                        ref={btnRefs[num]}
+                        onClick={createBtnHandler(num)}
+                        className="sequence-memory__field-btn"
+                      ></button>
+                    );
+                  })}
                 </div>
-            }
-            {!isStart && (
-              <ButtonNumber text="start" callback={start}></ButtonNumber>
-            )}
-            {isStart && !isEnd && (
-              <ButtonNumber text="stop" callback={stop}></ButtonNumber>
-            )}
-
+              </div>
+            )
+          }
+          {statusGame !== 'Started' && (
+            <ButtonNumber text="start" callback={start}></ButtonNumber>
+          )}
+          {statusGame === 'Started' && (
+            <ButtonNumber text="stop" callback={stop}></ButtonNumber>
+          )}
         </div>
-      }
-      {isEnd && (
+      )}
+      {statusGame === 'Finished' && (
         <FinishGameTable
           score={score}
           rightAnswers={0}
           totalAnswers={0}
           speed={0}
-          started={isStart}
-          setStarted={setIsStart}
+          statusGame={statusGame}
+          setStatusGame={setStatusGame}
+          // started={isStart}
+          // setStarted={setIsStart}
           startGame={start}
-          gameName={gameName}
+          gameName={'sequence_memory'}
           gameID={gameId}
-          finished={isEnd}
+          // finished={isEnd}
         />
       )}
     </>
-  )
+  );
 }

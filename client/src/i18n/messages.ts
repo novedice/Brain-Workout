@@ -150,10 +150,10 @@ export const messages = {
     typing_speed_test: 'Typing speed test',
     time_left_typing: 'Time left: ',
     new_test: 'New test',
-    words_per_minute: 'Words per minute: ',
+    words_per_minute: 'Words per minute: {n, number} ',
     accuracy_simple: 'Accuracy',
     sequence_memory_description: 'Memorize the pattern',
-    'sequence-memory': 'Sequence memory',
+    typing_speed: 'Typing speed',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -294,7 +294,7 @@ export const messages = {
     you_are_not_loggin:
       'Вы не зарегистрированы в системе. Если у вас уже есть аккаунт, пожалуйста, ',
     sequence_memory_description: 'Запомни паттерн',
-    'sequence-memory': 'Sequence memory',
+    // 'sequence-memory': 'Sequence memory',
     reaction_time_test: 'Тест на время реакции',
     reaction_time_description:
       'Когда красный цвет сменится зеленым, нажмите так быстро, как сможете.',
@@ -310,7 +310,8 @@ export const messages = {
     typing_speed_test: 'Печать на скорость',
     time_left_typing: 'Осталось времени: ',
     new_test: 'Пройти тест еще раз',
-    words_per_minute: 'Количество слов вминуту: ',
+    words_per_minute: 'Количество слов вминуту: {n, number}',
     accuracy_simple: 'Точность',
+    typing_speed: 'Скорость печати',
   },
 };
