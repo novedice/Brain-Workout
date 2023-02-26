@@ -7,6 +7,8 @@ import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { TypingSpeed } from '../components/Games/TypingSpeed/TypingSpeed';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList, IGameProps } from '../types/interfaces';
+import '../assets/games-pictures/color-match-ru.png';
+import '../assets/games-pictures/color-match-en.png';
 
 export const allGames: IGameList[] = [
   {
@@ -15,6 +17,7 @@ export const allGames: IGameList[] = [
     path: 'reaction-time',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
+    gameDescription: 'reaction_time_description',
     game: ReactionTime,
   },
   {
@@ -23,7 +26,7 @@ export const allGames: IGameList[] = [
     path: 'sequence-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: SequenceMemory
+    game: SequenceMemory,
   },
   {
     id: 3,
@@ -123,6 +126,8 @@ export const allGames: IGameList[] = [
     path: 'color-match',
     category: 'flexibility',
     categoryName: <FormattedMessage id="flexibility" />,
+    gameDescription: 'This game improve your flexibility.',
+    src: 'color-match-ru.png',
     game: MeaningColorGame,
   },
   {

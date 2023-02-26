@@ -25,7 +25,7 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
     cards[getRandom(0, cards.length - 1)]
   );
   const [score, setScore] = useState(0);
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(GAME_DURATION);
   const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [changing, setChanging] = useState<'' | 'changing-front'>('');
   const [rightAnswers, setRightAnswers] = useState(0);
@@ -39,8 +39,8 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
     setScore(0);
     setMultiple(1);
     setSpeed(0);
-    setStatusGame('Started');
     setSeconds(GAME_DURATION);
+    setStatusGame('Started');
     setBeginAnswer(new Date());
   };
 

@@ -70,6 +70,8 @@ export interface IGameList {
   path: string;
   category: string;
   categoryName: ReactElement;
+  gameDescription?: string;
+  src?: string;
   game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
@@ -86,6 +88,8 @@ export interface ICategories {
 export interface IGameProps {
   gameName: string;
   gameId: number;
+  gameDescription?: string;
+  src?: string;
 }
 
 export interface IOrderedArray {

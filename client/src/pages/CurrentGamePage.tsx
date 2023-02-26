@@ -21,12 +21,16 @@ export const CurrentGamePage = () => {
   // const userResults = useTypeSelector((state) => state.resultsInfo);
   let gameIndex = 0;
   let nameGame = '';
+  let gameImg = '';
   const { CurrentGame } = useParams<QParam>();
   for (let i = 0; i < allGames.length; i++) {
     if (allGames[i].path === CurrentGame) {
       GameNow = allGames[i].game;
       gameIndex = i + 1;
       nameGame = allGames[i].path;
+      if (allGames[i].src) {
+        gameImg = allGames[i].src as string;
+      }
       break;
     }
   }
@@ -48,7 +52,9 @@ export const CurrentGamePage = () => {
           <FormattedMessage id="all_games" />
         </Link>
         <div className="game mb-8  h-full border-8 border-sky-800 bg-[url('./assets/backgroud.jpeg')] p-[3%]">
-          {GameNow && <GameNow gameId={gameIndex} gameName={nameGame} />}
+          {GameNow && (
+            <GameNow gameId={gameIndex} gameName={nameGame} src={gameImg} />
+          )}
         </div>
       </div>
     </>

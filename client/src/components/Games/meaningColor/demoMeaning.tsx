@@ -2,13 +2,19 @@ import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 // import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
+import { StatusGameType } from '../../../types/types';
 
 interface IHowToPlayProps {
   howToPlay: boolean;
   setHowToPlay: React.Dispatch<React.SetStateAction<boolean>>;
+  setStatusGame: React.Dispatch<React.SetStateAction<StatusGameType>>;
 }
 
-export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
+export const ColorDemo = ({
+  howToPlay,
+  setHowToPlay,
+  setStatusGame,
+}: IHowToPlayProps) => {
   const [leftColor, setLeftColor] = useState(2);
   const [rightColor, setRightColor] = useState(0);
   const [leftMeaning, setLeftMeaning] = useState(0);
@@ -111,7 +117,10 @@ export const ColorDemo = ({ howToPlay, setHowToPlay }: IHowToPlayProps) => {
           </div>
 
           <button
-            onClick={() => setHowToPlay(false)}
+            onClick={() => {
+              setHowToPlay(false);
+              setStatusGame('Started');
+            }}
             className={` ${startButton} mr-3 h-[50px] w-[150px] self-center rounded-lg border bg-red-400`}
           >
             <FormattedMessage id="start_game" />
