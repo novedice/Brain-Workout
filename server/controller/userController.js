@@ -4,7 +4,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const { User, Session } = require("../models/models");
 const uuid = require("uuid");
 const sessionController = require("./sessionController");
-const {isValidEmail} = require('../util/validation')
+const { isValidEmail } = require("../util/validation");
 
 const generateJWT = (id, nickname, email, sessionId, lang) => {
   return jsonwebtoken.sign(
@@ -85,10 +85,12 @@ class UserController {
     let session = await sessionController.get(req.user.sessionId);
     if (session) {
       await session.update({ token });
+      return res.json({ token });
     } else {
       session = await sessionController.create(req.user, token);
+      return res.json({ token });
     }
-    return res.json({ token });
+    // return res.json({ token });
   }
 
   async update(req, res, next) {

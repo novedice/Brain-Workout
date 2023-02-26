@@ -4,7 +4,7 @@ const ApiError = require("../error/ApiError");
 
 class ResultController {
   async create(req, res, next) {
-    const { gameId, value } = req.body;
+    const { gameId, value } = await req.body;
     if (!gameId && !value) {
       return next(ApiError.badRequest("Invalid gameId or value!"));
     }
