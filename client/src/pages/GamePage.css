@@ -9,3 +9,9 @@
     border-radius: 5px;
     padding: 30px;
 }
+
+.game-img {
+    width: 100px;
+    background-color:rgba(59, 130, 246, 0.5);
+    transition: all 0.3s;
+}

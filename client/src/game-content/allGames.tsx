@@ -6,6 +6,10 @@ import { SpeedMatchGame } from '../components/Games/SpeedMatch/SpeedMatchGame';
 import { TypingSpeed } from '../components/Games/TypingSpeed/TypingSpeed';
 import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList, IGameProps } from '../types/interfaces';
+// import '../../../assets/lightning.png';
+import '../assets/lightning.png';
+import '../assets/wasd.png';
+import '../assets/memory-game.png';
 
 export const allGames: IGameList[] = [
   {
@@ -13,7 +17,7 @@ export const allGames: IGameList[] = [
     name: <FormattedMessage id="reaction_time" />,
     path: 'reaction-time',
     category: 'speed',
-    image: '12',
+    image: 'lightning.png',
     categoryName: <FormattedMessage id="speed" />,
     game: ReactionTime,
   },
@@ -106,6 +110,7 @@ export const allGames: IGameList[] = [
     name: <FormattedMessage id="typing" />,
     path: 'typing',
     category: 'speed',
+    image: 'wasd.png',
     categoryName: <FormattedMessage id="speed" />,
     game: TypingSpeed,
   },
@@ -137,6 +142,7 @@ export const allGames: IGameList[] = [
     name: <FormattedMessage id="memory_game" />,
     path: 'memory-game',
     category: 'memory',
+    image: 'memory-game.png',
     categoryName: <FormattedMessage id="memory" />,
     game: MemoryGame,
   },

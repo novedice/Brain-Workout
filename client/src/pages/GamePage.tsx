@@ -31,6 +31,10 @@ export function GamePage() {
                   <div className="m-5 flex items-center justify-center border p-3">
                     <div className="all-games-wrap">
                       <Link to={`/games/${game.path}`}>
+                        <img
+                          src={game.image}
+                          className="game-img hover:bg-red-200"
+                        ></img>
                         <p>{game.name}</p>
                         <p>{game.categoryName}</p>
                       </Link>
