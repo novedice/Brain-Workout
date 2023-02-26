@@ -1,0 +1,6 @@
+/*    /index.html  200
+/*    /games  200
+/*    /games/:CurrentGame  200
+/*    /statistic  200
+/*    /account_settings  200
+/api/*  https://rs-clone-server-production-9c01.up.railway.app  200
