@@ -10,7 +10,7 @@ module.exports = async function (req, res, next) {
     console.log("auth:", req.auth);
     console.log("headers:", req.headers);
 
-    const token = req.cookies.auth.split(" ")[1]; // Bearer eq4q23qe32...
+    const token = req.headers.auth.split(" ")[1]; // Bearer eq4q23qe32...
     if (!token) {
       return res.status(401).json({ message: "User is not authorized!" });
     }
