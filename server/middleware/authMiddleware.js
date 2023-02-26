@@ -8,7 +8,8 @@ module.exports = async function (req, res, next) {
   try {
     console.log("cookie:", req.cookies);
     console.log("auth:", req.auth);
-    console.log("headers:", req.headers);
+    console.log("headers auth:", req.headers.auth);
+    console.log("headers auth1:", req.headers.auth1);
 
     const token = req.headers.auth.split(" ")[1]; // Bearer eq4q23qe32...
     if (!token) {
