@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { IGameProps } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 import { ButtonNumber } from '../numberMemory/ButtonStart';
 import './SequenceMemory.css';
 
@@ -12,7 +13,7 @@ function getRandomNumber() {
   return num;
 }
 
-export default function SequenceMemory({ gameId }: IGameProps) {
+export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
   const [currentSequence, setCurrentSequence] = useState<number[]>([]);
   const [currentNumber, setCurrentNumber] = useState<{
     num: number;
@@ -116,7 +117,7 @@ export default function SequenceMemory({ gameId }: IGameProps) {
 
   return (
     <>
-      {statusGame !== 'Finished' && (
+      {statusGame !== 'Finished' && statusGame !== 'Wait' && (
         <div className="sequence-memory__warp">
           <div className="sequence-memory__header">
             <div className="sequence-memory__title first-letter:uppercase">
@@ -157,6 +158,17 @@ export default function SequenceMemory({ gameId }: IGameProps) {
             <ButtonNumber text="stop" callback={stop}></ButtonNumber>
           )}
         </div>
+      )}
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={start}
+          setStatusGame={setStatusGame}
+          gameName={'sequence_memory'}
+          statusGame={statusGame}
+          gameDescription="sequence_memory_description"
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
       )}
       {statusGame === 'Finished' && (
         <FinishGameTable

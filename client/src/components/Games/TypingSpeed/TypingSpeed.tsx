@@ -6,10 +6,11 @@ import { FormattedMessage } from 'react-intl';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { IGameProps } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 const NUMB_WORDS = 100;
 const SECONDS = 10;
 
-export function TypingSpeed({ gameId }: IGameProps) {
+export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
   const [words, setWords] = useState<string[]>([]);
   const [currentInput, setCurrentInput] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -119,13 +120,28 @@ export function TypingSpeed({ gameId }: IGameProps) {
 
   return (
     <div className="container-game">
-      <h1 className="game-name">
-        <FormattedMessage id="typing_speed_test" />
-      </h1>
-      <h2 className="time-left">
-        <FormattedMessage id="time_left_typing" />
-        <span className="important-text">{timeLeft}</span>
-      </h2>
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={startTime}
+          setStatusGame={setStatusGame}
+          gameName={'typing_speed_test'}
+          statusGame={statusGame}
+          gameDescription="typing_speed_description"
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
+      )}
+      {statusGame !== 'Wait' && statusGame !== 'Finished' && (
+        <>
+          <h1 className="game-name">
+            <FormattedMessage id="typing_speed_test" />
+          </h1>
+          <h2 className="time-left">
+            <FormattedMessage id="time_left_typing" />
+            <span className="important-text">{timeLeft}</span>
+          </h2>
+        </>
+      )}
 
       {statusGame === 'Started' && (
         <div className="section">
@@ -152,26 +168,28 @@ export function TypingSpeed({ gameId }: IGameProps) {
           </div>
         </div>
       )}
+      {statusGame !== 'Wait' && statusGame !== 'Finished' && (
+        <div className="section">
+          <input
+            ref={inputText}
+            disabled={statusGame !== 'Started'}
+            className="input-section"
+            onKeyDown={hendleKeyPress}
+            value={currentInput}
+            onChange={(e) => setCurrentInput(e.target.value)}
+          ></input>
+        </div>
+      )}
 
-      <div className="section">
-        <input
-          ref={inputText}
-          disabled={statusGame !== 'Started'}
-          className="input-section"
-          onKeyDown={hendleKeyPress}
-          value={currentInput}
-          onChange={(e) => setCurrentInput(e.target.value)}
-        ></input>
-      </div>
+      {/* {statusGame === 'Wait' && ( */}
 
-      {statusGame === 'Wait' && (
-        <button
+      {/* <button
           className="btn mb-4 w-28 rounded-full border p-1 text-xl hover:bg-red-200"
           onClick={startTime}
         >
           <FormattedMessage id="start" />
         </button>
-      )}
+      )} */}
 
       {statusGame === 'Finished' && (
         <>
@@ -186,7 +204,6 @@ export function TypingSpeed({ gameId }: IGameProps) {
             gameName={'typing_speed'}
             gameID={gameId}
             resultsName="words_per_minute"
-            // finished={statusGame === 'Finished'}
           />
 
           {/* <div className="section result-section">

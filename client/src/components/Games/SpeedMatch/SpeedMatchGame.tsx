@@ -15,10 +15,11 @@ import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { GamePaused } from '../gamesComponents/PauseComponent';
 import { StatusGameType } from '../../../types/types';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 
 const GAME_DURATION = 20;
 
-export const SpeedMatchGame = ({ gameId }: IGameProps) => {
+export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
   const [prevCard, setPrevCard] = useState<ICardSpeedMacth>();
   const [nextCard, setNextCard] = useState<ICardSpeedMacth>(
@@ -102,24 +103,29 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
           startGame={startGame}
           statusGame={statusGame}
           setStatusGame={setStatusGame}
-          // started={started}
-          // setStarted={setStarted}
           gameName="speed_match"
           gameID={gameId}
-          // finished={finished}
         />
       )}
-      {statusGame !== 'Finished' && (
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={startGame}
+          setStatusGame={setStatusGame}
+          gameName={'speed_match'}
+          statusGame={statusGame}
+          gameDescription="speed_match_description"
+          // setHowToPlay={setHowToPlay}
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
+      )}
+      {statusGame !== 'Finished' && statusGame !== 'Wait' && (
         <>
           {statusGame === 'Paused' && (
             <GamePaused
-              // paused={paused}
               statusGame={statusGame}
               setStatusGame={setStatusGame}
-              // started={started}
               startGame={startGame}
-              // setStarted={setStarted}
-              // setPaused={setPaused}
             />
           )}
           {statusGame !== 'Paused' && (
@@ -129,8 +135,6 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
                   startGame={startGame}
                   statusGame={statusGame}
                   setStatusGame={setStatusGame}
-                  // setStarted={setStarted}
-                  // started={started}
                 />
                 <ButtonPause
                   statusGame={statusGame}
@@ -141,11 +145,6 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
                     seconds={seconds}
                     statusGame={statusGame}
                     setStatusGame={setStatusGame}
-                    // started={started}
-                    // paused={paused}
-                    // finished={finished}
-                    // setFinished={setFinished}
-                    // setStarted={setStarted}
                     setSeconds={setSeconds}
                   />
                 </div>

@@ -9,6 +9,17 @@ import { MemoryGame } from '../components/MemoryGame/MemoryGame';
 import { IGameList, IGameProps } from '../types/interfaces';
 import '../assets/games-pictures/color-match-ru.png';
 import '../assets/games-pictures/color-match-en.png';
+import '../assets/games-pictures/memory-game-ru.png';
+import '../assets/games-pictures/memory-game-en.png';
+import '../assets/games-pictures/number-memory-ru.png';
+import '../assets/games-pictures/number-memory-en.png';
+import '../assets/games-pictures/sequence-memory-ru.png';
+import '../assets/games-pictures/sequence-memory-en.png';
+import '../assets/games-pictures/speed-match-ru.png';
+import '../assets/games-pictures/speed-match-en.png';
+import '../assets/games-pictures/typing-speed-ru.png';
+import '../assets/games-pictures/typing-speed-en.png';
+import '../assets/games-pictures/reaction-time-en.png';
 
 export const allGames: IGameList[] = [
   {
@@ -18,6 +29,7 @@ export const allGames: IGameList[] = [
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
     gameDescription: 'reaction_time_description',
+    srcEn: 'reaction-time-en.png',
     game: ReactionTime,
   },
   {
@@ -26,6 +38,8 @@ export const allGames: IGameList[] = [
     path: 'sequence-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
+    srcEn: 'sequence-memory-en.png',
+    srcRus: 'sequence-memory-ru.png',
     game: SequenceMemory,
   },
   {
@@ -34,11 +48,15 @@ export const allGames: IGameList[] = [
     path: 'aim-trainer',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
-    game: ({ gameId, gameName }: IGameProps) => {
+    game: ({ gameName }: IGameProps) => {
       return (
         <>
-          {gameId}
-          {gameName}
+          <div className="prestart-container">
+            <div className="name-of-the-game">{gameName}</div>
+            <div className="game-description">
+              <FormattedMessage id="game_in_development" />
+            </div>
+          </div>
         </>
       );
     },
@@ -49,11 +67,15 @@ export const allGames: IGameList[] = [
     path: 'chimp-test',
     category: 'problem_solving',
     categoryName: <FormattedMessage id="problem_solving" />,
-    game: ({ gameId, gameName }: IGameProps) => {
+    game: ({ gameName }: IGameProps) => {
       return (
         <>
-          {gameId}
-          {gameName}
+          <div className="prestart-container">
+            <div className="name-of-the-game">{gameName}</div>
+            <div className="game-description">
+              <FormattedMessage id="game_in_development" />
+            </div>
+          </div>
         </>
       );
     },
@@ -66,6 +88,8 @@ export const allGames: IGameList[] = [
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
     game: NumberMemory,
+    srcEn: 'number-memory-en.png',
+    srcRus: 'number-memory-ru.png',
   },
   {
     id: 6,
@@ -73,11 +97,15 @@ export const allGames: IGameList[] = [
     path: 'verbal-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: ({ gameId, gameName }: IGameProps) => {
+    game: ({ gameName }: IGameProps) => {
       return (
         <>
-          {gameId}
-          {gameName}
+          <div className="prestart-container">
+            <div className="name-of-the-game">{gameName}</div>
+            <div className="game-description">
+              <FormattedMessage id="game_in_development" />
+            </div>
+          </div>
         </>
       );
     },
@@ -88,11 +116,15 @@ export const allGames: IGameList[] = [
     path: 'visual-memory',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
-    game: ({ gameId, gameName }: IGameProps) => {
+    game: ({ gameName }: IGameProps) => {
       return (
         <>
-          {gameId}
-          {gameName}
+          <div className="prestart-container">
+            <div className="name-of-the-game">{gameName}</div>
+            <div className="game-description">
+              <FormattedMessage id="game_in_development" />
+            </div>
+          </div>
         </>
       );
     },
@@ -104,6 +136,8 @@ export const allGames: IGameList[] = [
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
     game: TypingSpeed,
+    srcEn: 'typing-speed-en.png',
+    srcRus: 'typing-speed-ru.png',
   },
   {
     id: 9,
@@ -111,11 +145,15 @@ export const allGames: IGameList[] = [
     path: 'pixel-logic',
     category: 'problem_solving',
     categoryName: <FormattedMessage id="problem_solving" />,
-    game: ({ gameId, gameName }: IGameProps) => {
+    game: ({ gameName }: IGameProps) => {
       return (
         <>
-          {gameId}
-          {gameName}
+          <div className="prestart-container">
+            <div className="name-of-the-game">{gameName}</div>
+            <div className="game-description">
+              <FormattedMessage id="game_in_development" />
+            </div>
+          </div>
         </>
       );
     },
@@ -127,7 +165,8 @@ export const allGames: IGameList[] = [
     category: 'flexibility',
     categoryName: <FormattedMessage id="flexibility" />,
     gameDescription: 'This game improve your flexibility.',
-    src: 'color-match-ru.png',
+    srcRus: 'color-match-ru.png',
+    srcEn: 'color-match-en.png',
     game: MeaningColorGame,
   },
   {
@@ -136,6 +175,8 @@ export const allGames: IGameList[] = [
     path: 'memory-game',
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
+    srcEn: 'memory-game-en.png',
+    srcRus: 'memory-game-ru.png',
     game: MemoryGame,
   },
   {
@@ -144,6 +185,8 @@ export const allGames: IGameList[] = [
     path: 'speed-match',
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
+    srcEn: 'speed-match-en.png',
+    srcRus: 'speed-match-ru.png',
     game: SpeedMatchGame,
   },
 ];

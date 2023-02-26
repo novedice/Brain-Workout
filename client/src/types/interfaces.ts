@@ -71,7 +71,8 @@ export interface IGameList {
   category: string;
   categoryName: ReactElement;
   gameDescription?: string;
-  src?: string;
+  srcEn?: string;
+  srcRus?: string;
   game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
@@ -89,7 +90,8 @@ export interface IGameProps {
   gameName: string;
   gameId: number;
   gameDescription?: string;
-  src?: string;
+  srcRus?: string;
+  srcEn?: string;
 }
 
 export interface IOrderedArray {

@@ -16,7 +16,7 @@ import './meaningColor.css';
 
 const GAME_DURATION = 20;
 
-export const MeaningColorGame = ({ gameId, src }: IGameProps) => {
+export const MeaningColorGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
   const [leftMeaningColor, setLeftMeaninfColor] = useState(0);
   const [rightColor, setRightColor] = useState(0);
@@ -92,9 +92,10 @@ export const MeaningColorGame = ({ gameId, src }: IGameProps) => {
             setStatusGame={setStatusGame}
             gameName={'color_match'}
             statusGame={statusGame}
-            gameDescription="choose color right"
+            gameDescription="color_match_description"
             setHowToPlay={setHowToPlay}
-            gameImg={src}
+            gameImgRus={srcRus}
+            gameImgEn={srcEn}
           />
         )}
         {statusGame === 'Finished' && (

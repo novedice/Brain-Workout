@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useTypeSelector } from '../../../hooks/useTypeSelector';
+import { LOCALES } from '../../../i18n/locales';
 import { StatusGameType } from '../../../types/types';
 import { ButtonStart } from './ButtonStart';
 import './prestart.css';
@@ -11,7 +13,8 @@ interface IPrestartWindowProps {
   startGame: () => void;
   gameDescription: string;
   setHowToPlay?: React.Dispatch<React.SetStateAction<boolean>>;
-  gameImg?: string;
+  gameImgRus?: string;
+  gameImgEn?: string;
 }
 
 export const PrestartWindow = ({
@@ -21,20 +24,30 @@ export const PrestartWindow = ({
   startGame,
   gameDescription,
   setHowToPlay,
-  gameImg,
+  gameImgRus,
+  gameImgEn,
 }: IPrestartWindowProps) => {
+  const [currentImg, setCurrentImg] = useState(gameImgEn);
+  const user = useTypeSelector((state) => state.userInfo);
+
+  useEffect(() => {
+    setCurrentImg(user.lang === LOCALES.ENGLISH ? gameImgEn : gameImgRus);
+  }, [user.lang]);
+
   return (
     <>
       <div className="prestart-container">
-        <div className="name-of-the-game">
+        <div className="name-of-the-game upper-case">
           <FormattedMessage id={gameName} />
         </div>
-        {gameImg && <img src={`${gameImg}`}></img>}
+        {currentImg && (
+          <img className="prestart-image" src={`${currentImg}`}></img>
+        )}
         <div className="game-description">
           <FormattedMessage id={gameDescription} />
-          {
+          {/* {
             'train your task-switching ability by shifting focus between where the leaves point and how they move.'
-          }
+          } */}
         </div>
         <div className="buttons-prestart">
           {setHowToPlay && (
@@ -44,7 +57,7 @@ export const PrestartWindow = ({
                 setHowToPlay(true);
               }}
             >
-              How to play
+              <FormattedMessage id="how_to_play" />
             </button>
           )}
           <ButtonStart
