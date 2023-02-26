@@ -11,7 +11,7 @@ module.exports = async function (req, res, next) {
     console.log("headers auth:", req.headers.auth);
     console.log("headers auth1:", req.headers.auth1);
 
-    const token = req.headers.auth.split(" ")[1]; // Bearer eq4q23qe32...
+    const token = await req.headers.auth.split(" ")[1]; // Bearer eq4q23qe32...
     console.log("token in middleware", token);
     if (!token) {
       return res.status(401).json({ message: "User is not authorized!" });
