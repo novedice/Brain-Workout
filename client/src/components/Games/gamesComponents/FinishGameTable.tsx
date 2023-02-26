@@ -4,14 +4,6 @@ import { createResult } from '../../../api/result-requerests';
 import { ADD_RESULT } from '../../../constants';
 import { useAppDispatch } from '../../../hooks/useTypeSelector';
 import { StatusGameType } from '../../../types/types';
-// import { writeResults } from '../gameFunctions/finishGame';
-// import { createResult } from '../../../api/result-requerests';
-// import { ADD_RESULT } from '../../../constants';
-// import {
-//   useAppDispatch,
-//   useTypeSelector,
-// } from '../../../hooks/useTypeSelector';
-// import { IResults } from '../../../types/interfaces';
 import { ButtonStart } from './ButtonStart';
 import './finishGameTable.css';
 
@@ -26,7 +18,6 @@ interface IFinishGameTableProps {
   gameName: string;
   gameID: number;
   resultsName?: string;
-  // finished: boolean;
 }
 
 export const FinishGameTable = ({
@@ -40,8 +31,7 @@ export const FinishGameTable = ({
   gameID,
   gameName,
   resultsName,
-}: // finished,
-IFinishGameTableProps) => {
+}: IFinishGameTableProps) => {
   const dispatch = useAppDispatch();
 
   const result = async () => {
@@ -124,7 +114,6 @@ IFinishGameTableProps) => {
             />
           )}
         </p>
-        {/* <button onClick={handleResults}>Make results</button> */}
         <ButtonStart
           startGame={startGame}
           setStatusGame={setStatusGame}

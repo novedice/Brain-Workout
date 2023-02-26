@@ -30,3 +30,7 @@ body {
 .lower-case {
   text-transform: lowercase;
 }
+
+.text-cursive {
+  font-style: italic;
+}

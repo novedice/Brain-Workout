@@ -70,20 +70,20 @@ export const ChooseFavoriteCategory = () => {
           <FormattedMessage id="choose_favorite_categories" />
         </p>
         {CATEGORIES.map((category) => {
-          if (category !== 'all_categories') {
+          if (category.category !== 'all_categories') {
             return (
-              <React.Fragment key={category}>
+              <React.Fragment key={category.category}>
                 <div
                   className={`category-in-favorites upper-case ${
                     favoriteCategories
                       ?.map((icat) => icat.category)
-                      .includes(category)
+                      .includes(category.category)
                       ? 'choosen-category'
                       : ''
                   }`}
-                  onClick={() => addDeleteFavorites(category)}
+                  onClick={() => addDeleteFavorites(category.category)}
                 >
-                  <FormattedMessage id={category} />
+                  <FormattedMessage id={category.category} />
                   <img
                     className="checked mr-4 h-[auto] w-[20px]"
                     src="i.png"

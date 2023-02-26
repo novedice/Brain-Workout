@@ -10,20 +10,21 @@ import { ButtonStart } from '../gamesComponents/ButtonStart';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { GamePaused } from '../gamesComponents/PauseComponent';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
 const GAME_DURATION = 20;
 
-export const MeaningColorGame = ({ gameId }: IGameProps) => {
+export const MeaningColorGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
   const [leftMeaningColor, setLeftMeaninfColor] = useState(0);
   const [rightColor, setRightColor] = useState(0);
   const [rightMeaningColor, setRightMeamingColor] = useState(0);
   const [score, setScore] = useState(0);
   const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
-  const [seconds, setSeconds] = useState(20);
-  const [howToPlay, setHowToPlay] = useState(true);
+  const [seconds, setSeconds] = useState(GAME_DURATION);
+  const [howToPlay, setHowToPlay] = useState(false);
   const [, setBackColor] = useState('');
   const [rightAnswers, setRightAnswers] = useState(0);
   const [totalAnswers, setTotalAnswers] = useState(0);
@@ -38,6 +39,8 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
 
   const startGame = () => {
     setScore(0);
+    setRightAnswers(0);
+    setTotalAnswers(0);
     setSeconds(GAME_DURATION);
     setMultiple(1);
     setStatusGame('Started');
@@ -83,6 +86,18 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
       <div
         className={`game-wrap mr-auto ml-auto flex h-full w-[90%] flex-col align-middle `}
       >
+        {statusGame === 'Wait' && !howToPlay && (
+          <PrestartWindow
+            startGame={startGame}
+            setStatusGame={setStatusGame}
+            gameName={'color_match'}
+            statusGame={statusGame}
+            gameDescription="color_match_description"
+            setHowToPlay={setHowToPlay}
+            gameImgRus={srcRus}
+            gameImgEn={srcEn}
+          />
+        )}
         {statusGame === 'Finished' && (
           <FinishGameTable
             score={score}
@@ -94,13 +109,16 @@ export const MeaningColorGame = ({ gameId }: IGameProps) => {
             startGame={startGame}
             gameName={'color_match'}
             gameID={gameId}
-            // finished={finished}
           />
         )}
         {howToPlay && (
-          <ColorDemo howToPlay={howToPlay} setHowToPlay={setHowToPlay} />
+          <ColorDemo
+            howToPlay={howToPlay}
+            setHowToPlay={setHowToPlay}
+            setStatusGame={setStatusGame}
+          />
         )}
-        {!howToPlay && statusGame !== 'Finished' && (
+        {!howToPlay && statusGame !== 'Finished' && statusGame !== 'Wait' && (
           <>
             {statusGame === 'Paused' && (
               <GamePaused

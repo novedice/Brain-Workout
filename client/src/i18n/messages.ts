@@ -152,8 +152,20 @@ export const messages = {
     new_test: 'New test',
     words_per_minute: 'Words per minute: {n, number} ',
     accuracy_simple: 'Accuracy',
-    sequence_memory_description: 'Memorize the pattern',
+    sequence_memory_description: 'Memorize the pattern. Try to repeat it. ',
     typing_speed: 'Typing speed',
+    color_match_description:
+      'This game will help you learn to focus on important things and not pay attention to unimportant aspects.',
+    speed_match_description:
+      'This game will help you to make a desicion faster. Try to remember previous image and decide is this image matches the previous one.',
+    typing_speed_description:
+      'This game will help you learn to type fast and correct. Check how fast you can type now. ',
+    memory_game_description:
+      'This game improves your memory. Try to find all the same cards using as few moves as possible.',
+    number_memory_description:
+      'This game improves your number memory. Remember the number and then try to repeat it. ',
+    game_in_development:
+      'Sorry, this game is under development. As soon as the game is ready, it will immediately appear here! We are constantly working hard to improve our application. Our team is doing its best to bring new and interesting games to the app as soon as possible. Thanks for understanding)',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -169,7 +181,7 @@ export const messages = {
     description: 'Ежедневные разнообразные когнитивные задачи',
     speed: 'скорость',
     memory: 'память',
-    flexibility: 'гибкость',
+    flexibility: 'гибкость мышления',
     problem_solving: 'решение проблем',
     reaction_time: 'время реакции',
     memory_game: 'найди пару',
@@ -293,11 +305,11 @@ export const messages = {
       'Чтобы добавить категорию в выбранные, пожалуйста, удалите одну из выбранных категорий',
     you_are_not_loggin:
       'Вы не зарегистрированы в системе. Если у вас уже есть аккаунт, пожалуйста, ',
-    sequence_memory_description: 'Запомни паттерн',
+    sequence_memory_description: 'Запомните паттерн. Постарайтесь повторить.',
     // 'sequence-memory': 'Sequence memory',
     reaction_time_test: 'Тест на время реакции',
     reaction_time_description:
-      'Когда красный цвет сменится зеленым, нажмите так быстро, как сможете.',
+      'Когда красный цвет сменится зеленым, кликните так быстро, как сможете.',
     click_for_start: 'Нажмите, чтобы начать игру',
     wait_for_green: 'Дождитесь зеленого...',
     too_soon: 'Слишком быстро!',
@@ -313,5 +325,17 @@ export const messages = {
     words_per_minute: 'Количество слов вминуту: {n, number}',
     accuracy_simple: 'Точность',
     typing_speed: 'Скорость печати',
+    color_match_description:
+      'Эта игра поможет научиться концентрироваться на важных вещах и не обращать внимания на неважные аспекты. ',
+    speed_match_description:
+      'Эта игра поможет научиться принимать решение быстро. Попробуйте решить, соответствует ли эта картинка предыдущей настолько быстро, насколько возможно. ',
+    typing_speed_description:
+      'Эта игра поможет вам научиться печатать быстро и правильно. Проверьте себя, насколько быстро вы сможете печатать. ',
+    memory_game_description:
+      'Эта игра развивает память. Попробуйте найти все одинаковые карточки, за наименьшее количество ходов.',
+    number_memory_description:
+      'Эта игра развивает память на числа. Сначала запомните число, потом попытайтесь повторить его. ',
+    game_in_development:
+      'Извините, данная игра находится в разработке. Как только игра будет готова, она сразу же появится здесь! Мы постоянно работаем над улучшением нашего приложения. Наша команда делает все возможное, чтобы в приложении появлялись новые и интересные игры.  Спасибо за понимание)',
   },
 };

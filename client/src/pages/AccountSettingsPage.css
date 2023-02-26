@@ -37,6 +37,7 @@ main {
 .open-now {
   background-color: rgb(147 197 253);
   color: white;
+  border-radius: 5px;
 }
 
 .account-info {

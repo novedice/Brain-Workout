@@ -5,6 +5,7 @@ import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { IGameProps } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
 
@@ -16,7 +17,7 @@ const generateNumber = (length: number) => {
   return String(number);
 };
 
-export default function NumberMemory({ gameId }: IGameProps) {
+export default function NumberMemory({ gameId, srcEn, srcRus }: IGameProps) {
   // const gameInfo = allGames.find((el) => el.id === id);
   // const gamePath = 'number-memory';
   const { lang } = useTypeSelector((state) => state.userInfo);
@@ -133,7 +134,7 @@ export default function NumberMemory({ gameId }: IGameProps) {
 
   return (
     <>
-      {statusGame !== 'Finished' && (
+      {statusGame !== 'Finished' && statusGame !== 'Wait' && (
         <div className="number-game__wrap">
           <div>
             <div className="number-game__header">
@@ -206,6 +207,17 @@ export default function NumberMemory({ gameId }: IGameProps) {
             <ButtonNumber text="stop" callback={stop}></ButtonNumber>
           )}
         </div>
+      )}
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={start}
+          setStatusGame={setStatusGame}
+          gameName={'number_memory'}
+          statusGame={statusGame}
+          gameDescription="number_memory_description"
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
       )}
       {statusGame === 'Finished' && (
         <FinishGameTable
