@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { createResult } from '../../../api/result-requerests';
 import { ADD_RESULT } from '../../../constants';
 import { useAppDispatch } from '../../../hooks/useTypeSelector';
+import { StatusGameType } from '../../../types/types';
 // import { writeResults } from '../gameFunctions/finishGame';
 // import { createResult } from '../../../api/result-requerests';
 // import { ADD_RESULT } from '../../../constants';
@@ -12,18 +13,20 @@ import { useAppDispatch } from '../../../hooks/useTypeSelector';
 // } from '../../../hooks/useTypeSelector';
 // import { IResults } from '../../../types/interfaces';
 import { ButtonStart } from './ButtonStart';
+import './finishGameTable.css';
 
 interface IFinishGameTableProps {
   score: number;
   rightAnswers: number;
   totalAnswers: number;
   speed: number;
-  started: boolean;
-  setStarted: React.Dispatch<SetStateAction<boolean>>;
+  statusGame: StatusGameType;
+  setStatusGame: React.Dispatch<SetStateAction<StatusGameType>>;
   startGame: () => void;
   gameName: string;
   gameID: number;
-  finished: boolean;
+  resultsName?: string;
+  // finished: boolean;
 }
 
 export const FinishGameTable = ({
@@ -31,17 +34,18 @@ export const FinishGameTable = ({
   rightAnswers,
   totalAnswers,
   speed,
-  started,
-  setStarted,
+  statusGame,
+  setStatusGame,
   startGame,
   gameID,
   gameName,
-  finished,
-}: IFinishGameTableProps) => {
+  resultsName,
+}: // finished,
+IFinishGameTableProps) => {
   const dispatch = useAppDispatch();
 
   const result = async () => {
-    if (score !== 0 && finished) {
+    if (score !== 0 && statusGame === 'Finished') {
       const res = await createResult({ gameId: gameID, value: score });
       if (res) {
         console.log('res', res);
@@ -72,17 +76,25 @@ export const FinishGameTable = ({
     }
   };
   useEffect(() => {
-    result();
-  }, [finished]);
+    if (statusGame === 'Finished') {
+      result();
+    }
+  }, [statusGame]);
 
   return (
     <>
-      <div className="flex h-full w-full flex-col items-center justify-center bg-gray-300">
+      <div
+        className="finish-game click-area time-container h-full w-full"
+        style={{ background: 'rgb(59 130 246 / 0.5)' }}
+      >
         <p className="upper-case">
           <FormattedMessage id={gameName} />
         </p>
         <p>
-          <FormattedMessage id="score" values={{ n: score }} />
+          <FormattedMessage
+            id={`${resultsName ? resultsName : 'score'}`}
+            values={{ n: score }}
+          />
         </p>
         {rightAnswers !== 0 && (
           <>
@@ -115,8 +127,8 @@ export const FinishGameTable = ({
         {/* <button onClick={handleResults}>Make results</button> */}
         <ButtonStart
           startGame={startGame}
-          setStarted={setStarted}
-          started={started}
+          setStatusGame={setStatusGame}
+          statusGame={statusGame}
         />
       </div>
     </>

@@ -14,6 +14,9 @@ import { FormattedMessage } from 'react-intl';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { GamePaused } from '../gamesComponents/PauseComponent';
+import { StatusGameType } from '../../../types/types';
+
+const GAME_DURATION = 20;
 
 export const SpeedMatchGame = ({ gameId }: IGameProps) => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
@@ -21,11 +24,9 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
   const [nextCard, setNextCard] = useState<ICardSpeedMacth>(
     cards[getRandom(0, cards.length - 1)]
   );
-  const [started, setStarted] = useState(false);
   const [score, setScore] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [seconds, setSeconds] = useState(10);
-  const [finished, setFinished] = useState(false);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [changing, setChanging] = useState<'' | 'changing-front'>('');
   const [rightAnswers, setRightAnswers] = useState(0);
   const [totalAnswers, setTotalAnswers] = useState(0);
@@ -36,10 +37,10 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
 
   const startGame = () => {
     setScore(0);
-    setSeconds(20);
-    setFinished(false);
-    setStarted(true);
+    setMultiple(1);
     setSpeed(0);
+    setStatusGame('Started');
+    setSeconds(GAME_DURATION);
     setBeginAnswer(new Date());
   };
 
@@ -92,48 +93,59 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
 
   return (
     <>
-      {finished && (
+      {statusGame === 'Finished' && (
         <FinishGameTable
           score={score}
           rightAnswers={rightAnswers}
           totalAnswers={totalAnswers}
           speed={speed}
           startGame={startGame}
-          started={started}
-          setStarted={setStarted}
+          statusGame={statusGame}
+          setStatusGame={setStatusGame}
+          // started={started}
+          // setStarted={setStarted}
           gameName="speed_match"
           gameID={gameId}
-          finished={finished}
+          // finished={finished}
         />
       )}
-      {!finished && (
+      {statusGame !== 'Finished' && (
         <>
-          {paused && (
+          {statusGame === 'Paused' && (
             <GamePaused
-              paused={paused}
+              // paused={paused}
+              statusGame={statusGame}
+              setStatusGame={setStatusGame}
               // started={started}
               startGame={startGame}
-              setStarted={setStarted}
-              setPaused={setPaused}
+              // setStarted={setStarted}
+              // setPaused={setPaused}
             />
           )}
-          {!paused && (
+          {statusGame !== 'Paused' && (
             <div className="flex w-full flex-col items-center">
               <div className="mb-[5%] flex w-full items-center justify-around">
                 <ButtonStart
                   startGame={startGame}
-                  setStarted={setStarted}
-                  started={started}
+                  statusGame={statusGame}
+                  setStatusGame={setStatusGame}
+                  // setStarted={setStarted}
+                  // started={started}
                 />
-                <ButtonPause paused={paused} setPaused={setPaused} />
+                <ButtonPause
+                  statusGame={statusGame}
+                  setStatusGame={setStatusGame}
+                />
                 <div className="m-5">
                   <Timer
                     seconds={seconds}
-                    started={started}
-                    paused={paused}
-                    finished={finished}
-                    setFinished={setFinished}
-                    setStarted={setStarted}
+                    statusGame={statusGame}
+                    setStatusGame={setStatusGame}
+                    // started={started}
+                    // paused={paused}
+                    // finished={finished}
+                    // setFinished={setFinished}
+                    // setStarted={setStarted}
                     setSeconds={setSeconds}
                   />
                 </div>
@@ -169,11 +181,15 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
                 </div>
               </div>
               <div className="flex justify-center align-middle">
-                <ButtonYesNo val="no" callback={noAnswer} disabled={!started} />
+                <ButtonYesNo
+                  val="no"
+                  callback={noAnswer}
+                  disabled={statusGame !== 'Started'}
+                />
                 <ButtonYesNo
                   val="yes"
                   callback={yesAnswer}
-                  disabled={!started}
+                  disabled={statusGame !== 'Started'}
                 />
               </div>
             </div>

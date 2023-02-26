@@ -1,27 +1,32 @@
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { StatusGameType } from '../../../types/types';
 
 interface IButtonStartAgainProps {
   // started: boolean;
-  setStarted: React.Dispatch<React.SetStateAction<boolean>>;
+  // setStarted: React.Dispatch<React.SetStateAction<boolean>>;
+  // statusGame: StatusGameType;
+  setStatusGame: React.Dispatch<React.SetStateAction<StatusGameType>>;
   startGame: () => void;
   // paused: boolean;
-  setPaused: React.Dispatch<React.SetStateAction<boolean>>;
+  // setPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ButtonStartAgain = ({
-  // started,
-  setStarted,
+  setStatusGame,
+  // statusGame,
   startGame,
-  setPaused,
-}: // paused,
+}: // setPaused,
+// paused,
 IButtonStartAgainProps) => {
   return (
     <>
       <button
         className="mr-3 h-[50px] w-[150px] self-center rounded-lg border-8 border-blue-300 bg-gray-200"
         onClick={() => {
-          setStarted(true);
-          setPaused(false);
+          setStatusGame('Started');
+          // setStarted(true);
+          // setPaused(false);
           startGame();
         }}
       >

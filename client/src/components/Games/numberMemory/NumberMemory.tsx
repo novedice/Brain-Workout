@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { getBestResult } from '../../../api/result-requerests';
 import { useTypeSelector } from '../../../hooks/useTypeSelector';
 import { IGameProps } from '../../../types/interfaces';
+import { StatusGameType } from '../../../types/types';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { ButtonNumber } from './ButtonStart';
 import './NumberMemory.css';
@@ -22,10 +23,11 @@ export default function NumberMemory({ gameId }: IGameProps) {
   const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
   const [currentLength, setCurrentLength] = useState(1);
   const [currentNumber, setCurrentNumber] = useState('');
-  const [isStart, setIsStart] = useState(false);
+  // const [isStart, setIsStart] = useState(false);
   const [time, setTime] = useState(0);
   const [isRemember, setIsRemember] = useState(false);
-  const [isEnd, setIsEnd] = useState(false);
+  // const [isEnd, setIsEnd] = useState(false);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [score, setScore] = useState(1);
   const [userNumber, setUserNumber] = useState('');
   const [bestResult, setBestResult] = useState<number>();
@@ -34,12 +36,13 @@ export default function NumberMemory({ gameId }: IGameProps) {
 
   const start = () => {
     setScore(1);
-    setIsStart(true);
+    setStatusGame('Started');
+    // setIsStart(true);
     setCurrentLength(1);
     setCurrentNumber(generateNumber(currentLength));
     setTime(5);
     setIsRemember(true);
-    setIsEnd(false);
+    // setIsEnd(false);
     // setIsSaved(false);
     if (timer) clearTimeout(timer);
     setTimer(
@@ -50,9 +53,11 @@ export default function NumberMemory({ gameId }: IGameProps) {
   };
 
   const stop = () => {
-    setIsStart(false);
-    setIsEnd(true);
+    // setIsStart(false);
+    // setIsEnd(true);
+    setStatusGame('Finished');
     setIsRemember(false);
+    setCurrentLength(1);
     if (timer) {
       clearTimeout(timer);
       setTimer(undefined);
@@ -62,7 +67,7 @@ export default function NumberMemory({ gameId }: IGameProps) {
   const nextNumber = () => {
     setCurrentLength((prev) => prev + 1);
     setCurrentNumber(generateNumber(currentLength + 1));
-    setTime(10);
+    setTime(5);
     setIsRemember(true);
     setUserNumber('');
   };
@@ -72,8 +77,9 @@ export default function NumberMemory({ gameId }: IGameProps) {
       setScore((prev) => prev + 1);
       nextNumber();
     } else {
-      setIsEnd(true);
-      setIsStart(false);
+      setStatusGame('Finished');
+      // setIsEnd(true);
+      // setIsStart(false);
     }
   };
 
@@ -127,7 +133,7 @@ export default function NumberMemory({ gameId }: IGameProps) {
 
   return (
     <>
-      {!isEnd && (
+      {statusGame !== 'Finished' && (
         <div className="number-game__wrap">
           <div>
             <div className="number-game__header">
@@ -148,12 +154,12 @@ export default function NumberMemory({ gameId }: IGameProps) {
             </div>
             <div className="number-game__container">
               <div className="number-game__container-inner">
-                {(isStart || isEnd) && (
+                {statusGame === 'Started' && (
                   <div className="number-game__score">
                     <FormattedMessage id="level" /> {score}
                   </div>
                 )}
-                {isStart && !isEnd && (
+                {statusGame === 'Started' && (
                   <>
                     <div className="number-game__inner">
                       {isRemember && (
@@ -193,26 +199,28 @@ export default function NumberMemory({ gameId }: IGameProps) {
           </div>
 
           {/* {isEnd && <ButtonNumber text="save" callback={saveResult}></ButtonNumber>} */}
-          {!isStart && (
+          {statusGame !== 'Started' && (
             <ButtonNumber text="start" callback={start}></ButtonNumber>
           )}
-          {isStart && !isEnd && (
+          {statusGame === 'Started' && (
             <ButtonNumber text="stop" callback={stop}></ButtonNumber>
           )}
         </div>
       )}
-      {isEnd && (
+      {statusGame === 'Finished' && (
         <FinishGameTable
           score={score}
           rightAnswers={0}
           totalAnswers={0}
           speed={0}
-          started={isStart}
-          setStarted={setIsStart}
+          statusGame={statusGame}
+          setStatusGame={setStatusGame}
+          // started={isStart}
+          // setStarted={setIsStart}
           startGame={start}
           gameName={'number_memory'}
           gameID={gameId}
-          finished={isEnd}
+          // finished={isEnd}
         />
       )}
     </>

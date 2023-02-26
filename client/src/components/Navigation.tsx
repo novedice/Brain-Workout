@@ -103,7 +103,8 @@ export function Navigation({
       {loggedIn && (
         <>
           {' '}
-          <p>{userName}</p>
+          {/* <p>{userName}</p> */}
+          <p>{user.nickname}</p>
           <Link to="/">
             <div
               onClick={() => {

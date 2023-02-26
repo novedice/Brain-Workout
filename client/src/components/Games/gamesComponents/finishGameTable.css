@@ -1,0 +1,17 @@
+.finish-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(59, 130, 246, 0.5);
+}
+
+.button-start-finished {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(232 171 66);
+  border-radius: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
