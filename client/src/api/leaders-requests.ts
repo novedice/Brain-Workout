@@ -11,7 +11,7 @@ export const getLeaders = async (gameId: number) => {
         withCredentials: true,
       }
     );
-    console.log('leaders in request:', response);
+    // console.log('leaders in request:', response);
     return response.data;
   } catch (e) {
     console.log(e);

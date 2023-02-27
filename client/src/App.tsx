@@ -24,7 +24,7 @@ import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
 import { checkToken, updateUser } from './api/user-requests';
-import { EverydayWorkout } from './pages/EverydayWorkout';
+// import { EverydayWorkout } from './pages/EverydayWorkout';
 
 export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
@@ -110,7 +110,7 @@ export function App() {
           <Route path={`/games/:CurrentGame`} element={<CurrentGamePage />} />
           <Route path="/statistic" element={<StatisticPage />} />
           <Route path="/account-settings/" element={<AccounSettingsPage />} />
-          <Route path="/workout/:gameNumber" element={<EverydayWorkout />} />
+          {/* <Route path="/workout/:gameNumber" element={<EverydayWorkout />} /> */}
         </Routes>
         <Footer />
         <LogInWindow />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCategory } from '../api/category-requests';
 import { BlockNotLoggedIn } from '../components/BlockNotLoggedIn';
@@ -41,10 +41,10 @@ export const EverydayWorkout = () => {
     );
   };
 
-  // let gameIndex = 0;
-  // let nameGame = '';
-  // let gameImgRus = '';
-  // let gameImgEn = '';
+  let gameIndex = [0, 0];
+  let nameGame = ['', ''];
+  let gameImgRus = ['', ''];
+  let gameImgEn = ['', ''];
 
   const recieveCategories = async () => {
     const responseCategories = await getCategory();
@@ -65,29 +65,34 @@ export const EverydayWorkout = () => {
       }
     }
     while (newGames.length < 2) {
-      const gamesNotInToday = newGames.length
-        ? allGames.filter((game) => game.category !== newGames[0].category)
-        : allGames;
+      // const gamesNotInToday = newGames.length
+      //   ? allGames.filter((game) => game.category !== newGames[0].category)
+      //   : allGames;
+      const gamesNotInToday = allGames;
       newGames.push(gamesNotInToday[getRandom(0, gamesNotInToday.length)]);
       console.log('new games in while:', newGames);
       setTodayGames(newGames);
       console.log('todays games', todayGames);
     }
+    gameIndex = [newGames[0].id, newGames[1].id];
+    nameGame = [newGames[0].path, newGames[1].path];
+    gameImgEn = [
+      newGames[0].srcEn ? newGames[0].srcEn : '',
+      newGames[1].srcEn ? newGames[1].srcEn : '',
+    ];
+    gameImgRus = [
+      newGames[0].srcRus ? newGames[0].srcRus : '',
+      newGames[1].srcRus ? newGames[1].srcRus : '',
+    ];
+    console.log('all params', gameIndex, nameGame, gameImgEn);
+    // CurrentWorkoutGame = newGames[Number(gameNumber) - 1].game;
   };
-
-  const startCurrentGame = () => {
-    console.log('final games', todayGames);
-    console.log('query param', gameNumber);
-    CurrentWorkoutGame = todayGames[Number(gameNumber) - 1].game;
-  };
+  if (newGames.length || todayGames.length) {
+  }
 
   useEffect(() => {
     recieveCategories();
   }, [favoriteCategories]);
-
-  useEffect(() => {
-    startCurrentGame();
-  }, [todayGames, workoutStage]);
 
   return (
     <>
@@ -106,15 +111,25 @@ export const EverydayWorkout = () => {
                 ))}
               </div>
               <div>
-                <CurrentWorkoutGame
-                  gameId={todayGames[Number(gameNumber) - 1].id}
-                  gameName={todayGames[Number(gameNumber) - 1].path}
-                />
+                <p>Current game</p>
+                <p>{gameIndex[0]}</p>
+                <p>{nameGame}</p>
+                {CurrentWorkoutGame && (
+                  <CurrentWorkoutGame
+                    // gameId={todayGames[Number(gameNumber) - 1].id}
+                    // gameName={todayGames[Number(gameNumber) - 1].path}
+                    gameId={gameIndex[Number(gameNumber) - 1]}
+                    gameName={nameGame[Number(gameNumber) - 1]}
+                    srcEn={gameImgEn[Number(gameNumber) - 1]}
+                    srcRus={gameImgRus[Number(gameNumber) - 1]}
+                  />
+                )}
               </div>
               <Link to="/workout/2">
                 <button onClick={() => setWorkoutStage('FirstFinished')}>
                   press for second
                 </button>
+                <p>{workoutStage}</p>
               </Link>
               {/* <div>{workoutStage}</div> */}
               {/* {firstGameStage === 'Started' && <WorkoutGames[0] />} */}

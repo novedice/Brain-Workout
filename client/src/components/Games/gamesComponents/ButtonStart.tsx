@@ -13,7 +13,7 @@ export const ButtonStart = ({
   statusGame,
   setStatusGame,
   startGame,
-  startName = 'Start',
+  startName = 'start',
 }: IButtonStartProps) => {
   return (
     <>
