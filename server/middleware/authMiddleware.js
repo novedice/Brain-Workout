@@ -19,7 +19,7 @@ module.exports = async function (req, res, next) {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     // console.log("decoded", decoded.id);
     const session = await sessionController.get(decoded.sessionId);
-    if (session == null && session.token !== token) {
+    if (session && session.token !== token) {
       // console.log("session", session);
       return res.status(401).json({ message: "User is not authorized!" });
     }
