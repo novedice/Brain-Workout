@@ -1,5 +1,6 @@
 .page-container {
   margin: 0;
+  margin-bottom: 15px;
   padding: 0;
   overflow-y: auto;
 }
@@ -17,10 +18,17 @@
 .game-statistic {
   display: flex;
   justify-content: space-around;
+  width: 100%;
 }
 
 .small-img {
-  width: 50px;
+  width: 55px;
+  margin-right: 10px;
+}
+
+.small-img-game {
+  width: 40px;
+  margin-right: 10px;
 }
 
 .statistic-h2 {
@@ -33,6 +41,24 @@
   box-shadow: 0 4px 6px -6px #5a5959;
   padding-bottom: 2%;
   height: 10%;
+  color: rgb(5, 98, 148);
+  font-weight: 600;
+}
+
+.h2-game {
+  font-size: 1.5em;
+  line-height: 1em;
+  font-weight: 400;
+  width: 100%;
+  /* margin-bottom: 15px; */
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px -6px #5a5959;
+  padding-bottom: 2%;
+  color: rgb(5, 98, 148);
+  font-weight: 600;
+  margin-bottom: 15px;
+  /* height: 10%; */
 }
 
 .statistic-page {
@@ -45,19 +71,73 @@
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
   border-radius: 10px;
   height: 100%;
+  width: 100%;
 }
 
 .statistic-block {
   margin: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
   border-radius: 10px;
-  padding: 5px;
-  width: 100%;
-  /* height: 300px; */
+  padding: 20px;
   background-color: #93c5fd;
   transition: all 0.3s;
+}
+
+.streak {
+  font-style: italic;
+  font-size: larger;
+  color: #056294;
+}
+
+.streak-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.best-results {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  font-style: italic;
+  font-size: larger;
+  color: #056294;
+}
+
+.graphics {
+  width: 350px;
+  height: 210px;
+}
+
+.your-progress {
+  font-family: Inter, sans-serif;
+  color: #056294;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.result-table {
+  font-family: Sans-Serif;
+  font-size: 14px;
+  text-align: center;
+  border-collapse: collapse;
+  border-radius: 5px;
+  box-shadow: 0 0 0 5px #056294;
+  color: #056294;
+  width: 250px;
+}
+.leaders-header {
+  padding: 10px 8px;
+  background: #93c5fd;
+  align-self: center;
+  align-self: center;
+}
+.td-in-leaders {
+  border-top: 5px solid #056294;
+  padding: 8px;
+  background: #93c5fd;
 }

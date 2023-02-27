@@ -76,7 +76,7 @@ export const UserCalendar = ({ activeDays }: IdatesArrayProps) => {
                 </th>
                 <th
                   className="change-period"
-                  onClick={() => handlePeriod('next', 'month')}
+                  onClick={() => handlePeriod('next', 'year')}
                 >
                   {`>>`}
                 </th>

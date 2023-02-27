@@ -16,6 +16,8 @@ import './statisticPage.css';
 import { allGames } from '../game-content/allGames';
 import React from 'react';
 import '../assets/categories-pics/statistic.jpeg';
+import '../assets/Blue-Fire-PNG.png';
+import '../assets/fire.png';
 
 export function StatisticPage() {
   const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
@@ -23,42 +25,45 @@ export function StatisticPage() {
   const [orderedRes, setOrderedRes] = useState<IOrderedArray[]>([]);
   const [streaks, setStreaks] = useState([0, 0]);
   const [curLead, setCurLead] = useState<
-    { game: string; gameID: number; leaders: ILeader[] }[]
+    { game: string; gameID: number; gameImg: string; leaders: ILeader[] }[]
   >([]);
   const dispatch = useAppDispatch();
 
   const reciveResults = async () => {
     const response = await getUserResults();
     if (response) {
-      console.log('results', response);
       dispatch({ payload: response, type: UPDATE_ALL_RESULTS });
       setOrderedRes(resultsForStatistic(response));
       setStreaks(findStreaks(findActiveDays(response)));
     }
   };
   const leaders = async () => {
-    const resLeaders: { game: string; gameID: number; leaders: ILeader[] }[] =
-      [];
+    const resLeaders: {
+      game: string;
+      gameID: number;
+      gameImg: string;
+      leaders: ILeader[];
+    }[] = [];
     for (let i = 0; i < allGames.length; i++) {
       const leadResp = await getLeaders(i + 1);
       if (leadResp) {
-        // console.log('leaders resp', leadResp);
         resLeaders.push({
           game: allGames[i].path,
           gameID: allGames[i].id,
           leaders: leadResp,
+          gameImg: allGames[i].srcEn as string,
         });
-        // console.log('resLeaders:', resLeaders);
-        // console.log('curl', curLead);
       }
     }
     setCurLead(resLeaders);
   };
 
   useEffect(() => {
-    reciveResults();
-    leaders();
-  }, []);
+    if (loggedIn) {
+      reciveResults();
+      leaders();
+    }
+  }, [loggedIn]);
 
   return (
     <>
@@ -76,26 +81,26 @@ export function StatisticPage() {
                 <FormattedMessage id="to_statistic" />
               </div>
               <div className="statistic-block ">
-                <p className="upper-case mb-3 text-lg">
+                <p className="upper-case h2-game">
                   <FormattedMessage id="name" />: {user.nickname}
                 </p>
-                <div className="flex">
-                  <p className="mb-1 mr-1 text-sm">
+                <div className="streak-wrap">
+                  <p className="text-cursive streak">
                     <FormattedMessage
                       id="your_best_streak"
                       values={{ count: streaks[1] }}
                     />
                   </p>
-                  <img className="max-h-5 w-[30px]" src="fire-blue.jpeg"></img>
+                  <img className=" w-[50px]" src="Blue-Fire-PNG.png"></img>
                 </div>
-                <div className="flex">
-                  <p className="mb-1 mr-2">
+                <div className="streak-wrap">
+                  <p className="text-cursive streak">
                     <FormattedMessage
                       id="your_streak"
                       values={{ count: streaks[0] }}
                     />
                   </p>
-                  <img className="max-h-5 w-[17px]" src="fire-red.jpeg"></img>
+                  <img className="max-h-5 w-[17px]" src="fire.png"></img>
                 </div>
               </div>
               <div></div>
@@ -107,26 +112,39 @@ export function StatisticPage() {
                       key={gameResults.gameId}
                       className="statistic-block"
                     >
-                      <div className="mb-3">
+                      <div className="h2-game">
+                        <img
+                          className="small-img-game"
+                          src={`${
+                            allGames.filter(
+                              (game) => game.id === gameResults.gameId
+                            )[0].srcEn
+                          }`}
+                          alt={`${gameResults.gameId}`}
+                        />
                         <p className="upper-case text-xl">
                           {gameResults.gameName}
                         </p>
-                        <p>
-                          <FormattedMessage
-                            id="best_result"
-                            values={{ score: gameResults.bestScore }}
-                          />
-                        </p>
-                        <p>
-                          <FormattedMessage
-                            id="times_played"
-                            values={{ times: gameResults.results.length }}
-                          />
-                        </p>
+                      </div>
+                      <div className="best-results">
+                        <div>
+                          <p>
+                            <FormattedMessage
+                              id="best_result"
+                              values={{ score: gameResults.bestScore }}
+                            />
+                          </p>
+                          <p>
+                            <FormattedMessage
+                              id="times_played"
+                              values={{ times: gameResults.results.length }}
+                            />
+                          </p>
+                        </div>
                       </div>
                       <div className="game-statistic">
                         {gameResults.results.length !== 0 && (
-                          <div className="mb-4 h-[276px] w-[504px] border-2">
+                          <div className="graphics">
                             <Canvas
                               canvasId={`game-${gameResults.gameId}`}
                               results={gameResults.results}
@@ -137,25 +155,45 @@ export function StatisticPage() {
                           <table className="result-table">
                             <thead className="result-table-head">
                               <tr>
-                                <th>Best results</th>
+                                <th className="leaders-header" colSpan={6}>
+                                  <FormattedMessage id="best_results" />
+                                </th>
                               </tr>
-                              <tr>
-                                <th>{gameResults.gameName}</th>
-                              </tr>
+                              {/* <tr>
+                                <th colSpan={6}>{gameResults.gameName}</th>
+                              </tr> */}
                             </thead>
                             <tbody>
-                              {curLead.length
+                              {curLead?.length
                                 ? curLead
                                     .filter(
                                       (gamelead) =>
                                         gamelead.gameID === gameResults.gameId
                                     )[0]
-                                    .leaders?.map((leader, index) => (
+                                    .leaders?.sort((a, b) =>
+                                      gameResults.gameId === 1 ||
+                                      gameResults.gameId === 11
+                                        ? a.value - b.value
+                                        : b.value - a.value
+                                    )
+                                    .map((leader, index) => (
                                       <React.Fragment key={index}>
                                         <tr>
-                                          <td>{index + 1}</td>
-                                          <td colSpan={2}>{leader.value}</td>
-                                          <td colSpan={3}>{leader.nickname}</td>
+                                          <td className="td-in-leaders position">
+                                            {index + 1}
+                                          </td>
+                                          <td
+                                            className="td-in-leaders leader-name"
+                                            colSpan={3}
+                                          >
+                                            {leader.nickname}
+                                          </td>
+                                          <td
+                                            className="td-in-leaders leader-score"
+                                            colSpan={2}
+                                          >
+                                            {leader.value}
+                                          </td>
                                         </tr>
                                       </React.Fragment>
                                     ))

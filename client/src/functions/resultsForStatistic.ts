@@ -18,10 +18,19 @@ export const resultsForStatistic = (results: IResultResponse[]) => {
           value: result.value,
           createdAt: result.createdAt,
         });
-        orderedArray[i].bestScore =
-          orderedArray[i].bestScore > result.value
-            ? orderedArray[i].bestScore
-            : result.value;
+        if (result.gameId === 1 || result.gameId === 11) {
+          orderedArray[i].bestScore =
+            orderedArray[i].bestScore < result.value
+              ? orderedArray[i].bestScore === 0
+                ? result.value
+                : orderedArray[i].bestScore
+              : result.value;
+        } else {
+          orderedArray[i].bestScore =
+            orderedArray[i].bestScore < result.value
+              ? result.value
+              : orderedArray[i].bestScore;
+        }
       }
     }
   }
