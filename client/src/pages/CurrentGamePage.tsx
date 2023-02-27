@@ -39,14 +39,14 @@ export const CurrentGamePage = () => {
 
   return (
     <>
-      <div className="game-wrap ml-[10%] mr-[10%] flex h-screen flex-col  ">
+      <div className="game-wrap flex h-screen flex-col bg-slate-200 pr-[10%] pl-[10%]">
         <Link
           to="/games"
-          className="upper-case mb-5 w-fit rounded bg-blue-300 p-4 text-white"
+          className="upper-case my-3 w-fit rounded bg-blue-300 p-4 text-white duration-300 hover:bg-red-200"
         >
           <FormattedMessage id="all_games" />
         </Link>
-        <div className="game mb-8  h-full border-8 border-sky-800 bg-[url('./assets/backgroud.jpeg')] p-[3%]">
+        <div className="game mb-8 h-full rounded-xl bg-white">
           {GameNow && (
             <GameNow
               gameId={gameIndex}

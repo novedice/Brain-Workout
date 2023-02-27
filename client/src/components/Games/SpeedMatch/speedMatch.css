@@ -11,6 +11,7 @@
   height: 205px;
   padding: 5px;
 }
+
 .right-card {
   width: 205px;
   height: 205px;
@@ -71,4 +72,10 @@
     transform-style: preserve-3d;
     transform-origin: left;
   }
+}
+
+.speed-match__container {
+  height: 73vh;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+  border-radius: 10px;
 }

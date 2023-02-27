@@ -37,7 +37,7 @@ export const PrestartWindow = ({
   return (
     <>
       <div className="prestart-container">
-        <div className="name-of-the-game upper-case">
+        <div className="name-of-the-game">
           <FormattedMessage id={gameName} />
         </div>
         {currentImg && (
@@ -52,7 +52,7 @@ export const PrestartWindow = ({
         <div className="buttons-prestart">
           {setHowToPlay && (
             <button
-              className="how-to-play-button"
+              className="how-to-play-button duration-300 hover:bg-red-200"
               onClick={() => {
                 setHowToPlay(true);
               }}
