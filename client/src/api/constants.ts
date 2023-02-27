@@ -7,4 +7,5 @@ export const login = 'login';
 export const authorization = 'auth';
 export const categories = 'categories';
 export const leaders = 'leaders';
-export const API_URL = 'http://localhost:5000';
+// export const API_URL = 'http://localhost:5000';
+export const API_URL = 'https://brain-workout2.onrender.com';
