@@ -43,13 +43,13 @@ export function GamePage() {
                 <FormattedMessage id={category ? category : 'all_categories'} />
               </div>
 
-              <div className="flex flex-wrap">
+              <div className="game-contant flex flex-wrap justify-center">
                 {filteredGames().map((game) => {
                   return (
                     <React.Fragment key={game.path}>
-                      <div className="game-small ">
-                        <div className="all-games-wrap">
-                          <Link to={`/games/${game.path}`}>
+                      <Link to={`/games/${game.path}`}>
+                        <div className="game-small ">
+                          <div className="all-games-wrap">
                             <img
                               className="game-image-small"
                               src={game.srcEn}
@@ -59,9 +59,9 @@ export function GamePage() {
                               {game.name}
                             </p>
                             <p className="text-cursive">{game.categoryName}</p>
-                          </Link>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </React.Fragment>
                   );
                 })}

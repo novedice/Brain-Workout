@@ -5,6 +5,9 @@
   height: 100%;
   align-items: center;
   gap: 5px;
+  padding: 50px 0;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+  border-radius: 10px;
 }
 
 .number-game__container {
@@ -19,21 +22,25 @@
 .number-game__start {
   align-self: center;
   justify-self: center;
+
 }
 
 .number-game__title {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .number-game__description {
   font-style: italic;
+  padding-bottom: 10px;
 }
 
 .number-game__best-result {
   text-align: center;
   margin-top: 10px;
+  padding-bottom: 10px;
 }
 
 .number-game__score {

@@ -8,7 +8,7 @@ import { IGameProps } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
 import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 const NUMB_WORDS = 100;
-const SECONDS = 10;
+const SECONDS = 60;
 
 export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
   const [words, setWords] = useState<string[]>([]);

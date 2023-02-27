@@ -5,6 +5,9 @@
   height: 100%;
   align-items: center;
   gap: 10px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+  border-radius: 10px;
+  padding: 50px 0;
 }
 
 /* .sequence-memory */
@@ -53,7 +56,7 @@
 
 .sequence-memory__field-btn.active {
   background-color: rgb(7 89 133);
-} 
+}
 
 .sequence-memory__field.disabled::after {
   content: '';

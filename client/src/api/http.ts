@@ -2,9 +2,11 @@ import axios, { InternalAxiosRequestConfig } from 'axios';
 import { API_URL } from './constants';
 
 const $host = axios.create({
-  baseURL: API_URL
+  baseURL: API_URL,
+  // headers: { 'access-control-allow-origin': '*' },
 });
 
+<<<<<<< HEAD
 const $authHost = axios.create({
   baseURL: API_URL
 });
@@ -20,3 +22,6 @@ export {
   $host,
   $authHost
 }
+=======
+export { $host };
+>>>>>>> develop
