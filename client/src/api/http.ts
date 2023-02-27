@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import { API_URL } from './constants';
 
 const $host = axios.create({
@@ -6,4 +6,19 @@ const $host = axios.create({
   // headers: { 'access-control-allow-origin': '*' },
 });
 
-export { $host };
+const $authHost = axios.create({
+  baseURL: API_URL
+});
+
+const authInterceptor = (config: InternalAxiosRequestConfig) => {
+  config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
+  return config;
+}
+
+$authHost.interceptors.request.use(authInterceptor);
+
+export {
+  $host,
+  $authHost
+}
+

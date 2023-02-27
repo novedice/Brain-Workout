@@ -80,11 +80,8 @@ const SignUpModal = () => {
       });
       dispatch({ type: LOGGINUSER });
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(registration.token));
+      localStorage.setItem('token', registration.token);
 
-      document.cookie = `auth=Bearer ${registration.token}`;
-      console.log('user after sign up', user);
-      console.log('cookies', document.cookie);
       if (checked) {
         localStorage.setItem('user', JSON.stringify(user));
       } else {

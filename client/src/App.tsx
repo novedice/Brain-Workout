@@ -31,9 +31,6 @@ export function App() {
   const [currentLang, setCurrentLang] = useState(user.lang);
   const authUser = async () => {
     if (localStorage.getItem('token')) {
-      document.cookie = `auth=Bearer ${JSON.parse(
-        localStorage.getItem('token') as string
-      )}`;
       const newToken = await checkToken();
       console.log('new token', newToken);
       if (newToken) {
@@ -63,8 +60,7 @@ export function App() {
             ? LOCALES.ENGLISH
             : LOCALES.RUSSIAN
         );
-        document.cookie = `auth=Bearer ${newToken.token}`;
-        localStorage.setItem('token', JSON.stringify(newToken.token));
+        localStorage.setItem('token', newToken.token);
       }
     }
   };
@@ -79,13 +75,7 @@ export function App() {
     setCurrentLang(user.lang);
     const responseUpdate = await updateUser({ lang: user.lang });
     if (responseUpdate) {
-      document.cookie = `auth=Bearer ${responseUpdate.token}`;
-      localStorage.setItem('token', JSON.stringify(responseUpdate.token));
-      console.log('token after change lang', responseUpdate.token);
-      console.log(
-        'decode token after change lang:',
-        jwt_decode<IUser>(responseUpdate.token).lang
-      );
+      localStorage.setItem('token', responseUpdate.token);
     }
 
     localStorage.setItem('user', JSON.stringify(user));

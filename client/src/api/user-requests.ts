@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 // import { useCookies } from 'react-cookie';
 import { IToken } from '../types/interfaces';
 import { authorization, BaseUrl, users } from './constants';
-import { $host } from './http';
+import { $authHost, $host } from './http';
 // import { useJwt } from 'react-jwt';
 
 interface IDataUser {
@@ -19,7 +19,7 @@ interface IDataUser {
 
 export const updateUser = async (data: IDataUser) => {
   try {
-    const response = await $host.put<IToken>(`${BaseUrl}/${users}/`, data, {
+    const response = await $authHost.put<IToken>(`${BaseUrl}/${users}/`, data, {
       withCredentials: true,
     });
     return response.data;
@@ -31,7 +31,7 @@ export const updateUser = async (data: IDataUser) => {
 
 export const deleteUser = async () => {
   try {
-    const response = await $host.delete<{ message: string }>(
+    const response = await $authHost.delete<{ message: string }>(
       `${BaseUrl}/${users}`,
       // data
       {
@@ -69,7 +69,7 @@ export const registrAuthUser = async (
 export const checkToken = async () => {
   let error;
   try {
-    const response = await $host.get<IToken>(
+    const response = await $authHost.get<IToken>(
       `${BaseUrl}/${users}/${authorization}`,
       { withCredentials: true }
     );

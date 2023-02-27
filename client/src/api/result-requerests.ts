@@ -3,7 +3,7 @@
 // import { useCookies } from 'react-cookie';
 import { IResData } from '../types/interfaces';
 import { BaseUrl, results, users } from './constants';
-import { $host } from './http';
+import { $authHost } from './http';
 
 export interface IResultResponse {
   id: number;
@@ -37,7 +37,7 @@ export const getUserResults = async () => {
   // let response: IResultResponse[];
   // let error = '';
   try {
-    const response = await $host.get<IResultResponse[]>(
+    const response = await $authHost.get<IResultResponse[]>(
       `${BaseUrl}/${users}/${results}`,
       { withCredentials: true }
     );
@@ -49,7 +49,7 @@ export const getUserResults = async () => {
 
 export const createResult = async (resData: IResData) => {
   try {
-    const response = await $host.post<IResultResponse>(
+    const response = await $authHost.post<IResultResponse>(
       `${BaseUrl}/${users}/${results}`,
       resData,
       {
@@ -64,7 +64,7 @@ export const createResult = async (resData: IResData) => {
 
 export const getBestResult = async (gameId: number, sort: 'ASC' | 'DESC') => {
   try {
-    const response = await $host.get<{ value: number }>(
+    const response = await $authHost.get<{ value: number }>(
       `${BaseUrl}/${users}/${results}/best?gameId=${gameId}&sort=${sort}`,
       {
         withCredentials: true,
