@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: ["https://brain-workout.netlify.app", "http://localhost:8080", "*"],
     credentials: true,
-    preflightContinue: true,
+    // preflightContinue: true,
   })
 );
 app.use(express.json());
