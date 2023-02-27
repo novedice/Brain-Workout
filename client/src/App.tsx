@@ -24,7 +24,7 @@ import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
 import { checkToken, updateUser } from './api/user-requests';
-// import { EverydayWorkout } from './pages/EverydayWorkout';
+import './assets/BG2.jpg';
 
 export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
@@ -88,12 +88,20 @@ export function App() {
       locale={currentLang}
       defaultLocale={LOCALES.ENGLISH}
     >
-      <div className="flex h-screen flex-col justify-between">
+      <div
+        className="main-page__container flex h-screen flex-col justify-between "
+        style={{
+          backgroundImage: `url("BG2.jpg") `,
+          backgroundPosition: '0 -60px',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          width: '100%',
+        }}
+      >
         <Navigation
           currentLang={currentLang}
           handleChangeLang={handleChangeLang}
         />
-
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/games" element={<GamePage />} />

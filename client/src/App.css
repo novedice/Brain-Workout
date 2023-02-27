@@ -1,3 +1,4 @@
+
 :root {
   --color-primary: #a463f2;
   --color-gray-dark: #ccc;
@@ -15,10 +16,6 @@ body {
   font-family: var(--font-primary);
 }
 
-.calendar {
-  border: solid 1px black;
-}
-
 .upper-case {
   text-transform: uppercase;
 }
@@ -34,3 +31,4 @@ body {
 .text-cursive {
   font-style: italic;
 }
+

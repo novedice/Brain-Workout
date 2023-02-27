@@ -110,6 +110,8 @@ export const messages = {
     thu: 'thu',
     fri: 'fri',
     sat: 'sat',
+    discover: 'Discover what your mind can do',
+    programs: 'Train your memory, flexibility, and more with brain training programs',
     training_preferences: 'training preferences',
     back_to_settings: 'Back to account settings',
     account: 'account',
@@ -171,6 +173,8 @@ export const messages = {
     your_best_results: 'Your best results',
   },
   [LOCALES.RUSSIAN]: {
+    discover: 'Узнайте, на что способен ваш разум',
+    programs: 'Тренируйте память, гибкость и многое другое с помощью программ тренировки мозга',
     to_main: `НА ГЛАВНУЮ`,
     to_games: 'ИГРЫ',
     to_statistic: 'статистика',
