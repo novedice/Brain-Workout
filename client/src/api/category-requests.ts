@@ -1,11 +1,11 @@
 import { ICategory } from '../types/interfaces';
 import { BaseUrl, categories, users } from './constants';
-import { $host } from './http';
+import { $authHost } from './http';
 import { IResultResponse } from './result-requerests';
 
 export const createCategory = async (category: string) => {
   try {
-    const response = await $host.post<ICategory>(
+    const response = await $authHost.post<ICategory>(
       `${BaseUrl}/${users}/${categories}`,
       { category: category },
       {
@@ -22,7 +22,7 @@ export const createCategory = async (category: string) => {
 
 export const getCategory = async () => {
   try {
-    const response = await $host.get<ICategory[]>(
+    const response = await $authHost.get<ICategory[]>(
       `${BaseUrl}/${users}/${categories}`,
       {
         withCredentials: true,
@@ -36,7 +36,7 @@ export const getCategory = async () => {
 
 export const deleteCategory = async (id: number) => {
   try {
-    const response = await $host.delete<IResultResponse>(
+    const response = await $authHost.delete<IResultResponse>(
       `${BaseUrl}/${users}/${categories}/${id}`,
       {
         withCredentials: true,
