@@ -6,7 +6,6 @@ const $host = axios.create({
   // headers: { 'access-control-allow-origin': '*' },
 });
 
-<<<<<<< HEAD
 const $authHost = axios.create({
   baseURL: API_URL
 });
@@ -22,6 +21,4 @@ export {
   $host,
   $authHost
 }
-=======
-export { $host };
->>>>>>> develop
+
