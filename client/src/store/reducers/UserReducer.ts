@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { IUser } from '../../types/interfaces';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { CHANGE_LANGUAGE, LOGGINUSER, UPDATE_USER } from '../../constants';
+import {
+  CHANGE_LANGUAGE,
+  DELETE_USER,
+  LOGGINUSER,
+  UPDATE_USER,
+} from '../../constants';
 import { LOCALES } from '../../i18n/locales';
 
 const initialState: IUser = {
@@ -36,6 +41,10 @@ export const UserReducer = (
     }
     case LOGGINUSER: {
       state.loggedIn = true;
+      return state;
+    }
+    case DELETE_USER: {
+      state = initialState;
       return state;
     }
     default:

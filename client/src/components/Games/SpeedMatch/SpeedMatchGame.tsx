@@ -13,18 +13,21 @@ import { ButtonPause } from '../gamesComponents/ButtonPause';
 import { FormattedMessage } from 'react-intl';
 import { ButtonYesNo } from '../gamesComponents/ButtonYesNo';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { GamePaused } from '../gamesComponents/PauseComponent';
+import { StatusGameType } from '../../../types/types';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 
-export const SpeedMatchGame = ({ gameId }: IGameProps) => {
+const GAME_DURATION = 20;
+
+export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
   const [prevCard, setPrevCard] = useState<ICardSpeedMacth>();
   const [nextCard, setNextCard] = useState<ICardSpeedMacth>(
     cards[getRandom(0, cards.length - 1)]
   );
-  const [started, setStarted] = useState(false);
   const [score, setScore] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [seconds, setSeconds] = useState(10);
-  const [finished, setFinished] = useState(false);
+  const [seconds, setSeconds] = useState(GAME_DURATION);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [changing, setChanging] = useState<'' | 'changing-front'>('');
   const [rightAnswers, setRightAnswers] = useState(0);
   const [totalAnswers, setTotalAnswers] = useState(0);
@@ -35,10 +38,10 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
 
   const startGame = () => {
     setScore(0);
-    setSeconds(20);
-    setFinished(false);
-    setStarted(true);
+    setMultiple(1);
     setSpeed(0);
+    setSeconds(GAME_DURATION);
+    setStatusGame('Started');
     setBeginAnswer(new Date());
   };
 
@@ -91,77 +94,106 @@ export const SpeedMatchGame = ({ gameId }: IGameProps) => {
 
   return (
     <>
-      {finished && (
+      {statusGame === 'Finished' && (
         <FinishGameTable
           score={score}
           rightAnswers={rightAnswers}
           totalAnswers={totalAnswers}
           speed={speed}
           startGame={startGame}
-          started={started}
-          setStarted={setStarted}
+          statusGame={statusGame}
+          setStatusGame={setStatusGame}
           gameName="speed_match"
           gameID={gameId}
-          finished={finished}
         />
       )}
-      {!finished && (
-        <div className="flex w-full flex-col items-center">
-          <div className="mb-[5%] flex w-full items-center justify-around">
-            <ButtonStart
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={startGame}
+          setStatusGame={setStatusGame}
+          gameName={'speed_match'}
+          statusGame={statusGame}
+          gameDescription="speed_match_description"
+          // setHowToPlay={setHowToPlay}
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
+      )}
+      {statusGame !== 'Finished' && statusGame !== 'Wait' && (
+        <>
+          {statusGame === 'Paused' && (
+            <GamePaused
+              statusGame={statusGame}
+              setStatusGame={setStatusGame}
               startGame={startGame}
-              setStarted={setStarted}
-              started={started}
             />
-            <ButtonPause paused={paused} setPaused={setPaused} />
-
-            <div className="m-5">
-              <Timer
-                seconds={seconds}
-                started={started}
-                paused={paused}
-                finished={finished}
-                setFinished={setFinished}
-                setStarted={setStarted}
-                setSeconds={setSeconds}
-              />
-            </div>
-            <p className="m-5">
-              <FormattedMessage id="score" values={{ n: score }} />
-            </p>
-            <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
-          </div>
-          <p>
-            <FormattedMessage id="question_speed_match" />
-          </p>
-          <div className="cover flex">
-            <div className="left-card">
-              <SpeedMatchCard
-                card={{ src: 'card-cover.jpeg', name: 'cover' }}
-              />
-            </div>
-            <div className="right-card">
-              <div className="card">
-                <div
-                  className={`card-front ${changing}`}
-                  // className={`${changing} card-front ${frontActive} speed-match-card-container face`}
-                >
-                  <SpeedMatchCard card={currentCard} />
+          )}
+          {statusGame !== 'Paused' && (
+            <div className="flex w-full flex-col items-center">
+              <div className="mb-[5%] flex w-full items-center justify-around">
+                <ButtonStart
+                  startGame={startGame}
+                  statusGame={statusGame}
+                  setStatusGame={setStatusGame}
+                />
+                <ButtonPause
+                  statusGame={statusGame}
+                  setStatusGame={setStatusGame}
+                />
+                <div className="m-5">
+                  <Timer
+                    seconds={seconds}
+                    statusGame={statusGame}
+                    setStatusGame={setStatusGame}
+                    setSeconds={setSeconds}
+                  />
                 </div>
-                <div
-                  className={`card-back ${backActive} `}
-                  // className={`backpart card-back ${backActive}`}
-                >
-                  <SpeedMatchCard card={nextCard} />
+                <p className="m-5">
+                  <FormattedMessage id="score" values={{ n: score }} />
+                </p>
+                <p className="border-blue flex h-[50px] w-[50px] items-center justify-center rounded-full border-4 border-blue-300">{`x${multiple}`}</p>
+              </div>
+              <p>
+                <FormattedMessage id="question_speed_match" />
+              </p>
+              <div className="cover flex">
+                <div className="left-card">
+                  <SpeedMatchCard
+                    card={{ src: 'card-cover.jpeg', name: 'cover' }}
+                  />
+                </div>
+                <div className="right-card">
+                  <div className="card">
+                    <div
+                      className={`card-front ${changing}`}
+                      // className={`${changing} card-front ${frontActive} speed-match-card-container face`}
+                    >
+                      <SpeedMatchCard card={currentCard} />
+                    </div>
+                    <div
+                      className={`card-back ${backActive} `}
+                      // className={`backpart card-back ${backActive}`}
+                    >
+                      <SpeedMatchCard card={nextCard} />
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div className="flex justify-center align-middle">
+                <ButtonYesNo
+                  val="no"
+                  callback={noAnswer}
+                  disabled={statusGame !== 'Started'}
+                />
+                <ButtonYesNo
+                  val="yes"
+                  callback={yesAnswer}
+                  disabled={statusGame !== 'Started'}
+                />
+              </div>
             </div>
-          </div>
-          <div className="flex justify-center align-middle">
-            <ButtonYesNo val="no" callback={noAnswer} disabled={!started} />
-            <ButtonYesNo val="yes" callback={yesAnswer} disabled={!started} />
-          </div>
-        </div>
+          )}
+        </>
       )}
     </>
   );

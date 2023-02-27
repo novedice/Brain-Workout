@@ -33,6 +33,7 @@ const SignUpModal = () => {
   const [emailError, setEmailError] = useState<ReactElement | string>();
   const [confirmPass, setConfirmPass] = useState('');
   const [confirmPassErr, setConfirmPassErr] = useState<ReactElement | string>();
+  const [checked, setChecked] = useState(true);
   const user: IUser = useTypeSelector((state) => state.userInfo);
 
   const dispatch = useAppDispatch();
@@ -68,7 +69,7 @@ const SignUpModal = () => {
           loggedIn: true,
           language: user.lang,
           email: user.email,
-          alwaysSignIn: true,
+          alwaysSignIn: checked,
         },
         type: UPDATE_USER,
       });
@@ -84,6 +85,12 @@ const SignUpModal = () => {
       document.cookie = `auth=Bearer ${registration.token}`;
       console.log('user after sign up', user);
       console.log('cookies', document.cookie);
+      if (checked) {
+        localStorage.setItem('user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+      }
       signUpModalHide();
     } else {
       setEmailError(<FormattedMessage id="user_exists" />);
@@ -95,25 +102,22 @@ const SignUpModal = () => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    let numOfErr = emailError ? 1 : 0;
 
-    setPasswordEr(isValidPassword(password));
-    setNameError(isNameValid(nickname));
-    setEmailError(isEmailValid(email));
-    setConfirmPassErr(isPasswordsEquial(confirmPass, password));
+    setPasswordEr(isValidPassword(password, numOfErr).err);
+    numOfErr = isValidPassword(password, numOfErr).n;
+    setNameError(isNameValid(nickname, numOfErr).err);
+    numOfErr = isNameValid(nickname, numOfErr).n;
+    setEmailError(isEmailValid(email, numOfErr).err);
+    numOfErr = isEmailValid(email, numOfErr).n;
+    setConfirmPassErr(isPasswordsEquial(confirmPass, password, numOfErr).err);
+    numOfErr = isEmailValid(email, numOfErr).n;
 
-    if (
-      passwordEr !== '' ||
-      emailError !== '' ||
-      confirmPassErr !== '' ||
-      nameError !== '' ||
-      !nickname ||
-      !email ||
-      !password ||
-      !confirmPass
-    ) {
+    if (numOfErr !== 0) {
+      console.log('numbers in sign up', numOfErr);
       return;
     } else {
-      console.log(passwordEr, emailError, confirmPassErr, nameError);
+      // console.log(passwordEr, emailError, confirmPassErr, nameError);
 
       sigInComplete();
       return;
@@ -136,6 +140,10 @@ const SignUpModal = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setConfirmPass(event.target.value);
+  };
+
+  const staySignedHandler = () => {
+    setChecked(!checked);
   };
 
   return (
@@ -215,6 +223,17 @@ const SignUpModal = () => {
           >
             <FormattedMessage id="registration" />
           </button>
+          <div className="flex items-center justify-start">
+            <label>
+              <input
+                className="mr-3"
+                type="checkbox"
+                checked={checked}
+                onChange={staySignedHandler}
+              ></input>
+              <FormattedMessage id="stay_signed" />
+            </label>
+          </div>
         </form>
       </div>
     </div>

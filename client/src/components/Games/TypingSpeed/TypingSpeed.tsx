@@ -2,10 +2,16 @@ import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import randomWords from 'random-words';
 import './TypingSpeed.css';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+// import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { IGameProps } from '../../../types/interfaces';
+import { StatusGameType } from '../../../types/types';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 const NUMB_WORDS = 100;
-const SECONDS = 60;
+const SECONDS = 10;
 
-export function TypingSpeed() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
   const [words, setWords] = useState<string[]>([]);
   const [currentInput, setCurrentInput] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -14,7 +20,7 @@ export function TypingSpeed() {
   const [correct, setCorrect] = useState<number>(0);
   const [inCorrect, setInCorrect] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<number | undefined>(SECONDS);
-  const [statusGame, setStatusGame] = useState('wait');
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const inputText = useRef<any>(null);
 
   useEffect(() => {
@@ -26,6 +32,14 @@ export function TypingSpeed() {
   function generateWords() {
     return randomWords(NUMB_WORDS);
   }
+
+  const saveResult = () => {
+    localStorage.setItem('bestTypingScore', JSON.stringify(correct));
+    localStorage.setItem(
+      'bestTypingAccuracyScore',
+      JSON.stringify(Math.round((correct / (correct + inCorrect)) * 100))
+    );
+  };
 
   const startTime = () => {
     if (statusGame === 'Finished') {
@@ -41,6 +55,7 @@ export function TypingSpeed() {
           if (prev === 0) {
             clearInterval(interval);
             setStatusGame('Finished');
+            saveResult();
             setCurrentInput('');
             return SECONDS;
           } else {
@@ -104,20 +119,30 @@ export function TypingSpeed() {
     }
   }
 
-  const saveResult = () => {
-    localStorage.setItem('bestTypingScore', JSON.stringify(correct));
-    localStorage.setItem(
-      'bestTypingAccuracyScore',
-      JSON.stringify(Math.round((correct / (correct + inCorrect)) * 100))
-    );
-  };
-
   return (
     <div className="container-game">
-      <h1 className="game-name">Typing Speed Test</h1>
-      <h2 className="time-left">
-        Time left: <span className="important-text">{timeLeft}</span>
-      </h2>
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={startTime}
+          setStatusGame={setStatusGame}
+          gameName={'typing_speed_test'}
+          statusGame={statusGame}
+          gameDescription="typing_speed_description"
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
+      )}
+      {statusGame !== 'Wait' && statusGame !== 'Finished' && (
+        <>
+          <h1 className="game-name">
+            <FormattedMessage id="typing_speed_test" />
+          </h1>
+          <h2 className="time-left">
+            <FormattedMessage id="time_left_typing" />
+            <span className="important-text">{timeLeft}</span>
+          </h2>
+        </>
+      )}
 
       {statusGame === 'Started' && (
         <div className="section">
@@ -144,56 +169,73 @@ export function TypingSpeed() {
           </div>
         </div>
       )}
+      {statusGame !== 'Wait' && statusGame !== 'Finished' && (
+        <div className="section">
+          <input
+            ref={inputText}
+            disabled={statusGame !== 'Started'}
+            className="input-section"
+            onKeyDown={hendleKeyPress}
+            value={currentInput}
+            onChange={(e) => setCurrentInput(e.target.value)}
+          ></input>
+        </div>
+      )}
 
-      <div className="section">
-        <input
-          ref={inputText}
-          disabled={statusGame !== 'Started'}
-          className="input-section"
-          onKeyDown={hendleKeyPress}
-          value={currentInput}
-          onChange={(e) => setCurrentInput(e.target.value)}
-        ></input>
-      </div>
+      {/* {statusGame === 'Wait' && ( */}
 
-      {statusGame === 'wait' && (
-        <button
+      {/* <button
           className="btn mb-4 w-28 rounded-full border p-1 text-xl hover:bg-red-200"
           onClick={startTime}
         >
-          Start
+          <FormattedMessage id="start" />
         </button>
-      )}
+      )} */}
 
       {statusGame === 'Finished' && (
-        <div className="section result-section">
-          <div className="result-container content">
-            <p>
-              Words per minute:{' '}
-              <span className="important-text">{correct}</span>
-            </p>
-            <p>
-              Accuracy:{' '}
-              <span className="important-text">
-                {Math.round((correct / (correct + inCorrect)) * 100)}%
-              </span>
-            </p>
+        <>
+          {/* <FinishGameTable
+            score={correct}
+            rightAnswers={correct}
+            totalAnswers={correct + inCorrect}
+            speed={0}
+            statusGame={statusGame}
+            setStatusGame={setStatusGame}
+            startGame={startTime}
+            gameName={'typing_speed'}
+            gameID={gameId}
+            resultsName="words_per_minute"
+          /> */}
+
+          <div className="section result-section">
+            <div className="result-container content">
+              <p>
+                <FormattedMessage id="words_per_minute" />{' '}
+                <span className="important-text">{correct}</span>
+              </p>
+              <p>
+                <FormattedMessage id="accuracy_simple" />:{' '}
+                <span className="important-text">
+                  {Math.round((correct / (correct + inCorrect)) * 100)}%
+                </span>
+              </p>
+            </div>
+            <div>
+              <button
+                className="btn mr-4 rounded-full border p-1 px-4 text-xl hover:bg-red-200"
+                onClick={() => saveResult()}
+              >
+                <FormattedMessage id="save_result" />
+              </button>
+              <button
+                className="btn rounded-full border p-1 px-4 text-xl hover:bg-red-200"
+                onClick={startTime}
+              >
+                <FormattedMessage id="new_test" />
+              </button>
+            </div>
           </div>
-          <div>
-            <button
-              className="btn mr-4 rounded-full border p-1 px-4 text-xl hover:bg-red-200"
-              onClick={() => saveResult()}
-            >
-              Save score
-            </button>
-            <button
-              className="btn rounded-full border p-1 px-4 text-xl hover:bg-red-200"
-              onClick={startTime}
-            >
-              New test
-            </button>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );

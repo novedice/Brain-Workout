@@ -1,8 +1,10 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link, useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
 import { allGames } from '../game-content/allGames';
-import './GamePage.css';
+import CATEGORIES from '../game-content/game-categories';
+import './gamePage.css';
 
 export function GamePage() {
   const [searchParams] = useSearchParams();
@@ -18,33 +20,55 @@ export function GamePage() {
 
   return (
     <>
-      <div className="game-page__container wrap flex h-full justify-center p-3">
-        <aside className="width-[20%] game-aside mr-14">
-          <GameCategories />
-        </aside>
+      <div className="game-page">
+        <div className="game-page-container">
+          <aside className="aside-nav-game">
+            <GameCategories />
+          </aside>
 
-        <main className="game-main flex w-[70%] flex-col justify-around">
-          <div className="flex flex-wrap justify-around">
-            {filteredGames().map((game) => {
-              return (
-                <React.Fragment key={game.path}>
-                  <div className="m-5 flex items-center justify-center border p-3">
-                    <div className="all-games-wrap">
-                      <Link to={`/games/${game.path}`}>
-                        <img
-                          src={game.image}
-                          className="game-img hover:bg-red-200"
-                        ></img>
-                        <p>{game.name}</p>
-                        <p>{game.categoryName}</p>
-                      </Link>
-                    </div>
-                  </div>
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </main>
+          <main className="">
+            <div className="games-info">
+              <div className="h2-category upper-case">
+                <img
+                  className="category-image"
+                  src={
+                    category
+                      ? CATEGORIES.filter(
+                          (categ) => categ.category === category
+                        )[0].src
+                      : CATEGORIES[0].src
+                  }
+                  alt={category ? category : 'all_categories'}
+                />
+                <FormattedMessage id={category ? category : 'all_categories'} />
+              </div>
+
+              <div className="flex flex-wrap">
+                {filteredGames().map((game) => {
+                  return (
+                    <React.Fragment key={game.path}>
+                      <div className="game-small ">
+                        <div className="all-games-wrap">
+                          <Link to={`/games/${game.path}`}>
+                            <img
+                              className="game-image-small"
+                              src={game.srcEn}
+                              alt={game.path}
+                            />
+                            <p className="upper-case name-of-game">
+                              {game.name}
+                            </p>
+                            <p className="text-cursive">{game.categoryName}</p>
+                          </Link>
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
     </>
   );

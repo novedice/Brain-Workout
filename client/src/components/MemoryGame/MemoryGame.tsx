@@ -6,6 +6,8 @@ import './MemoryGame.css';
 import { FormattedMessage } from 'react-intl';
 import { IGameProps } from '../../types/interfaces';
 import { FinishGameTable } from '../Games/gamesComponents/FinishGameTable';
+import { StatusGameType } from '../../types/types';
+import { PrestartWindow } from '../Games/gamesComponents/PrestartWindow';
 
 const shuffleCards = () => {
   return [...CARD_IMAGES, ...CARD_IMAGES]
@@ -13,14 +15,13 @@ const shuffleCards = () => {
     .map((card) => ({ ...card, id: Math.random() }));
 };
 
-export function MemoryGame({ gameId }: IGameProps) {
+export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
   const [cards, setCards] = useState<ICards[]>(shuffleCards());
   const [turns, setTurns] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<ICards | null>(null);
   const [selectTwo, setSelectTwo] = useState<ICards | null>(null);
   const [disabledCard, setDisabledCard] = useState(false);
-  const [finished, setFinished] = useState<boolean>(false);
-  const [started, setStarted] = useState<boolean>(true);
+  const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
 
   let solvedArray = cards
     .map((elem) => elem.matched)
@@ -43,8 +44,7 @@ export function MemoryGame({ gameId }: IGameProps) {
       localStorage.setItem('bestScore', '' + newBestScore);
     }
     setTimeout(() => {
-      setFinished(true);
-      setStarted(false);
+      setStatusGame('Finished');
     }, 2000);
   };
 
@@ -57,8 +57,7 @@ export function MemoryGame({ gameId }: IGameProps) {
 
   useEffect(() => checkCompletion(), [cards]);
   const resetGame = () => {
-    setFinished(false);
-    setStarted(true);
+    setStatusGame('Started');
     setSelectOne(null);
     setSelectTwo(null);
     setCards(shuffleCards());
@@ -104,21 +103,31 @@ export function MemoryGame({ gameId }: IGameProps) {
 
   return (
     <>
-      {finished && (
+      {statusGame === 'Finished' && (
         <FinishGameTable
           score={turns}
           rightAnswers={0}
           totalAnswers={0}
           speed={0}
           startGame={resetGame}
-          started={started}
-          setStarted={setStarted}
+          statusGame={statusGame}
+          setStatusGame={setStatusGame}
           gameName="memory_game"
           gameID={gameId}
-          finished={finished}
         />
       )}
-      {!finished && (
+      {statusGame === 'Wait' && (
+        <PrestartWindow
+          startGame={resetGame}
+          setStatusGame={setStatusGame}
+          gameName={'memory_game'}
+          statusGame={statusGame}
+          gameDescription="memory_game_description"
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
+      )}
+      {statusGame !== 'Finished' && statusGame !== 'Wait' && (
         <div className="game-wrapper flex flex-col items-center">
           <FormattedMessage id="memory_game" />
           <button

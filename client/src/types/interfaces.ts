@@ -23,7 +23,7 @@ export interface IGame {
 export interface ICategory {
   id: number;
   category: string;
-  userId: number;
+  userId?: number;
 }
 
 export interface IResult {
@@ -57,7 +57,7 @@ export interface IColorMeaning {
 export interface ILeader {
   id: number;
   nickname: string;
-  result: number;
+  value: number;
 }
 
 export type QParam = {
@@ -70,7 +70,9 @@ export interface IGameList {
   path: string;
   category: string;
   categoryName: ReactElement;
-  image?: string;
+  gameDescription?: string;
+  srcEn?: string;
+  srcRus?: string;
   game: ({ gameId }: IGameProps) => JSX.Element;
 }
 
@@ -87,6 +89,9 @@ export interface ICategories {
 export interface IGameProps {
   gameName: string;
   gameId: number;
+  gameDescription?: string;
+  srcRus?: string;
+  srcEn?: string;
 }
 
 export interface IOrderedArray {

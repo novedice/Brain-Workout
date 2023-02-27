@@ -38,6 +38,7 @@
 
 .number-game__score {
   font-size: 18px;
+  text-transform: capitalize;
 }
 
 .number-game__remember {
