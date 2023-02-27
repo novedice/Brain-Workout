@@ -2,8 +2,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   background-color: rgba(59, 130, 246, 0.5);
+  height: 100%;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 500;
+  color: white;
+  border-radius: 0.75rem;
+}
+
+.finish-game-name {
+  font-size: 52px;
 }
 
 .button-start-finished {
@@ -14,4 +23,8 @@
   border-radius: 30px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.finish-game-score {
+  font-size: 22px;
 }

@@ -168,6 +168,7 @@ export const messages = {
       'Sorry, this game is under development. As soon as the game is ready, it will immediately appear here! We are constantly working hard to improve our application. Our team is doing its best to bring new and interesting games to the app as soon as possible. Thanks for understanding)',
     start_random_game: 'Start random game!',
     best_results: 'Best results',
+    your_best_results: 'Your best results',
   },
   [LOCALES.RUSSIAN]: {
     to_main: `НА ГЛАВНУЮ`,
@@ -341,5 +342,6 @@ export const messages = {
       'Извините, данная игра находится в разработке. Как только игра будет готова, она сразу же появится здесь! Мы постоянно работаем над улучшением нашего приложения. Наша команда делает все возможное, чтобы в приложении появлялись новые и интересные игры.  Спасибо за понимание)',
     start_random_game: 'Начать случайную игру!',
     best_results: 'Лучшие результаты',
+    your_best_results: 'Ваши лучшие результаты',
   },
 };

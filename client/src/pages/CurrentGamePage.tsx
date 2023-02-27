@@ -27,7 +27,7 @@ export const CurrentGamePage = () => {
   for (let i = 0; i < allGames.length; i++) {
     if (allGames[i].path === CurrentGame) {
       GameNow = allGames[i].game;
-      gameIndex = i + 1;
+      gameIndex = allGames[i].id;
       nameGame = allGames[i].path;
       if (allGames[i].srcRus || allGames[i].srcEn) {
         gameImgRus = allGames[i].srcRus as string;

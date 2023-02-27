@@ -34,6 +34,15 @@ export const FinishGameTable = ({
 }: IFinishGameTableProps) => {
   const dispatch = useAppDispatch();
 
+  // const reciveResults = async () => {
+  //   const response = await getUserResults();
+  //   if (response) {
+  //     dispatch({ payload: response, type: UPDATE_ALL_RESULTS });
+  //     setOrderedRes(resultsForStatistic(response));
+  //     setStreaks(findStreaks(findActiveDays(response)));
+  //   }
+  // };
+
   const result = async () => {
     if (score !== 0 && statusGame === 'Finished') {
       const res = await createResult({ gameId: gameID, value: score });
@@ -74,51 +83,95 @@ export const FinishGameTable = ({
   return (
     <>
       <div
-        className="finish-game click-area time-container h-full w-full"
+        className="finish-game"
         style={{ background: 'rgb(59 130 246 / 0.5)' }}
       >
-        <p className="upper-case">
-          <FormattedMessage id={gameName} />
-        </p>
-        <p>
-          <FormattedMessage
-            id={`${resultsName ? resultsName : 'score'}`}
-            values={{ n: score }}
-          />
-        </p>
-        {rightAnswers !== 0 && (
-          <>
-            <p>
+        <div>
+          <p className="upper-case finish-game-name">
+            <FormattedMessage id={gameName} />
+          </p>
+          <p className="finish-game-score">
+            <FormattedMessage
+              id={`${resultsName ? resultsName : 'score'}`}
+              values={{ n: score }}
+            />
+          </p>
+          {rightAnswers !== 0 && (
+            <>
+              <p className="finish-game-score">
+                <FormattedMessage
+                  id="correct_answers"
+                  values={{ n: rightAnswers, m: totalAnswers }}
+                />
+              </p>
+              <p className="finish-game-score">
+                <FormattedMessage
+                  id="accuracy"
+                  values={{
+                    n: ((rightAnswers * 100) / totalAnswers).toFixed(0),
+                  }}
+                />
+              </p>
+            </>
+          )}
+          <p className="finish-game-score">
+            {speed !== 0 && (
               <FormattedMessage
-                id="correct_answers"
-                values={{ n: rightAnswers, m: totalAnswers }}
-              />
-            </p>
-            <p>
-              <FormattedMessage
-                id="accuracy"
+                id="average_speed"
                 values={{
-                  n: ((rightAnswers * 100) / totalAnswers).toFixed(0),
+                  n: (speed / totalAnswers).toFixed(0),
                 }}
               />
-            </p>
-          </>
-        )}
-        <p>
-          {speed !== 0 && (
-            <FormattedMessage
-              id="average_speed"
-              values={{
-                n: (speed / totalAnswers).toFixed(0),
-              }}
-            />
-          )}
-        </p>
-        <ButtonStart
-          startGame={startGame}
-          setStatusGame={setStatusGame}
-          statusGame={statusGame}
-        />
+            )}
+          </p>
+          <ButtonStart
+            startGame={startGame}
+            setStatusGame={setStatusGame}
+            statusGame={statusGame}
+          />
+        </div>
+        <div>
+          <table className="result-table">
+            <thead className="result-table-head">
+              <tr>
+                <th className="leaders-header" colSpan={6}>
+                  <FormattedMessage id="your_best_results" />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* {curLead?.length
+                ? curLead
+                    .filter(
+                      (gamelead) => gamelead.gameID === gameResults.gameId
+                    )[0]
+                    .leaders?.sort((a, b) =>
+                      gameResults.gameId === 1 || gameResults.gameId === 11
+                        ? a.value - b.value
+                        : b.value - a.value
+                    )
+                    .map((leader, index) => (
+                      <React.Fragment key={index}>
+                        <tr>
+                          <td className="td-in-leaders position">
+                            {index + 1}
+                          </td>
+                          <td className="td-in-leaders leader-name" colSpan={3}>
+                            {leader.nickname}
+                          </td>
+                          <td
+                            className="td-in-leaders leader-score"
+                            colSpan={2}
+                          >
+                            {leader.value}
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    ))
+                : null} */}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
