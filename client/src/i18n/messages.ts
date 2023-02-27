@@ -110,6 +110,8 @@ export const messages = {
     thu: 'thu',
     fri: 'fri',
     sat: 'sat',
+    discover: 'Discover what your mind can do',
+    programs: 'Train your memory, flexibility, and more with brain training programs',
     training_preferences: 'training preferences',
     back_to_settings: 'Back to account settings',
     account: 'account',
@@ -168,6 +170,8 @@ export const messages = {
       'Sorry, this game is under development. As soon as the game is ready, it will immediately appear here! We are constantly working hard to improve our application. Our team is doing its best to bring new and interesting games to the app as soon as possible. Thanks for understanding)',
   },
   [LOCALES.RUSSIAN]: {
+    discover: 'Узнайте, на что способен ваш разум',
+    programs: 'Тренируйте память, гибкость и многое другое с помощью программ тренировки мозга',
     to_main: `НА ГЛАВНУЮ`,
     to_games: 'ИГРЫ',
     to_statistic: 'статистика',

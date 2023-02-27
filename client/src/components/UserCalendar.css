@@ -2,14 +2,14 @@
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  border: solid 1px rgb(26, 79, 63);
-  border-radius: 10px;
 }
 
 .table {
   max-width: 100%;
   width: 300px;
   table-layout: fixed;
+  border-spacing: 5px 5px;
+  border-collapse:separate;
 }
 
 .year {
@@ -19,9 +19,7 @@
   align-self: center;
 }
 
-/* .change-period {
-  border: solid 1px gray;
-} */
+
 .change-period:hover {
   cursor: pointer;
 }
@@ -38,27 +36,20 @@
   margin-bottom: 2px;
 }
 .day-of-week {
-  /* width: 10%; */
-  width: 14%;
-  height: 30px;
   vertical-align: middle;
   text-align: center;
   padding: 8px;
 }
 .days-row {
-  height: 42px;
+  height: 37px;
   /* padding: 5px; */
 }
 
 .every-day {
   box-sizing: border-box;
-  width: 14%;
-  height: 14%;
   text-align: center;
-  padding: 5px;
-  /* border: solid 1px black; */
   background-color: white;
-  border-radius: 50%;
+  border-radius: 10px;
 }
 
 .active-date {
@@ -66,5 +57,5 @@
 }
 
 .not-active {
-  background-color: gray;
+  background-color: #3B82F6;
 }
