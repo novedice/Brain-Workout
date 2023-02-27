@@ -120,7 +120,7 @@ export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
         />
       )}
       {statusGame !== 'Finished' && statusGame !== 'Wait' && (
-        <>
+        <div className="speed-match__container">
           {statusGame === 'Paused' && (
             <GamePaused
               statusGame={statusGame}
@@ -129,7 +129,7 @@ export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
             />
           )}
           {statusGame !== 'Paused' && (
-            <div className="flex w-full flex-col items-center">
+            <div className="mt-12 flex w-full flex-col items-center">
               <div className="mb-[5%] flex w-full items-center justify-around">
                 <ButtonStart
                   startGame={startGame}
@@ -193,7 +193,7 @@ export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
               </div>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );

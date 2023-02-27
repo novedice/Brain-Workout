@@ -84,7 +84,7 @@ export const MeaningColorGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   return (
     <>
       <div
-        className={`game-wrap mr-auto ml-auto flex h-full w-[90%] flex-col align-middle `}
+        className={`color-match__container game-wrap mr-auto ml-auto flex h-full flex-col align-middle`}
       >
         {statusGame === 'Wait' && !howToPlay && (
           <PrestartWindow

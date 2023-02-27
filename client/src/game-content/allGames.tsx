@@ -20,6 +20,8 @@ import '../assets/games-pictures/speed-match-en.png';
 import '../assets/games-pictures/typing-speed-ru.png';
 import '../assets/games-pictures/typing-speed-en.png';
 import '../assets/games-pictures/reaction-time-en.png';
+import '../assets/games-pictures/work-in-progress.png';
+import '../assets/games-pictures/work-in-progress-2.png';
 
 export const allGames: IGameList[] = [
   {
@@ -39,20 +41,23 @@ export const allGames: IGameList[] = [
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
     srcEn: 'sequence-memory-en.png',
-    srcRus: 'sequence-memory-ru.png',
+    srcRus: 'sequence-memory-en.png',
     game: SequenceMemory,
   },
   {
     id: 3,
     name: <FormattedMessage id="aim_trainer" />,
-    path: 'aim-trainer',
+    path: 'Aim-trainer',
     category: 'speed',
+    srcEn: 'work-in-progress.png',
+    srcRus: 'work-in-progress.png',
     categoryName: <FormattedMessage id="speed" />,
     game: ({ gameName }: IGameProps) => {
       return (
         <>
           <div className="prestart-container">
             <div className="name-of-the-game">{gameName}</div>
+            <img src="work-in-progress-2.png" className="mb-6 w-56"></img>
             <div className="game-description">
               <FormattedMessage id="game_in_development" />
             </div>
@@ -64,14 +69,17 @@ export const allGames: IGameList[] = [
   {
     id: 4,
     name: <FormattedMessage id="chimp_test" />,
-    path: 'chimp-test',
+    path: 'Chimp-test',
     category: 'problem_solving',
+    srcEn: 'work-in-progress.png',
+    srcRus: 'work-in-progress.png',
     categoryName: <FormattedMessage id="problem_solving" />,
     game: ({ gameName }: IGameProps) => {
       return (
         <>
           <div className="prestart-container">
             <div className="name-of-the-game">{gameName}</div>
+            <img src="work-in-progress-2.png" className="mb-6 w-56"></img>
             <div className="game-description">
               <FormattedMessage id="game_in_development" />
             </div>
@@ -94,14 +102,17 @@ export const allGames: IGameList[] = [
   {
     id: 6,
     name: <FormattedMessage id="verbal_memory" />,
-    path: 'verbal-memory',
+    path: 'Verbal-memory',
     category: 'memory',
+    srcEn: 'work-in-progress.png',
+    srcRus: 'work-in-progress.png',
     categoryName: <FormattedMessage id="memory" />,
     game: ({ gameName }: IGameProps) => {
       return (
         <>
           <div className="prestart-container">
             <div className="name-of-the-game">{gameName}</div>
+            <img src="work-in-progress-2.png" className="mb-6 w-56"></img>
             <div className="game-description">
               <FormattedMessage id="game_in_development" />
             </div>
@@ -113,14 +124,17 @@ export const allGames: IGameList[] = [
   {
     id: 7,
     name: <FormattedMessage id="visual_memory" />,
-    path: 'visual-memory',
+    path: 'Visual-memory',
     category: 'memory',
+    srcEn: 'work-in-progress.png',
+    srcRus: 'work-in-progress.png',
     categoryName: <FormattedMessage id="memory" />,
     game: ({ gameName }: IGameProps) => {
       return (
         <>
           <div className="prestart-container">
             <div className="name-of-the-game">{gameName}</div>
+            <img src="work-in-progress-2.png" className="mb-6 w-56"></img>
             <div className="game-description">
               <FormattedMessage id="game_in_development" />
             </div>
@@ -142,14 +156,17 @@ export const allGames: IGameList[] = [
   {
     id: 9,
     name: <FormattedMessage id="pixel_logic" />,
-    path: 'pixel-logic',
+    path: 'Pixel-logic',
     category: 'problem_solving',
+    srcEn: 'work-in-progress.png',
+    srcRus: 'work-in-progress.png',
     categoryName: <FormattedMessage id="problem_solving" />,
     game: ({ gameName }: IGameProps) => {
       return (
         <>
           <div className="prestart-container">
             <div className="name-of-the-game">{gameName}</div>
+            <img src="work-in-progress-2.png" className="mb-6 w-56"></img>
             <div className="game-description">
               <FormattedMessage id="game_in_development" />
             </div>

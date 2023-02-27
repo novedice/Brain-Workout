@@ -129,7 +129,9 @@ export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
       )}
       {statusGame !== 'Finished' && statusGame !== 'Wait' && (
         <div className="game-wrapper flex flex-col items-center">
-          <FormattedMessage id="memory_game" />
+          <h1>
+            <FormattedMessage id="memory_game" />
+          </h1>
           <button
             className="mt-2 w-28 rounded-full border p-1 hover:bg-red-200"
             onClick={resetGame}

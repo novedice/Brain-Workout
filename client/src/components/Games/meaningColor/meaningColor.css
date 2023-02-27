@@ -2,6 +2,7 @@
   -webkit-animation: pulsing 1s infinite;
   animation: pulsing 1s infinite;
 }
+
 /* .right-now:hover {
   width: 100px;
   height: 70px;
@@ -12,6 +13,7 @@
   transition-property: background-color;
   transition-duration: 2s;
 }
+
 .wrong-now:hover {
   /* width: 100px; */
   /* height: 70px; */
@@ -32,10 +34,12 @@
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
   }
+
   50% {
     -webkit-transform: scale(1.2, 1.2);
     transform: scale(1.2, 1.2);
   }
+
   100% {
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
@@ -47,8 +51,18 @@
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
   }
+
   50% {
     -webkit-transform: scale(1.2, 1.2);
     transform: scale(1.2, 1.2);
   }
+}
+
+.head-game {
+  margin: 50px auto;
+}
+
+.color-match__container {
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+  border-radius: 10px;
 }

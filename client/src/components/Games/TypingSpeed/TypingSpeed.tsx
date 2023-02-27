@@ -3,14 +3,13 @@ import randomWords from 'random-words';
 import './TypingSpeed.css';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-// import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { FinishGameTable } from '../gamesComponents/FinishGameTable';
 import { IGameProps } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
 import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 const NUMB_WORDS = 100;
-const SECONDS = 10;
+const SECONDS = 60;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
   const [words, setWords] = useState<string[]>([]);
   const [currentInput, setCurrentInput] = useState<string>('');
@@ -194,7 +193,7 @@ export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
 
       {statusGame === 'Finished' && (
         <>
-          {/* <FinishGameTable
+          <FinishGameTable
             score={correct}
             rightAnswers={correct}
             totalAnswers={correct + inCorrect}
@@ -205,9 +204,9 @@ export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
             gameName={'typing_speed'}
             gameID={gameId}
             resultsName="words_per_minute"
-          /> */}
+          />
 
-          <div className="section result-section">
+          {/* <div className="section result-section">
             <div className="result-container content">
               <p>
                 <FormattedMessage id="words_per_minute" />{' '}
@@ -234,7 +233,7 @@ export function TypingSpeed({ gameId, srcEn, srcRus }: IGameProps) {
                 <FormattedMessage id="new_test" />
               </button>
             </div>
-          </div>
+          </div> */}
         </>
       )}
     </div>

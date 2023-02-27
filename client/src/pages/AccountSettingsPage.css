@@ -2,6 +2,7 @@
   background-color: rgb(238, 237, 237);
   height: inherit;
 }
+
 .account-container {
   display: flex;
   width: 80%;
@@ -34,6 +35,7 @@
 main {
   width: 100%;
 }
+
 .open-now {
   background-color: rgb(147 197 253);
   color: white;
@@ -52,7 +54,7 @@ main {
 .section {
   display: flex;
   flex-direction: column;
-  border-bottom: solid 1px gray;
+  /* border-bottom: solid 1px gray; */
   padding-bottom: 5%;
   padding-top: 3%;
   justify-content: space-around;
@@ -137,7 +139,7 @@ main {
   background-color: rgb(86, 136, 177);
 }
 
-.choosen-category > img {
+.choosen-category>img {
   display: block;
 }
 
