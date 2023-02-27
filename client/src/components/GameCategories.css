@@ -1,0 +1,18 @@
+.category {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition: all 0.3s;
+
+}
+
+.category:hover {
+  background-color: #d9dce9;
+}
+
+.categories-input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}

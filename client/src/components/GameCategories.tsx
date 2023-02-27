@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
 import CATEGORIES from '../game-content/game-categories';
 import { useCategory } from '../hooks/ChooseCategory';
+import './GameCategories.css';
 
 export function GameCategories() {
   const { updateSearchParams } = useCategory();
