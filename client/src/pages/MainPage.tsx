@@ -6,11 +6,13 @@ import { FormattedMessage } from 'react-intl';
 import { UserCalendar } from '../components/UserCalendar';
 import { getUserResults } from '../api/result-requerests';
 import { useEffect, useState } from 'react';
-import { UPDATE_ALL_RESULTS } from '../constants';
-import { useAppDispatch } from '../hooks/useTypeSelector';
+import { SHOW_MODAL, UPDATE_ALL_RESULTS } from '../constants';
+import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
 import { findActiveDays } from '../functions/findActiveDays';
+import { Link } from 'react-router-dom';
 
 export function MainPage() {
+  const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
   const [activeDays, setActiveDays] = useState<string[]>();
   const dispatch = useAppDispatch();
 
@@ -21,6 +23,10 @@ export function MainPage() {
       // setOrderedRes(resultsForStatistic(response));
       setActiveDays(findActiveDays(response));
     }
+  };
+
+  const modalShow = () => {
+    dispatch({ type: SHOW_MODAL });
   };
 
   useEffect(() => {
@@ -43,21 +49,27 @@ export function MainPage() {
                 <p className="text-center text-xl">
                   <FormattedMessage id="description" />
                 </p>
-                <button className="btn start-workout ml-auto mr-auto flex w-[150px] items-center justify-center rounded bg-blue-700">
-                  <FormattedMessage id="start_train" />
-                </button>
+                {loggedIn && (
+                  <Link to="/workout/1">
+                    <button className="btn start-workout ml-auto mr-auto flex w-[150px] items-center justify-center rounded bg-blue-700">
+                      <FormattedMessage id="start_train" />
+                    </button>
+                  </Link>
+                )}
+                {!loggedIn && (
+                  <button
+                    onClick={modalShow}
+                    className="btn start-workout ml-auto mr-auto flex w-[150px] items-center justify-center rounded bg-blue-700"
+                  >
+                    <FormattedMessage id="start_train" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
           <div className="calendar-container m-2">
             <FormattedMessage id="show_calendar" />
-            {/* <div className="calendar border">
-              <Calendar />
-            </div> */}
-            <UserCalendar
-              // datesArray={datesForCalendar(new Date())}
-              activeDays={activeDays}
-            />
+            <UserCalendar activeDays={activeDays} />
           </div>
         </div>
       </main>

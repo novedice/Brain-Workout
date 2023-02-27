@@ -9,25 +9,31 @@ import CATEGORIES from '../game-content/game-categories';
 import { ICategory } from '../types/interfaces';
 import '../assets/i.png';
 import { styleErrorMes } from '../constants/styleConstants';
+import { useAppDispatch } from '../hooks/useTypeSelector';
+import { ADD_CATEGORY, DELETE_CATEGORY, UPDATE_CATEGORIES } from '../constants';
 
 export const ChooseFavoriteCategory = () => {
   const [favoriteCategories, setFavoriteCategories] = useState<ICategory[]>([]);
   const [error, setError] = useState('');
+  const dispatch = useAppDispatch();
 
   const recieveCategories = async () => {
     const responseCategories = await getCategory();
     if (responseCategories?.length) {
       setFavoriteCategories(responseCategories);
+      dispatch({ payload: responseCategories, type: UPDATE_CATEGORIES });
     }
   };
 
   const addDeleteFavorites = async (category: string) => {
     setError('');
     let categoryId: number = 0;
+    let choosenCategory = '';
     if (favoriteCategories?.length) {
       for (let oneCategory of favoriteCategories) {
         if (oneCategory.category === category) {
           categoryId = oneCategory.id;
+          choosenCategory = oneCategory.category;
           break;
         }
       }
@@ -38,6 +44,7 @@ export const ChooseFavoriteCategory = () => {
         console.log(resCreateCat);
         if (resCreateCat) {
           setFavoriteCategories([...favoriteCategories, resCreateCat]);
+          dispatch({ payload: resCreateCat.category, type: ADD_CATEGORY });
           console.log('favorite cat:', favoriteCategories);
         } else {
           console.log('something create got wrong');
@@ -52,6 +59,7 @@ export const ChooseFavoriteCategory = () => {
         setFavoriteCategories(
           favoriteCategories.filter((cat) => cat.id !== categoryId)
         );
+        dispatch({ payload: choosenCategory, type: DELETE_CATEGORY });
         return;
       } else {
         console.log('something delete went wrong');
