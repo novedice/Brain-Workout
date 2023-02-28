@@ -80,3 +80,13 @@
   font: 500 20px sans-serif;
   margin-bottom: 30px;
 }
+
+@media screen and (max-width: 850px) {
+  .workout-container {
+    width: 45%;
+  }
+
+  .calendar-container {
+    width: 45%;
+  }
+}

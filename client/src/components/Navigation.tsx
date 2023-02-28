@@ -6,6 +6,7 @@ import { IToken, IUser } from '../types/interfaces';
 import '../assets/speed-match-game/logout.png';
 import { FormattedMessage } from 'react-intl';
 import { useEffect, useState } from 'react';
+import './navigation.css';
 
 interface INavigationProps {
   currentLang: string;
@@ -53,7 +54,7 @@ export function Navigation({
   }, [token]);
 
   return (
-    <nav className="upper-case flex h-16 w-[100%] items-center justify-between bg-blue-300 py-3 px-12 text-center text-lg text-white">
+    <nav className="navigation-container upper-case ">
       <a
         className="unlink mr-2"
         href="https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rsclone/rsclone.md"
@@ -61,13 +62,13 @@ export function Navigation({
         <img className="w-[50px]" src="Logo.png"></img>
       </a>
       <div>
-        <Link to="/" className="mr-5 hover:text-red-200">
+        <Link to="/" className="nav-list hover:text-red-200">
           <FormattedMessage id="to_main" />
         </Link>
-        <Link to="/games" className="mr-5 hover:text-red-200">
+        <Link to="/games" className="nav-list hover:text-red-200">
           <FormattedMessage id="to_games" />
         </Link>
-        <Link to="/statistic" className="mr-5 hover:text-red-200">
+        <Link to="/statistic" className="nav-list hover:text-red-200">
           <FormattedMessage id="to_statistic" />
         </Link>
       </div>
@@ -94,7 +95,7 @@ export function Navigation({
       )}
       <button
         onClick={() => handleChangeLang()}
-        className="w-16 rounded-full border p-2 hover:bg-red-200"
+        className="button-lang border hover:bg-red-200"
       >
         {currentLang}
       </button>
@@ -108,9 +109,9 @@ export function Navigation({
               onClick={() => {
                 logoutHandler();
               }}
-              className="flex items-center justify-between"
+              className="logout flex items-center justify-between"
             >
-              <p className="mr-3">
+              <p className="mr-2 hover:text-red-200">
                 <FormattedMessage id="to_logout" />
               </p>
               <p>

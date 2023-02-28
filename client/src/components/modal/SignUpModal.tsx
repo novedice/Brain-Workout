@@ -93,8 +93,6 @@ const SignUpModal = () => {
       setEmailError(<FormattedMessage id="user_exists" />);
       return;
     }
-
-    // modalShow();
   };
 
   const submitHandler = async (event: React.FormEvent) => {

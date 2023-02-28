@@ -63,14 +63,14 @@ export function StatisticPage() {
       reciveResults();
       leaders();
     }
-  }, [loggedIn])
+  }, [loggedIn]);
 
-  useEffect(() => {
-    if (loggedIn) {
-      reciveResults();
-      leaders();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     reciveResults();
+  //     leaders();
+  //   }
+  // }, []);
 
   return (
     <>
@@ -169,11 +169,11 @@ export function StatisticPage() {
                             <tbody>
                               {curLead?.length
                                 ? curLead
-                                    .filter(
+                                    ?.filter(
                                       (gamelead) =>
-                                        gamelead.gameID === gameResults.gameId
+                                        gamelead?.gameID === gameResults.gameId
                                     )[0]
-                                    .leaders?.filter((lead, id) => id < 8)
+                                    ?.leaders?.filter((lead, id) => id < 8)
                                     .sort((a, b) =>
                                       gameResults.gameId === 1 ||
                                       gameResults.gameId === 11
