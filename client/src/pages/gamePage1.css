@@ -1,6 +1,6 @@
 .game-page {
   background-color: rgb(238, 237, 237);
-  height: auto;
+  height: 100%;
 }
 
 .game-page-container {
@@ -105,4 +105,10 @@
 .name-of-game {
   color: rgb(5, 98, 148);
   font-weight: 600;
+}
+
+@media screen and (max-width: 1050px) {
+  .game-page {
+    height: auto;
+  }
 }

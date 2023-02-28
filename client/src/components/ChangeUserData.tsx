@@ -16,6 +16,7 @@ import jwt_decode from 'jwt-decode';
 import { IUser } from '../types/interfaces';
 import { UPDATE_TOKEN, UPDATE_USER } from '../constants';
 import { DeleteUserBlock } from './DeleteUser';
+import { setToken } from '../functions/tokenManipulation';
 
 interface IChangeUserDataProps {
   typeOfChanges: '' | 'name' | 'email' | 'password' | 'delete';
@@ -60,8 +61,10 @@ export const ChangeUserData = ({
         payload: { token: responseChanges.token },
         type: UPDATE_TOKEN,
       });
+      setToken(responseChanges.token);
+
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(responseChanges.token));
+      // localStorage.setItem('token', JSON.stringify(responseChanges.token));
 
       document.cookie = `auth=Bearer ${responseChanges.token}`;
       typeOfChanges = '';
