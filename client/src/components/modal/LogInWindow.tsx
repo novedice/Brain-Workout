@@ -1,14 +1,11 @@
 import React, { ReactElement, useState } from 'react';
-// import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-import {
-  /* refreshToken, checkToken,*/ registrAuthUser,
-} from '../../api/user-requests';
+import { registrAuthUser } from '../../api/user-requests';
 import {
   HIDE_MODAL,
   LOGGIN,
   LOGGINUSER,
-  SHOW_SIGNUP /* UPDATE_TOKEN */,
+  SHOW_SIGNUP,
   UPDATE_USER,
 } from '../../constants';
 import {
@@ -170,12 +167,6 @@ const LogInWindow = () => {
               </label>
             </div>
           </form>
-          {/* <p className="mb-2">
-            <FormattedMessage id="forgot_password" />
-            <Link to="/reset" className="link__signup">
-              <FormattedMessage id="reset_password" />
-            </Link>
-          </p> */}
         </div>
       </div>
     </>

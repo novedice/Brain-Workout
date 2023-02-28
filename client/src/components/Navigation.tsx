@@ -19,7 +19,7 @@ export function Navigation({
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const token: IToken = useTypeSelector((state) => state.tokenInfo);
   const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
-  const [userName, setUserName] = useState(user.nickname);
+  const [, setUserName] = useState(user.nickname);
 
   const dispatch = useAppDispatch();
 
@@ -44,14 +44,9 @@ export function Navigation({
       },
       type: UPDATE_USER,
     });
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    sessionStorage.removeItem('token');
-    localStorage.removeItem('always');
+    sessionStorage.clear();
+    localStorage.clear();
   };
-
-  console.log('user in user main', user.nickname);
-  console.log('cur user in main', userName);
 
   useEffect(() => {
     setUserName(user.nickname);

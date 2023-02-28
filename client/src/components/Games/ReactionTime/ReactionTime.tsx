@@ -77,7 +77,6 @@ export function ReactionTime({ gameId }: IGameProps) {
     setStatusGame('Started');
     setResultArray([]);
     setCurrentScreen(ScreenType.StartGame);
-    console.log(gameId);
   };
 
   const wrongClicked = () => {
@@ -180,32 +179,6 @@ export function ReactionTime({ gameId }: IGameProps) {
             resultsName="your_best_reaction_time"
           />
         </div>
-        //   className="click-area time-container"
-        //   style={{ background: 'rgb(59 130 246 / 0.5)' }}
-        // >
-        //   <p>
-        //     <FormattedMessage
-        //       id="your_best_reaction_time"
-        //       values={{
-        //         n: resultArray.reduce((acc, elem) => (acc < elem ? acc : elem)),
-        //       }}
-        //     />
-        //     {/* You best reaction time:{' '}
-        //     {resultArray.reduce((acc, elem) => (acc < elem ? acc : elem))} ms */}
-        //   </p>
-        //   <button
-        //     className="mt-2 rounded-full border px-4 text-xl hover:bg-red-200"
-        //     onClick={() => newGame()}
-        //   >
-        //     <FormattedMessage id="try_again" />
-        //   </button>
-        //   <button
-        //     className="m-2 rounded-full border px-4 text-xl hover:bg-red-200"
-        //     onClick={() => saveResult()}
-        //   >
-        //     <FormattedMessage id="save_result" />
-        //   </button>
-        // </div>
       )}
     </div>
   );

@@ -31,11 +31,6 @@ export default function SingleCard({
           src="question.png"
           alt="back-card"
           className="back-card w-20 first-line:h-20"
-          // className={
-          //   flip
-          //     ? 'back-card w-20 first-line:h-20'
-          //     : 'back-card shake w-20 first-line:h-20'
-          // }
           onClick={handleClick}
         />
       </div>

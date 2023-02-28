@@ -1,5 +1,4 @@
 import { ICardSpeedMacth } from '../../../types/interfaces';
-// import { cards } from './cards';
 
 interface ISpeedMatchCardProps {
   card: ICardSpeedMacth;

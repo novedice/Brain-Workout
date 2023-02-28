@@ -45,9 +45,6 @@ export const PrestartWindow = ({
         )}
         <div className="game-description">
           <FormattedMessage id={gameDescription} />
-          {/* {
-            'train your task-switching ability by shifting focus between where the leaves point and how they move.'
-          } */}
         </div>
         <div className="buttons-prestart">
           {setHowToPlay && (

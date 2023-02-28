@@ -1,0 +1,13 @@
+.workout-page-container {
+  background-color: rgb(238, 237, 237);
+  height: inherit;
+}
+
+.workout-page {
+  display: flex;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  height: 95%;
+}

@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { GameCategories } from '../components/GameCategories';
 import { allGames } from '../game-content/allGames';
 import CATEGORIES from '../game-content/game-categories';
-import './gamePage.css';
+import './gamePage1.css';
 
 export function GamePage() {
   const [searchParams] = useSearchParams();

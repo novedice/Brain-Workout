@@ -12,8 +12,6 @@ export const createCategory = async (category: string) => {
         withCredentials: true,
       }
     );
-    console.log('response create', response.data);
-    console.log('all response create:', response);
     return response.data;
   } catch (e) {
     console.log(e);

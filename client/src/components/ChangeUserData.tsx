@@ -44,7 +44,6 @@ export const ChangeUserData = ({
           });
 
     if (responseChanges) {
-      console.log('token data', jwt_decode<IUser>(responseChanges.token));
       dispatch({
         payload: {
           id: jwt_decode<IUser>(responseChanges.token).id,
@@ -65,7 +64,6 @@ export const ChangeUserData = ({
       localStorage.setItem('token', JSON.stringify(responseChanges.token));
 
       document.cookie = `auth=Bearer ${responseChanges.token}`;
-      console.log('user after changes', user);
       typeOfChanges = '';
       setOpenChanges(false);
     } else {
@@ -80,21 +78,17 @@ export const ChangeUserData = ({
     setError('');
     switch (typeOfChanges) {
       case 'name':
-        console.log('name change');
         let resName = isNameValid(value, numberOfErr);
         setError(resName.err);
         numberOfErr = resName.n;
-        console.log('name er:', error);
         break;
       case 'email':
-        console.log('email change');
         let resEmail = isEmailValid(value, numberOfErr);
         setError(resEmail.err);
         numberOfErr = resEmail.n;
 
         break;
       case 'password':
-        console.log('password change');
         let resPass = isValidPassword(value, numberOfErr);
         setError(resPass.err);
         numberOfErr = resPass.n;
@@ -111,7 +105,6 @@ export const ChangeUserData = ({
     }
 
     if (numberOfErr !== 0) {
-      console.log('error in if:', error);
       return;
     } else {
       changeComplete();

@@ -64,6 +64,10 @@ export type QParam = {
   CurrentGame: string;
 };
 
+export type QparamWorkout = {
+  gameNumber: string;
+};
+
 export interface IGameList {
   id: number;
   name: ReactElement;
