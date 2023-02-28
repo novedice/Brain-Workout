@@ -53,7 +53,7 @@ export const allGames: IGameList[] = [
     categoryName: <FormattedMessage id="memory" />,
     game: NumberMemory,
     srcEn: 'number-memory-en.png',
-    srcRus: 'number-memory-ru.png',
+    srcRus: 'number-memory-en.png',
   },
 
   {
@@ -64,7 +64,7 @@ export const allGames: IGameList[] = [
     categoryName: <FormattedMessage id="speed" />,
     game: TypingSpeed,
     srcEn: 'typing-speed-en.png',
-    srcRus: 'typing-speed-ru.png',
+    srcRus: 'typing-speed-en.png',
   },
   {
     id: 10,
@@ -73,7 +73,7 @@ export const allGames: IGameList[] = [
     category: 'flexibility',
     categoryName: <FormattedMessage id="flexibility" />,
     gameDescription: 'This game improve your flexibility.',
-    srcRus: 'color-match-ru.png',
+    srcRus: 'color-match-en.png',
     srcEn: 'color-match-en.png',
     game: MeaningColorGame,
   },
@@ -84,7 +84,7 @@ export const allGames: IGameList[] = [
     category: 'memory',
     categoryName: <FormattedMessage id="memory" />,
     srcEn: 'memory-game-en.png',
-    srcRus: 'memory-game-ru.png',
+    srcRus: 'memory-game-en.png',
     game: MemoryGame,
   },
   {
@@ -94,7 +94,7 @@ export const allGames: IGameList[] = [
     category: 'speed',
     categoryName: <FormattedMessage id="speed" />,
     srcEn: 'speed-match-en.png',
-    srcRus: 'speed-match-ru.png',
+    srcRus: 'speed-match-en.png',
     game: SpeedMatchGame,
   },
 

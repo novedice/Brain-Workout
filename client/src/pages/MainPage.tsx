@@ -1,6 +1,6 @@
 import '../assets/logo-brain.png';
 import './mainPage.css';
-import '../assets/brush.png';
+import '../assets/brush1.png';
 import { FormattedMessage } from 'react-intl';
 import { UserCalendar } from '../components/UserCalendar';
 import { getUserResults } from '../api/result-requerests';
@@ -67,8 +67,8 @@ export function MainPage() {
         <div
           className="main-description"
           style={{
-            backgroundImage: `url("brush.png") `,
-            backgroundPosition: '0 -300px',
+            backgroundImage: `url("brush1.png") `,
+            backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             width: '100%',

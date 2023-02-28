@@ -57,20 +57,23 @@
   background-color: #3b82f6;
   transition: 0.3s;
 }
+
 .start-workout:hover {
   background-color: rgb(254 202 202);
 }
+
 .main-description {
   max-width: 60%;
   margin: 0 auto 150px;
   border-radius: 10px;
-
+  padding-top: 20px;
   font: 600 44px sans-serif;
   color: orange;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
+  justify-content: center;
 }
 
 .main-description h3 {
