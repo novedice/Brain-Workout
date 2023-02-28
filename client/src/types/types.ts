@@ -10,7 +10,6 @@ export interface ImodalSignUpState {
 
 export interface ImodalAction {
   type: string;
-  // payload? : any;
 }
 
 export type AppDispatch = typeof store.dispatch;

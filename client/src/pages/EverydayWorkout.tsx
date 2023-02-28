@@ -21,13 +21,11 @@ export const EverydayWorkout = () => {
   );
   const [choosenCategories, setChoosenCategories] = useState<ICategory[]>([]);
   const [workoutStage, setWorkoutStage] = useState<WorkoutStageType>('Wait');
-  //  const [secondGameStage, setSecondGameStage] = useState<StatusGameType>('Wait');
   const [todayGames, setTodayGames] = useState<IGameList[]>([]);
   const newGames: IGameList[] = [];
 
   const { gameNumber } = useParams<QparamWorkout>();
 
-  // const { token } = useTypeSelector((state) => state.tokenInfo);
   let CurrentWorkoutGame: ({
     gameId,
     gameName,

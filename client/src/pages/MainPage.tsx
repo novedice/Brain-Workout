@@ -1,8 +1,6 @@
 import '../assets/logo-brain.png';
 import './mainPage.css';
 import '../assets/brush.png';
-// import Calendar from 'react-calendar';
-// import 'react-calendar/dist/Calendar.css';
 import { FormattedMessage } from 'react-intl';
 import { UserCalendar } from '../components/UserCalendar';
 import { getUserResults } from '../api/result-requerests';
@@ -16,7 +14,6 @@ import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector';
 import { findActiveDays } from '../functions/findActiveDays';
 import { Link } from 'react-router-dom';
 import { getCategory } from '../api/category-requests';
-// import { ICategory } from '../types/interfaces';
 import { allGames } from '../game-content/allGames';
 import { getRandom } from '../functions/random';
 
@@ -30,29 +27,27 @@ export function MainPage() {
     const response = await getUserResults();
     if (response) {
       dispatch({ payload: response, type: UPDATE_ALL_RESULTS });
-      // setOrderedRes(resultsForStatistic(response));
       setActiveDays(findActiveDays(response));
     }
   };
 
   const reciveFavorites = async () => {
     const responseFavorites = await getCategory();
+
     if (responseFavorites?.length) {
-      console.log('resp fav', responseFavorites);
-      console.log('length', responseFavorites.length);
       dispatch({ payload: responseFavorites, type: UPDATE_CATEGORIES });
 
       setGamePath(() => {
         const filteredGames = allGames.filter(
-          (game) =>
+          (game, index) =>
             responseFavorites[getRandom(0, responseFavorites.length - 1)]
-              .category === game.category
+              .category === game.category && index < 7
         );
 
         return filteredGames[getRandom(0, filteredGames.length - 1)].path;
       });
     } else {
-      setGamePath(allGames[getRandom(0, allGames.length - 1)].path);
+      setGamePath(allGames[getRandom(0, 6)].path);
     }
   };
 
@@ -63,7 +58,7 @@ export function MainPage() {
   useEffect(() => {
     reciveResults();
     reciveFavorites();
-  }, []);
+  }, [localStorage]);
 
   return (
     <>
@@ -123,13 +118,7 @@ export function MainPage() {
             <h2 className="calendar-text">
               <FormattedMessage id="show_calendar" />
             </h2>
-            {/* <div className="calendar border">
-              <Calendar />
-            </div> */}
-            <UserCalendar
-              // datesArray={datesForCalendar(new Date())}
-              activeDays={activeDays}
-            />
+            <UserCalendar activeDays={activeDays} />
           </div>
         </div>
       </main>

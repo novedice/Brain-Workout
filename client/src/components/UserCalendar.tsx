@@ -72,7 +72,6 @@ export const UserCalendar = ({ activeDays }: IdatesArrayProps) => {
                 </th>
                 <th className="upper-first" colSpan={5}>
                   {yearToday}
-                  {/* <FormattedMessage id={months[monthToday]} /> */}
                 </th>
                 <th
                   className="change-period"

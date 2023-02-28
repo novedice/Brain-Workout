@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';

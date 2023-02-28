@@ -45,7 +45,7 @@ export function StatisticPage() {
       leaders: ILeader[];
     }[] = [];
     for (let i = 0; i < allGames.length; i++) {
-      const leadResp = await getLeaders(i + 1);
+      const leadResp = await getLeaders(allGames[i].id);
       if (leadResp) {
         resLeaders.push({
           game: allGames[i].path,
@@ -103,7 +103,6 @@ export function StatisticPage() {
                   <img className="max-h-5 w-[17px]" src="fire.png"></img>
                 </div>
               </div>
-              <div></div>
               {orderedRes
                 .sort((a, b) => b.results.length - a.results.length)
                 .map((gameResults) => {
@@ -159,9 +158,6 @@ export function StatisticPage() {
                                   <FormattedMessage id="best_results" />
                                 </th>
                               </tr>
-                              {/* <tr>
-                                <th colSpan={6}>{gameResults.gameName}</th>
-                              </tr> */}
                             </thead>
                             <tbody>
                               {curLead?.length
@@ -170,7 +166,8 @@ export function StatisticPage() {
                                       (gamelead) =>
                                         gamelead.gameID === gameResults.gameId
                                     )[0]
-                                    .leaders?.sort((a, b) =>
+                                    .leaders?.filter((lead, id) => id < 8)
+                                    .sort((a, b) =>
                                       gameResults.gameId === 1 ||
                                       gameResults.gameId === 11
                                         ? a.value - b.value
@@ -186,13 +183,17 @@ export function StatisticPage() {
                                             className="td-in-leaders leader-name"
                                             colSpan={3}
                                           >
-                                            {leader.nickname}
+                                            {leader.nickname
+                                              ? leader.nickname
+                                              : 'no result yet...'}
                                           </td>
                                           <td
                                             className="td-in-leaders leader-score"
                                             colSpan={2}
                                           >
-                                            {leader.value}
+                                            {leader.value
+                                              ? leader.value
+                                              : '000'}
                                           </td>
                                         </tr>
                                       </React.Fragment>

@@ -114,7 +114,6 @@ export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
           gameName={'speed_match'}
           statusGame={statusGame}
           gameDescription="speed_match_description"
-          // setHowToPlay={setHowToPlay}
           gameImgRus={srcRus}
           gameImgEn={srcEn}
         />
@@ -164,16 +163,10 @@ export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
                 </div>
                 <div className="right-card">
                   <div className="card">
-                    <div
-                      className={`card-front ${changing}`}
-                      // className={`${changing} card-front ${frontActive} speed-match-card-container face`}
-                    >
+                    <div className={`card-front ${changing}`}>
                       <SpeedMatchCard card={currentCard} />
                     </div>
-                    <div
-                      className={`card-back ${backActive} `}
-                      // className={`backpart card-back ${backActive}`}
-                    >
+                    <div className={`card-back ${backActive} `}>
                       <SpeedMatchCard card={nextCard} />
                     </div>
                   </div>

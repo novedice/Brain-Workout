@@ -24,7 +24,6 @@ export function AccounSettingsPage() {
   useEffect(() => {
     setCurrentEmail(user.email);
     setCurrentName(user.nickname);
-    console.log(loggedIn);
   }, [token]);
 
   return (

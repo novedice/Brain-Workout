@@ -202,3 +202,15 @@ main {
 .checked {
   display: none;
 }
+.choose-category {
+  font-size: 1.25em;
+  line-height: 1em;
+  width: 100%;
+  /* margin-bottom: 15px; */
+  display: flex;
+  align-items: center;
+  padding-bottom: 2%;
+  color: rgb(5, 98, 148);
+  font-weight: 600;
+  margin-bottom: 15px;
+}

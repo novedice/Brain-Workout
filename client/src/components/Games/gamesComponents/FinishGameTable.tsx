@@ -1,8 +1,11 @@
-import { SetStateAction, useEffect } from 'react';
+import React from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { createResult } from '../../../api/result-requerests';
+import { createResult, getUserResults } from '../../../api/result-requerests';
 import { ADD_RESULT } from '../../../constants';
+import { resultsForStatistic } from '../../../functions/resultsForStatistic';
 import { useAppDispatch } from '../../../hooks/useTypeSelector';
+import { IOrderedArray } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
 import { ButtonStart } from './ButtonStart';
 import './finishGameTable.css';
@@ -33,21 +36,14 @@ export const FinishGameTable = ({
   resultsName,
 }: IFinishGameTableProps) => {
   const dispatch = useAppDispatch();
-
-  // const reciveResults = async () => {
-  //   const response = await getUserResults();
-  //   if (response) {
-  //     dispatch({ payload: response, type: UPDATE_ALL_RESULTS });
-  //     setOrderedRes(resultsForStatistic(response));
-  //     setStreaks(findStreaks(findActiveDays(response)));
-  //   }
-  // };
+  const [gameResults, setGameResults] = useState<IOrderedArray[]>([]);
+  const [resDate, setResDate] = useState('');
 
   const result = async () => {
     if (score !== 0 && statusGame === 'Finished') {
       const res = await createResult({ gameId: gameID, value: score });
       if (res) {
-        console.log('res', res);
+        setResDate(res.createdAt);
         dispatch({
           payload: [
             {
@@ -60,6 +56,10 @@ export const FinishGameTable = ({
           ],
           type: ADD_RESULT,
         });
+      }
+      const resultsResponse = await getUserResults();
+      if (resultsResponse) {
+        setGameResults(resultsForStatistic(resultsResponse));
       }
       let saveScore: number = 0;
       const localScore = localStorage.getItem(gameName);
@@ -86,7 +86,7 @@ export const FinishGameTable = ({
         className="finish-game"
         style={{ background: 'rgb(59 130 246 / 0.5)' }}
       >
-        <div>
+        <div className="result-box">
           <p className="upper-case finish-game-name">
             <FormattedMessage id={gameName} />
           </p>
@@ -131,44 +131,49 @@ export const FinishGameTable = ({
           />
         </div>
         <div>
-          <table className="result-table">
+          <table className="finish-result-table">
             <thead className="result-table-head">
               <tr>
-                <th className="leaders-header" colSpan={6}>
+                <th className="leaders-header" colSpan={8}>
                   <FormattedMessage id="your_best_results" />
                 </th>
               </tr>
             </thead>
             <tbody>
-              {/* {curLead?.length
-                ? curLead
-                    .filter(
-                      (gamelead) => gamelead.gameID === gameResults.gameId
-                    )[0]
-                    .leaders?.sort((a, b) =>
-                      gameResults.gameId === 1 || gameResults.gameId === 11
+              {gameResults?.length
+                ? gameResults
+                    .filter((gameResult) => gameResult.gameId === gameID)[0]
+                    .results?.sort((a, b) =>
+                      gameID === 1 || gameID === 11
                         ? a.value - b.value
                         : b.value - a.value
                     )
-                    .map((leader, index) => (
+                    .map((gameRes, index) => (
                       <React.Fragment key={index}>
-                        <tr>
-                          <td className="td-in-leaders position">
+                        <tr
+                          className={`${
+                            gameRes.value === score &&
+                            gameRes.createdAt === resDate
+                              ? 'result-now'
+                              : ''
+                          }`}
+                        >
+                          <td className="td-in-leaders position" colSpan={2}>
                             {index + 1}
-                          </td>
-                          <td className="td-in-leaders leader-name" colSpan={3}>
-                            {leader.nickname}
                           </td>
                           <td
                             className="td-in-leaders leader-score"
-                            colSpan={2}
+                            colSpan={4}
                           >
-                            {leader.value}
+                            {gameRes.value}
+                          </td>
+                          <td className="td-in-leaders leader-time" colSpan={2}>
+                            {new Date(gameRes.createdAt).toDateString()}
                           </td>
                         </tr>
                       </React.Fragment>
                     ))
-                : null} */}
+                : null}
             </tbody>
           </table>
         </div>

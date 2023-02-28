@@ -27,9 +27,6 @@ export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
     .map((elem) => elem.matched)
     .filter((elem) => elem === false);
 
-  // localStorage.setItem('bestScore', newBestStore.toString());
-  // localStorage.setItem('bestScore', JSON.stringify(newBestScore));
-
   const [bestScore, setBestScore] = useState<number>(
     parseInt(localStorage.getItem('bestScore') || '0') ||
       Number.MAX_SAFE_INTEGER
@@ -51,7 +48,6 @@ export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
   const checkCompletion = () => {
     if (solvedArray.length === 0) {
       gameFinish();
-      console.log('you win');
     }
   };
 
@@ -65,7 +61,7 @@ export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
   };
 
   const handleSelect = (card: ICards) => {
-    if (card.id === selectOne?.id) return; // commit this for easy find card
+    if (card.id === selectOne?.id) return;
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     selectOne ? setSelectTwo(card) : setSelectOne(card);
   };
@@ -96,10 +92,6 @@ export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
       }
     }
   }, [selectOne, selectTwo]);
-
-  // useEffect(() => {
-  //   resetGame();
-  // }, []);
 
   return (
     <>
@@ -155,11 +147,6 @@ export function MemoryGame({ gameId, srcEn, srcRus }: IGameProps) {
           <p>
             <FormattedMessage id="best_score" values={{ s: bestScore }} />
           </p>
-          {/* {localStorage.getItem('bestScore') && (
-        <div>
-          <span>Best score:</span> {bestScore}
-        </div>
-      )} */}
         </div>
       )}
     </>

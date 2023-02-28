@@ -41,19 +41,15 @@ export const ChooseFavoriteCategory = () => {
     if (categoryId === 0) {
       if (favoriteCategories.length < 2) {
         const resCreateCat = await createCategory(category);
-        console.log(resCreateCat);
         if (resCreateCat) {
           setFavoriteCategories([...favoriteCategories, resCreateCat]);
           dispatch({ payload: resCreateCat.category, type: ADD_CATEGORY });
-          console.log('favorite cat:', favoriteCategories);
         } else {
-          console.log('something create got wrong');
         }
       } else {
         setError('category_error');
       }
     } else {
-      console.log('delete');
       const resDelCat = await deleteCategory(categoryId);
       if (resDelCat) {
         setFavoriteCategories(
@@ -62,7 +58,6 @@ export const ChooseFavoriteCategory = () => {
         dispatch({ payload: choosenCategory, type: DELETE_CATEGORY });
         return;
       } else {
-        console.log('something delete went wrong');
       }
     }
   };
@@ -74,7 +69,7 @@ export const ChooseFavoriteCategory = () => {
   return (
     <>
       <div className="flex flex-col">
-        <p className="mb-10">
+        <p className="choose-category">
           <FormattedMessage id="choose_favorite_categories" />
         </p>
         {CATEGORIES.map((category) => {

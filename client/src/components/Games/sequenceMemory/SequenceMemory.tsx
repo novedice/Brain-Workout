@@ -19,8 +19,6 @@ export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
     num: number;
     id: number;
   }>({ num: 0, id: 0 });
-  // const [isStart, setIsStart] = useState(false);
-  // const [isEnd, setIsEnd] = useState(false);
   const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [score, setScore] = useState(1);
   const btnRefs = [
@@ -49,7 +47,6 @@ export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
     field.current.classList.add('disabled');
     sequence.forEach((el, index) => {
       setTimeout(() => {
-        // console.log('here');
         animateBtn(btnRefs[el].current);
       }, 750 * index);
     });
@@ -62,8 +59,6 @@ export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
 
   function start() {
     setStatusGame('Started');
-    // setIsStart(true);
-    // setIsEnd(false);
     setScore(1);
     setCurrentSequence((prev) => {
       const num = getRandomNumber();
@@ -91,8 +86,6 @@ export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
 
   function stop() {
     setStatusGame('Finished');
-    // setIsStart(false);
-    // setIsEnd(true);
     setCurrentNumber({ num: 0, id: 0 });
     setCurrentSequence([]);
   }
@@ -127,30 +120,27 @@ export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
               <FormattedMessage id="sequence_memory_description" />
             </div>
           </div>
-          {
-            // isStart && !isEnd &&
-            statusGame === 'Started' && (
-              <div className="sequence-memory__container">
-                {(statusGame === 'Started' || statusGame === 'Finished') && (
-                  <div className="sequence-memory__score">
-                    <FormattedMessage id="level" /> {score}
-                  </div>
-                )}
-                <div ref={field} className="sequence-memory__field">
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((num) => {
-                    return (
-                      <button
-                        key={num}
-                        ref={btnRefs[num]}
-                        onClick={createBtnHandler(num)}
-                        className="sequence-memory__field-btn"
-                      ></button>
-                    );
-                  })}
+          {statusGame === 'Started' && (
+            <div className="sequence-memory__container">
+              {(statusGame === 'Started' || statusGame === 'Finished') && (
+                <div className="sequence-memory__score">
+                  <FormattedMessage id="level" /> {score}
                 </div>
+              )}
+              <div ref={field} className="sequence-memory__field">
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((num) => {
+                  return (
+                    <button
+                      key={num}
+                      ref={btnRefs[num]}
+                      onClick={createBtnHandler(num)}
+                      className="sequence-memory__field-btn"
+                    ></button>
+                  );
+                })}
               </div>
-            )
-          }
+            </div>
+          )}
           {statusGame !== 'Started' && (
             <ButtonNumber text="start" callback={start}></ButtonNumber>
           )}
@@ -178,12 +168,9 @@ export default function SequenceMemory({ gameId, srcEn, srcRus }: IGameProps) {
           speed={0}
           statusGame={statusGame}
           setStatusGame={setStatusGame}
-          // started={isStart}
-          // setStarted={setIsStart}
           startGame={start}
           gameName={'sequence_memory'}
           gameID={gameId}
-          // finished={isEnd}
         />
       )}
     </>

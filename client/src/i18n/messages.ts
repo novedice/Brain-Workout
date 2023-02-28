@@ -9,7 +9,7 @@ export const messages = {
     to_login: 'log in',
     to_signup: 'SIGN UP',
     to_logout: 'Log out',
-    today: "Today's workout",
+    today: 'Start your training now',
     show_calendar: 'Training calendar',
     start_train: 'START WORKOUT',
     description: 'A daily taste of assorted cognitive tasks',
@@ -111,7 +111,8 @@ export const messages = {
     fri: 'fri',
     sat: 'sat',
     discover: 'Discover what your mind can do',
-    programs: 'Train your memory, flexibility, and more with brain training programs',
+    programs:
+      'Train your memory, flexibility, and more with brain training programs',
     training_preferences: 'training preferences',
     back_to_settings: 'Back to account settings',
     account: 'account',
@@ -174,7 +175,8 @@ export const messages = {
   },
   [LOCALES.RUSSIAN]: {
     discover: 'Узнайте, на что способен ваш разум',
-    programs: 'Тренируйте память, гибкость и многое другое с помощью программ тренировки мозга',
+    programs:
+      'Тренируйте память, гибкость и многое другое с помощью программ тренировки мозга',
     to_main: `НА ГЛАВНУЮ`,
     to_games: 'ИГРЫ',
     to_statistic: 'статистика',
@@ -182,7 +184,7 @@ export const messages = {
     to_login: 'войти',
     to_signup: 'ЗАРЕГИСТРИРОВАТЬСЯ',
     to_logout: 'Выйти',
-    today: 'Тренировка сегодня',
+    today: 'Начните тренировку сейчас',
     show_calendar: 'Календарь тренировок',
     start_train: 'НАЧАТЬ ТРЕНИРОВКУ',
     description: 'Ежедневные разнообразные когнитивные задачи',

@@ -7,15 +7,13 @@ import { StatusGameType } from '../../../types/types';
 interface IButtonPause {
   statusGame: StatusGameType;
   setStatusGame: React.Dispatch<React.SetStateAction<StatusGameType>>;
-  // paused: boolean;
-  // setPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ButtonPause = ({ statusGame, setStatusGame }: IButtonPause) => {
   return (
     <>
       <button
-        className="mr-3 flex h-[50px] w-[150px] items-center justify-around self-center rounded-lg border-8 border-blue-300  bg-gray-200 align-middle"
+        className="mr-3 flex h-[40px] w-[150px] items-center justify-around self-center rounded-lg  bg-gray-300 align-middle duration-300 hover:bg-red-200"
         onClick={() =>
           setStatusGame(statusGame === 'Started' ? 'Paused' : 'Started')
         }

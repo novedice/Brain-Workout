@@ -12,13 +12,14 @@
   margin-right: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  height: 97vh;
+  height: auto;
 }
 
 .game-statistic {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  align-items: center;
 }
 
 .small-img {
@@ -130,14 +131,22 @@
   color: #056294;
   width: 250px;
 }
+
 .leaders-header {
   padding: 10px 8px;
   background: #93c5fd;
   align-self: center;
   align-self: center;
 }
+
 .td-in-leaders {
   border-top: 5px solid #056294;
   padding: 8px;
   background: #93c5fd;
+}
+
+.result-table-container {
+  display: flex;
+  width: 50%;
+  justify-content: flex-end;
 }
