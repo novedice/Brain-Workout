@@ -24,13 +24,14 @@ import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
 import { checkToken, updateUser } from './api/user-requests';
+import { getToken, setToken } from './functions/tokenManipulation';
 
 export function App() {
   const user: IUser = useTypeSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
   const [currentLang, setCurrentLang] = useState(user.lang);
   const authUser = async () => {
-    if (localStorage.getItem('token')) {
+    if (getToken()) {
       const newToken = await checkToken();
       console.log('new token', newToken);
       if (newToken) {
@@ -60,7 +61,8 @@ export function App() {
             ? LOCALES.ENGLISH
             : LOCALES.RUSSIAN
         );
-        localStorage.setItem('token', newToken.token);
+        // localStorage.setItem('token', newToken.token);
+        setToken(newToken.token);
       }
     }
   };

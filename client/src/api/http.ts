@@ -1,4 +1,5 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
+import { getToken } from '../functions/tokenManipulation';
 import { API_URL } from './constants';
 
 const $host = axios.create({
@@ -11,7 +12,7 @@ const $authHost = axios.create({
 });
 
 const authInterceptor = (config: InternalAxiosRequestConfig) => {
-  config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
+  config.headers.authorization = `Bearer ${getToken()}`;
   return config;
 }
 

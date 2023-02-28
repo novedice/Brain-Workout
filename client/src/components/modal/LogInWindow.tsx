@@ -21,6 +21,7 @@ import { useAppDispatch, useTypeSelector } from '../../hooks/useTypeSelector';
 import { IUser } from '../../types/interfaces';
 import './ModalWindow.css';
 import { FormattedMessage } from 'react-intl';
+import { setToken } from '../../functions/tokenManipulation';
 
 const LogInWindow = () => {
   const dispatch = useAppDispatch();
@@ -58,7 +59,9 @@ const LogInWindow = () => {
         },
         type: UPDATE_USER,
       });
-      localStorage.setItem('token', loginResponse.token);
+      //localStorage.setItem('token', loginResponse.token);
+      localStorage.setItem('always', String(checked));
+      setToken(loginResponse.token);
 
       dispatch({ type: LOGGINUSER });
       modalHide();

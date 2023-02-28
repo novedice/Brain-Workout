@@ -45,6 +45,9 @@ export function Navigation({
       type: UPDATE_USER,
     });
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    localStorage.removeItem('always');
   };
 
   console.log('user in user main', user.nickname);
