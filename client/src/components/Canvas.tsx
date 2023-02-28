@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+const WIDTH = 350;
+const HEIGHT = 180;
+
 interface ICanvasProps {
   canvasId: string;
   results: { value: number; createdAt: string }[];
@@ -19,21 +22,13 @@ export const Canvas = ({ canvasId, results }: ICanvasProps) => {
       ctx!.beginPath();
       ctx!.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       ctx!.fillStyle = '#000000';
-      ctx!.fillRect(0, 250, 2, -250);
+      ctx!.fillRect(0, HEIGHT, 2, -HEIGHT);
       ctx!.fillStyle = '#000000';
-      ctx!.fillRect(0, 250, 500, -2);
-      // ctx!.fillStyle = '#085a88';
-      // ctx!.strokeStyle = '#085a88';
-      // ctx!.font = '20px arial';
-      // ctx!.strokeText(
-      //   language === 'en' ? 'Your progress' : 'Ваш прогресс',
-      //   8,
-      //   20
-      // );
+      ctx!.fillRect(0, HEIGHT, WIDTH, -2);
       let startBarX = 30;
       let startBarY = 2;
-      const maxHeight = 200;
-      const barWidth = results.length < 5 ? 50 : results.length < 10 ? 25 : 15;
+      const maxHeight = HEIGHT * 0.8;
+      const barWidth = results.length < 5 ? 35 : results.length < 10 ? 20 : 15;
       const gap =
         results.length < 5
           ? barWidth * 1.5
@@ -42,17 +37,20 @@ export const Canvas = ({ canvasId, results }: ICanvasProps) => {
           : barWidth * 3;
       for (let res of results) {
         const currentHeight =
-          res.value < 50
-            ? (res.value / 50) * maxHeight
-            : (res.value / 10000) * maxHeight;
+          (res.value /
+            Math.max.apply(
+              null,
+              results.map((result) => result.value)
+            )) *
+          maxHeight;
 
-        ctx!.fillStyle = `#b3d5fc`;
-        ctx!.font = '14px arial';
+        ctx!.fillStyle = `#000000`;
+        ctx!.font = '16px Inter';
         ctx!.save();
-        ctx!.translate(0, 250);
+        ctx!.translate(0, HEIGHT);
         ctx?.fillRect(startBarX, -startBarY, barWidth, -currentHeight);
-        ctx!.fillStyle = '#085a88';
-        ctx!.fillText(res.value.toString(), startBarX, -currentHeight - 30);
+        ctx!.fillStyle = '#056294';
+        ctx!.fillText(res.value.toString(), startBarX, -currentHeight - 20);
         ctx!.restore();
         startBarX += gap;
       }
@@ -60,10 +58,10 @@ export const Canvas = ({ canvasId, results }: ICanvasProps) => {
   }, []);
   return (
     <>
-      <p className="upper-case text-blue-800">
+      <p className="upper-case your-progress">
         <FormattedMessage id="your_progress" />
       </p>
-      <canvas width="500" ref={canvasRef} id={canvasId} height="250"></canvas>
+      <canvas width="350" ref={canvasRef} id={canvasId} height="200"></canvas>
     </>
   );
 };

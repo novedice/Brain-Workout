@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-// import { getRandom } from '../../../functions/random';
 import { colors } from '../../../functions/randomColor';
 import { StatusGameType } from '../../../types/types';
 
@@ -10,11 +9,7 @@ interface IHowToPlayProps {
   setStatusGame: React.Dispatch<React.SetStateAction<StatusGameType>>;
 }
 
-export const ColorDemo = ({
-  howToPlay,
-  setHowToPlay,
-  setStatusGame,
-}: IHowToPlayProps) => {
+export const ColorDemo = ({ setHowToPlay, setStatusGame }: IHowToPlayProps) => {
   const [leftColor, setLeftColor] = useState(2);
   const [rightColor, setRightColor] = useState(0);
   const [leftMeaning, setLeftMeaning] = useState(0);
@@ -30,10 +25,8 @@ export const ColorDemo = ({
   const [startButton, setStartButton] = useState('');
   const [count, setCount] = useState(0);
 
-  console.log(howToPlay);
   const answerDemo = () => {
     setCount(count + 1);
-    console.log('count', count);
     if (count > 3) {
       setNoNow('');
       setYesNow('');
@@ -100,7 +93,6 @@ export const ColorDemo = ({
                   className={`${noNow} no-answ-demo mr-3 h-[50px] w-[80px] rounded-lg border ${backColor} bg-blue-400`}
                   onClick={answerDemo}
                   disabled={noDisabled}
-                  // disabled={!started}
                 >
                   <FormattedMessage id="no" />
                 </button>
@@ -108,7 +100,6 @@ export const ColorDemo = ({
                   className={`${yesNow} yes-answ-demo h-[50px] w-[80px] rounded-lg border ${backColor} bg-blue-400`}
                   onClick={answerDemo}
                   disabled={yesDisabled}
-                  // disabled={!started}
                 >
                   <FormattedMessage id="yes" />
                 </button>

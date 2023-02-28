@@ -13,17 +13,16 @@ export const ButtonStart = ({
   statusGame,
   setStatusGame,
   startGame,
-  startName = 'Start',
+  startName = 'start',
 }: IButtonStartProps) => {
   return (
     <>
       <button
         className={
           statusGame === 'Finished'
-            ? 'mt-2 rounded-full border px-4 text-xl hover:bg-red-200'
+            ? 'mt-2 h-[40px] w-[100px] rounded-full border px-4 text-[24px] hover:bg-red-200'
             : 'mr-3 flex h-[40px] w-[150px] items-center justify-around self-center rounded-lg  bg-gray-300 align-middle duration-300 hover:bg-red-200'
         }
-        //  mr-3 h-[50px] w-[150px] self-center rounded-lg border-8 border-blue-300 bg-gray-200"
         onClick={() => {
           if (statusGame !== 'Started') {
             startGame();

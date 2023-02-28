@@ -33,10 +33,8 @@ export function App() {
   const authUser = async () => {
     if (localStorage.getItem('token')) {
       const newToken = await checkToken();
-      console.log('new token', newToken);
       if (newToken) {
         dispatch({ type: LOGGIN });
-        console.log('decode token:', jwt_decode<IUser>(newToken.token).lang);
         dispatch({
           payload: {
             id: jwt_decode<IUser>(newToken.token).id,
@@ -70,7 +68,6 @@ export function App() {
     authUser();
   }, [localStorage]);
 
-  // TODO updateUser - language
   const handleChangeLang = async () => {
     dispatch({ type: CHANGE_LANGUAGE });
     setCurrentLang(user.lang);

@@ -58,10 +58,8 @@ const SignUpModal = () => {
       'registration'
     );
 
-    console.log('registration data', registration);
     if (registration) {
       dispatch({ type: LOGGIN });
-      console.log('token data', jwt_decode<IUser>(registration.token));
       dispatch({
         payload: {
           id: jwt_decode<IUser>(registration.token).id,
@@ -111,11 +109,8 @@ const SignUpModal = () => {
     numOfErr = isEmailValid(email, numOfErr).n;
 
     if (numOfErr !== 0) {
-      console.log('numbers in sign up', numOfErr);
       return;
     } else {
-      // console.log(passwordEr, emailError, confirmPassErr, nameError);
-
       sigInComplete();
       return;
     }
