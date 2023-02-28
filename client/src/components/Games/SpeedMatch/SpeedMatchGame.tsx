@@ -17,7 +17,7 @@ import { GamePaused } from '../gamesComponents/PauseComponent';
 import { StatusGameType } from '../../../types/types';
 import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 
-const GAME_DURATION = 20;
+const GAME_DURATION = 60;
 
 export const SpeedMatchGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   const [currentCard, setCurrentCard] = useState<ICardSpeedMacth>(cards[0]);
