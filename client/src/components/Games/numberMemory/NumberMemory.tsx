@@ -18,33 +18,25 @@ const generateNumber = (length: number) => {
 };
 
 export default function NumberMemory({ gameId, srcEn, srcRus }: IGameProps) {
-  // const gameInfo = allGames.find((el) => el.id === id);
-  // const gamePath = 'number-memory';
   const { lang } = useTypeSelector((state) => state.userInfo);
   const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
   const [currentLength, setCurrentLength] = useState(1);
   const [currentNumber, setCurrentNumber] = useState('');
-  // const [isStart, setIsStart] = useState(false);
   const [time, setTime] = useState(0);
   const [isRemember, setIsRemember] = useState(false);
-  // const [isEnd, setIsEnd] = useState(false);
   const [statusGame, setStatusGame] = useState<StatusGameType>('Wait');
   const [score, setScore] = useState(1);
   const [userNumber, setUserNumber] = useState('');
   const [bestResult, setBestResult] = useState<number>();
-  // const [isSaved, setIsSaved] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
   const start = () => {
     setScore(1);
     setStatusGame('Started');
-    // setIsStart(true);
     setCurrentLength(1);
     setCurrentNumber(generateNumber(currentLength));
     setTime(5);
     setIsRemember(true);
-    // setIsEnd(false);
-    // setIsSaved(false);
     if (timer) clearTimeout(timer);
     setTimer(
       setTimeout(() => {
@@ -54,8 +46,6 @@ export default function NumberMemory({ gameId, srcEn, srcRus }: IGameProps) {
   };
 
   const stop = () => {
-    // setIsStart(false);
-    // setIsEnd(true);
     setStatusGame('Finished');
     setIsRemember(false);
     setCurrentLength(1);
@@ -79,8 +69,6 @@ export default function NumberMemory({ gameId, srcEn, srcRus }: IGameProps) {
       nextNumber();
     } else {
       setStatusGame('Finished');
-      // setIsEnd(true);
-      // setIsStart(false);
     }
   };
 
@@ -188,18 +176,10 @@ export default function NumberMemory({ gameId, srcEn, srcRus }: IGameProps) {
                     </div>
                   </>
                 )}
-                {/* {isEnd && (
-            <div className="number-game__end">
-              <div className="number-game__message">
-                {lang === 'rus' ? 'Игра окончена!' : 'Game over!'}
-              </div>
-            </div>
-          )} */}
               </div>
             </div>
           </div>
 
-          {/* {isEnd && <ButtonNumber text="save" callback={saveResult}></ButtonNumber>} */}
           {statusGame !== 'Started' && (
             <ButtonNumber text="start" callback={start}></ButtonNumber>
           )}
@@ -227,12 +207,9 @@ export default function NumberMemory({ gameId, srcEn, srcRus }: IGameProps) {
           speed={0}
           statusGame={statusGame}
           setStatusGame={setStatusGame}
-          // started={isStart}
-          // setStarted={setIsStart}
           startGame={start}
           gameName={'number_memory'}
           gameID={gameId}
-          // finished={isEnd}
         />
       )}
     </>

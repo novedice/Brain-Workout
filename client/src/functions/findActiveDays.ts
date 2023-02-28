@@ -1,11 +1,5 @@
 import { IResultResponse } from '../api/result-requerests';
 
-// interface IActiveDay {
-//   year: number;
-//   month: number;
-//   day: number;
-// }
-
 export const findActiveDays = (results: IResultResponse[]) => {
   const activeDates: string[] = [];
 

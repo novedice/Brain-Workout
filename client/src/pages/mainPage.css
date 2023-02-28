@@ -4,7 +4,10 @@
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  
+}
+
+.main {
+  margin-bottom: 10px;
 }
 
 .workout-container {
@@ -15,7 +18,7 @@
   color: white;
   background-color: rgb(147 197 253);
   padding: 10px;
-  opacity: .8;
+  opacity: 0.8;
   border-radius: 10px;
   padding-bottom: 20px;
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
@@ -23,7 +26,7 @@
 
 .workout-image {
   margin: 0 auto;
-  contain:content;
+  contain: content;
   border-radius: 10px;
 }
 
@@ -35,12 +38,13 @@
   justify-content: center;
   background-color: rgb(147 197 253);
   padding: 10px;
-  opacity: .8;
+  opacity: 0.8;
   border-radius: 10px;
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
 }
 
-.calendar-text, .today-workout {
+.calendar-text,
+.today-workout {
   font: 600 22px sans-serif;
   color: white;
   border-radius: 10px;
@@ -50,18 +54,17 @@
 .start-workout {
   margin-top: 15px;
   height: 40px;
-  background-color: #3B82F6;
-  transition: .3s;
+  background-color: #3b82f6;
+  transition: 0.3s;
 }
 .start-workout:hover {
   background-color: rgb(254 202 202);
 }
 .main-description {
-  
   max-width: 60%;
   margin: 0 auto 150px;
   border-radius: 10px;
-  
+
   font: 600 44px sans-serif;
   color: orange;
   display: flex;
@@ -74,6 +77,3 @@
   font: 500 20px sans-serif;
   margin-bottom: 30px;
 }
-
-
-

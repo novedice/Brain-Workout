@@ -1,10 +1,7 @@
 import { AxiosError } from 'axios';
-// import { useEffect, useState } from 'react';
-// import { useCookies } from 'react-cookie';
 import { IToken } from '../types/interfaces';
 import { authorization, BaseUrl, users } from './constants';
 import { $authHost, $host } from './http';
-// import { useJwt } from 'react-jwt';
 
 interface IDataUser {
   email?: string;
@@ -12,10 +9,6 @@ interface IDataUser {
   nickname?: string;
   lang?: string;
 }
-
-// interface IDataDelete {
-//   password: string;
-// }
 
 export const updateUser = async (data: IDataUser) => {
   try {
@@ -33,7 +26,6 @@ export const deleteUser = async () => {
   try {
     const response = await $authHost.delete<{ message: string }>(
       `${BaseUrl}/${users}`,
-      // data
       {
         withCredentials: true,
       }
@@ -56,12 +48,10 @@ export const registrAuthUser = async (
         withCredentials: true,
       }
     );
-    console.log('response', response.data);
     return response.data;
   } catch (e) {
     if (e) {
       console.log(e);
-      // return e;
     }
   }
 };
@@ -77,6 +67,5 @@ export const checkToken = async () => {
   } catch (e) {
     error = (e as AxiosError).message;
     console.log(error);
-    // return null;
   }
 };

@@ -1,6 +1,3 @@
-// import { AxiosError } from 'axios';
-// import { useEffect, useState } from 'react';
-// import { useCookies } from 'react-cookie';
 import { IResData } from '../types/interfaces';
 import { BaseUrl, results, users } from './constants';
 import { $authHost } from './http';
@@ -14,28 +11,7 @@ export interface IResultResponse {
   userId: number;
 }
 
-// export const getUserResults = () => {
-//   const [userResults, setUserResults] = useState<IResultResponse[]>();
-//   const [resError, setResError] = useState('');
-//   const fetchResults = async () => {
-//     try {
-//       const response = await $host.get<IResultResponse[]>(
-//         `${BaseUrl}/${users}/${results}`,
-//         { withCredentials: true }
-//       );
-//       setUserResults(response.data);
-//     } catch (e) {
-//       setResError((e as AxiosError).message);
-//     }
-//   };
-//   useEffect(() => {
-//     fetchResults();
-//   });
-//   return { userResults, resError };
-// };
 export const getUserResults = async () => {
-  // let response: IResultResponse[];
-  // let error = '';
   try {
     const response = await $authHost.get<IResultResponse[]>(
       `${BaseUrl}/${users}/${results}`,

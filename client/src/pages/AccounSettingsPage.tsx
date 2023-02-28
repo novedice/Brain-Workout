@@ -24,7 +24,6 @@ export function AccounSettingsPage() {
   useEffect(() => {
     setCurrentEmail(user.email);
     setCurrentName(user.nickname);
-    console.log(loggedIn);
   }, [token]);
 
   return (
@@ -81,16 +80,18 @@ export function AccounSettingsPage() {
                     {!openChanges && (
                       <>
                         {' '}
+                        <h2 className="h2-account upper-case">
+                          <FormattedMessage id="account" />
+                        </h2>
                         <section className="section">
-                          <h2 className="h2-account upper-case">
-                            <FormattedMessage id="account" />
-                          </h2>
                           <div className="info-block">
                             <div className="info">
-                              <p className="name-email">
+                              <p className="name-email h3-name">
                                 <FormattedMessage id="your_name" />
                               </p>
-                              <p className="user-name-email">{currentName}</p>
+                              <p className="user-name-email h3-name">
+                                {currentName}
+                              </p>
                             </div>
                             <div className="change-in-process">
                               <p
@@ -110,7 +111,7 @@ export function AccounSettingsPage() {
                             <FormattedMessage id="login_information" />
                           </h3>
                           <div className="info-block">
-                            <div className="info">
+                            <div className=" h3-email">
                               <p className="name-email">
                                 <FormattedMessage id="your_email" />
                               </p>

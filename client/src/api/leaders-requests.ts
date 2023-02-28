@@ -11,21 +11,9 @@ export const getLeaders = async (gameId: number) => {
         withCredentials: true,
       }
     );
-    console.log('leaders in request:', response);
     return response.data;
   } catch (e) {
     console.log(e);
     return null;
   }
 };
-
-//   try {
-//     const response = await $host.get<IResultResponse[]>(
-//       `${BaseUrl}/${users}/${results}`,
-//       { withCredentials: true }
-//     );
-//     return response.data;
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };

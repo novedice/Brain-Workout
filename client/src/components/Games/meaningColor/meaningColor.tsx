@@ -14,7 +14,7 @@ import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 import { ColorDemo } from './demoMeaning';
 import './meaningColor.css';
 
-const GAME_DURATION = 20;
+const GAME_DURATION = 60;
 
 export const MeaningColorGame = ({ gameId, srcEn, srcRus }: IGameProps) => {
   const [leftColor, setLeftColor] = useState(0);
