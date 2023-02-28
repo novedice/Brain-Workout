@@ -1,108 +1,17 @@
-.game-page {
-  background-color: rgb(238, 237, 237);
-  height: inherit;
+.game-page__container {
+    background-color: #e6e8f4;
 }
 
-.game-page-container {
-  display: flex;
-  width: 85%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-  height: 97%;
+.game-aside,
+.game-main {
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+    border-radius: 5px;
+    padding: 30px;
 }
 
-.input-radio {
-  display: none;
-}
-
-.category-image {
-  width: 50px;
-  height: auto;
-  border: solid 4px rgb(147, 197, 253);
-  margin-right: 2%;
-  border-radius: 5px;
-}
-
-.games-info {
-  display: flex;
-  flex-direction: column;
-  /* flex-wrap: wrap; */
-  background-color: white;
-  width: 100%;
-  padding: 2%;
-  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
-  border-radius: 10px;
-  height: 100%;
-}
-
-.game-contant {
-  height: 90%;
-  align-content: center;
-}
-
-.aside-nav-game {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  background-color: white;
-  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px;
-  border-radius: 10px;
-  margin-right: 5%;
-  height: 100%;
-  padding: 15px;
-}
-
-.aside-nav-game-list {
-  display: flex;
-  justify-items: center;
-  align-content: center;
-  padding: 10px;
-  border-radius: 20px;
-}
-
-.aside-nav-game-list:hover {
-  cursor: pointer;
-  color: orange;
-}
-
-.h2-category {
-  font-size: 2em;
-  line-height: 1em;
-  font-weight: 500;
-  /* margin-bottom: 15px; */
-  display: flex;
-  align-items: center;
-  box-shadow: 0 4px 6px -6px #5a5959;
-  padding-bottom: 2%;
-  height: 10%;
-}
-
-.game-image-small {
-  width: 80px;
-  height: auto;
-  margin: 5% auto;
-}
-
-.game-small {
-  margin: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
-  border-radius: 10px;
-  padding: 5px;
-  width: 200px;
-  height: 170px;
-  background-color: #93C5FD;
-  transition: all .3s;
-}
-
-.game-small:hover {
-  background-color: rgb(254 202 202);
-}
-
-.name-of-game {
-  color: rgb(5, 98, 148);
-  font-weight: 600;
+.game-img {
+    width: 100px;
+    background-color:rgba(59, 130, 246, 0.5);
+    transition: all 0.3s;
 }
