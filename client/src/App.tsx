@@ -24,6 +24,7 @@ import { LOCALES } from './i18n/locales';
 import { messages } from './i18n/messages';
 import { useEffect, useState } from 'react';
 import { checkToken, updateUser } from './api/user-requests';
+import { getToken, setToken } from './functions/tokenManipulation';
 import './assets/BG2.jpg';
 
 export function App() {
@@ -31,7 +32,7 @@ export function App() {
   const dispatch = useAppDispatch();
   const [currentLang, setCurrentLang] = useState(user.lang);
   const authUser = async () => {
-    if (localStorage.getItem('token')) {
+    if (getToken()) {
       const newToken = await checkToken();
       if (newToken) {
         dispatch({ type: LOGGIN });
@@ -59,7 +60,8 @@ export function App() {
             ? LOCALES.ENGLISH
             : LOCALES.RUSSIAN
         );
-        localStorage.setItem('token', newToken.token);
+        // localStorage.setItem('token', newToken.token);
+        setToken(newToken.token);
       }
     }
   };

@@ -44,6 +44,7 @@ export function Navigation({
       },
       type: UPDATE_USER,
     });
+    sessionStorage.clear();
     localStorage.clear();
   };
 

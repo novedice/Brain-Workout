@@ -63,7 +63,14 @@ export function StatisticPage() {
       reciveResults();
       leaders();
     }
-  }, [loggedIn]);
+  }, [loggedIn])
+
+  useEffect(() => {
+    if (loggedIn) {
+      reciveResults();
+      leaders();
+    }
+  }, []);
 
   return (
     <>

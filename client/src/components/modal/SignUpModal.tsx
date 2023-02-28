@@ -23,6 +23,7 @@ import { isPasswordsEquial } from '../../functions/validPasswordConfirm';
 import { useAppDispatch, useTypeSelector } from '../../hooks/useTypeSelector';
 import { IUser } from '../../types/interfaces';
 import './ModalWindow.css';
+import { setToken } from '../../functions/tokenManipulation';
 
 const SignUpModal = () => {
   const [nickname, setNickname] = useState('');
@@ -78,7 +79,8 @@ const SignUpModal = () => {
       });
       dispatch({ type: LOGGINUSER });
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', registration.token);
+      // localStorage.setItem('token', registration.token);
+      setToken(registration.token);
 
       if (checked) {
         localStorage.setItem('user', JSON.stringify(user));
