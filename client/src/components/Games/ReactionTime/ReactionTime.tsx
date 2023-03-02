@@ -6,6 +6,7 @@ import { IGameProps } from '../../../types/interfaces';
 import { FormattedMessage } from 'react-intl';
 import { StatusGameType } from '../../../types/types';
 import { FinishGameTable } from '../gamesComponents/FinishGameTable';
+import { PrestartWindow } from '../gamesComponents/PrestartWindow';
 
 enum ScreenType {
   StartGame = 1,
@@ -18,7 +19,7 @@ enum ScreenType {
 
 const TOTAL_ROUNDS = 5;
 
-export function ReactionTime({ gameId }: IGameProps) {
+export function ReactionTime({ gameId, srcEn, srcRus }: IGameProps) {
   const timeoutRef = useRef<any>(null);
   const [time, setTime] = useState<Date | null>(null);
   const [currentScreen, setCurrentScreen] = useState(ScreenType.StartGame);
@@ -87,6 +88,17 @@ export function ReactionTime({ gameId }: IGameProps) {
   return (
     <div className="container">
       {currentScreen === ScreenType.StartGame && (
+        <PrestartWindow
+          startGame={gameStart}
+          setStatusGame={setStatusGame}
+          gameName={'reaction_time_test'}
+          statusGame={statusGame}
+          gameDescription="reaction_time_description"
+          gameImgRus={srcRus}
+          gameImgEn={srcEn}
+        />
+      )}
+      {/* {currentScreen === ScreenType.StartGame && (
         <div
           className="click-area time-container"
           style={{ background: 'rgb(59 130 246 / 0.5)' }}
@@ -103,7 +115,7 @@ export function ReactionTime({ gameId }: IGameProps) {
             <FormattedMessage id="click_for_start" />
           </h3>
         </div>
-      )}
+      )} */}
       {currentScreen === ScreenType.WaitClick && (
         <div
           className="click-area time-container"

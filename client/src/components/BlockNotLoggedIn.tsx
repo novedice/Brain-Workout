@@ -28,7 +28,7 @@ export const BlockNotLoggedIn = () => {
             <p>
               <FormattedMessage id="you_are_not_loggin" />
               <span className="change-info" onClick={modalShow}>
-                <FormattedMessage id="login" />
+                <FormattedMessage id="enter" />
               </span>
               <span>. </span>
               <span>
