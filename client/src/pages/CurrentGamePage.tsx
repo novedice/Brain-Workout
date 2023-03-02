@@ -2,6 +2,7 @@ import { FormattedMessage } from 'react-intl';
 import { Link, useParams } from 'react-router-dom';
 import { allGames } from '../game-content/allGames';
 import { IGameProps, QParam } from '../types/interfaces';
+import './allGamesPage.css';
 
 export const CurrentGamePage = () => {
   let GameNow: ({

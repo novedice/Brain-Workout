@@ -1,0 +1,23 @@
+.footer-wrap {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.github-img {
+  width: 150px;
+}
+
+@media screen and (max-width: 500px) and (min-width: 320px) {
+  .footer-wrap {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .github-img {
+    max-width: 80px;
+  }
+
+  .unlink {
+    font-size: 14px;
+  }
+}

@@ -172,6 +172,7 @@ export const messages = {
     start_random_game: 'Start random game!',
     best_results: 'Best results',
     your_best_results: 'Your best results',
+    name_the_same: 'You enter your current name',
   },
   [LOCALES.RUSSIAN]: {
     discover: 'Узнайте, на что способен ваш разум',
@@ -349,5 +350,6 @@ export const messages = {
     start_random_game: 'Начать случайную игру!',
     best_results: 'Лучшие результаты',
     your_best_results: 'Ваши лучшие результаты',
+    name_the_same: 'Введенное имя совпадает с вашим',
   },
 };
