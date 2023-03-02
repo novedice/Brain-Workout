@@ -84,6 +84,10 @@ export const ChangeUserData = ({
         let resName = isNameValid(value, numberOfErr);
         setError(resName.err);
         numberOfErr = resName.n;
+        if (resName.n === 0 && value === user.nickname) {
+          setError(<FormattedMessage id="name_the_same" />);
+          numberOfErr += 1;
+        }
         break;
       case 'email':
         let resEmail = isEmailValid(value, numberOfErr);

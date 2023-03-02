@@ -69,10 +69,7 @@ export function MainPage() {
           style={{
             backgroundImage: `url("brush1.png") `,
             backgroundPosition: 'center',
-            backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            width: '100%',
-            height: '150px',
           }}
         >
           <h2>

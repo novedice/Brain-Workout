@@ -75,7 +75,7 @@ export function App() {
     setCurrentLang(user.lang);
     const responseUpdate = await updateUser({ lang: user.lang });
     if (responseUpdate) {
-      localStorage.setItem('token', responseUpdate.token);
+      setToken(responseUpdate.token);
     }
 
     localStorage.setItem('user', JSON.stringify(user));

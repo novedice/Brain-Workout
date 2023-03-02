@@ -1,0 +1,11 @@
+.game-wrap {
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+@media screen and (max-width: 680px) {
+  .game-wrap {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+}

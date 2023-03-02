@@ -64,6 +64,8 @@
 
 .main-description {
   max-width: 60%;
+  width: 100%;
+  height: 150px;
   margin: 0 auto 150px;
   border-radius: 10px;
   padding-top: 20px;
@@ -74,6 +76,7 @@
   justify-content: space-around;
   text-align: center;
   justify-content: center;
+  background-size: cover;
 }
 
 .main-description h3 {
@@ -81,12 +84,118 @@
   margin-bottom: 30px;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 850px) and (min-width: 721px) {
   .workout-container {
     width: 45%;
   }
 
+  .main-description {
+    max-width: 80%;
+    height: 200px;
+    background-size: contain;
+    margin: 0 auto 100px;
+  }
+
   .calendar-container {
     width: 45%;
+  }
+
+  .main-container {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 720px) and (min-width: 650px) {
+  .workout-container {
+    width: 49%;
+  }
+
+  .calendar-container {
+    max-width: 49%;
+  }
+
+  .main-description {
+    max-width: 90%;
+    height: auto;
+    background-size: contain;
+    margin: 0 auto 50px;
+  }
+
+  .main-container {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 649px) and (min-width: 500px) {
+  .workout-container {
+    width: 49%;
+  }
+
+  .calendar-container {
+    max-width: 49%;
+  }
+
+  .main-container {
+    width: 95%;
+  }
+
+  .day-of-week {
+    font-size: 12px;
+  }
+
+  .main-container {
+    max-width: 90%;
+    height: auto;
+    background-size: contain;
+    margin: 0 auto 50px;
+  }
+
+  .every-day {
+    font-size: 12px;
+  }
+
+  .main-description > h2 {
+    font-size: 24px;
+  }
+
+  .main-description > h3 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 499px) and (min-width: 320px) {
+  .workout-container {
+    width: 80%;
+    margin-bottom: 2%;
+  }
+
+  .calendar-container {
+    max-width: 80%;
+    width: 80%;
+  }
+
+  .main-container {
+    max-width: 95%;
+    height: auto;
+    background-size: contain;
+    margin: 0 auto 30px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .day-of-week {
+    font-size: 12px;
+  }
+
+  .every-day {
+    font-size: 12px;
+  }
+
+  .main-description > h2 {
+    font-size: 24px;
+  }
+
+  .main-description > h3 {
+    font-size: 16px;
   }
 }

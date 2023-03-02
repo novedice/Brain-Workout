@@ -32,7 +32,7 @@
   }
 }
 
-@media screen and (max-width: 699px) and (min-width: 575px) {
+@media screen and (max-width: 699px) and (min-width: 596px) {
   .navigation-container {
     font-size: small;
   }
@@ -46,13 +46,13 @@
   }
 
   .nav-list {
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
   }
 }
 
-@media screen and (max-width: 574px) and (min-width: 460px) {
+@media screen and (max-width: 595px) and (min-width: 320px) {
   .navigation-container {
-    font-size: smaller;
+    font-size: 10px;
   }
 
   .button-lang {
@@ -61,10 +61,18 @@
   }
 
   .logout {
-    font-size: smaller;
+    font-size: 10px;
   }
 
   .nav-list {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
+  }
+
+  .logout-text {
+    display: none;
+  }
+
+  .logo-main {
+    display: none;
   }
 }

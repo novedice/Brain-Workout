@@ -59,7 +59,7 @@ export function Navigation({
         className="unlink mr-2"
         href="https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rsclone/rsclone.md"
       >
-        <img className="w-[50px]" src="Logo.png"></img>
+        <img className="logo-main w-[50px]" src="Logo.png"></img>
       </a>
       <div>
         <Link to="/" className="nav-list hover:text-red-200">
@@ -111,7 +111,7 @@ export function Navigation({
               }}
               className="logout flex items-center justify-between"
             >
-              <p className="mr-2 hover:text-red-200">
+              <p className="logout-text mr-2 hover:text-red-200">
                 <FormattedMessage id="to_logout" />
               </p>
               <p>
