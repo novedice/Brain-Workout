@@ -4,7 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { createResult, getUserResults } from '../../../api/result-requerests';
 import { ADD_RESULT } from '../../../constants';
 import { resultsForStatistic } from '../../../functions/resultsForStatistic';
-import { useAppDispatch } from '../../../hooks/useTypeSelector';
+import {
+  useAppDispatch,
+  useTypeSelector,
+} from '../../../hooks/useTypeSelector';
 import { IOrderedArray } from '../../../types/interfaces';
 import { StatusGameType } from '../../../types/types';
 import { ButtonStart } from './ButtonStart';
@@ -35,12 +38,13 @@ export const FinishGameTable = ({
   gameName,
   resultsName,
 }: IFinishGameTableProps) => {
+  const { loggedIn } = useTypeSelector((state) => state.loggedInInfo);
   const dispatch = useAppDispatch();
   const [gameResults, setGameResults] = useState<IOrderedArray[]>([]);
   const [resDate, setResDate] = useState('');
 
   const result = async () => {
-    if (score !== 0 && statusGame === 'Finished') {
+    if (score !== 0 && statusGame === 'Finished' && loggedIn) {
       const res = await createResult({ gameId: gameID, value: score });
       if (res) {
         setResDate(res.createdAt);

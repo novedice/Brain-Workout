@@ -173,6 +173,7 @@ export const messages = {
     best_results: 'Best results',
     your_best_results: 'Your best results',
     name_the_same: 'You enter your current name',
+    enter: 'login',
   },
   [LOCALES.RUSSIAN]: {
     discover: 'Узнайте, на что способен ваш разум',
@@ -351,5 +352,6 @@ export const messages = {
     best_results: 'Лучшие результаты',
     your_best_results: 'Ваши лучшие результаты',
     name_the_same: 'Введенное имя совпадает с вашим',
+    enter: 'войдите в приложение',
   },
 };
