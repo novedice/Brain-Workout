@@ -1,0 +1,34 @@
+
+:root {
+  --color-primary: #a463f2;
+  --color-gray-dark: #ccc;
+  --color-gray: #f9fafb;
+  --font-primary: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: var(--font-primary);
+}
+
+.upper-case {
+  text-transform: uppercase;
+}
+
+.upper-first {
+  text-transform: capitalize;
+}
+
+.lower-case {
+  text-transform: lowercase;
+}
+
+.text-cursive {
+  font-style: italic;
+}
+

@@ -1,0 +1,19 @@
+.game-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+    height: 73vh;
+    border-radius: 10px;
+    padding-top: 50px;
+}
+
+.grid-cards {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+h1 {
+    font-size: 32px;
+}

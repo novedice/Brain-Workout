@@ -1,0 +1,61 @@
+.calendar {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.table {
+  max-width: 100%;
+  width: 300px;
+  table-layout: fixed;
+  border-spacing: 5px 5px;
+  border-collapse:separate;
+}
+
+.year {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+
+
+.change-period:hover {
+  cursor: pointer;
+}
+
+.table-calendar {
+  padding: 5px;
+}
+
+.month {
+  align-self: center;
+}
+
+.days-of-week-row {
+  margin-bottom: 2px;
+}
+.day-of-week {
+  vertical-align: middle;
+  text-align: center;
+  padding: 8px;
+}
+.days-row {
+  height: 37px;
+  /* padding: 5px; */
+}
+
+.every-day {
+  box-sizing: border-box;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.active-date {
+  background-color: aquamarine;
+}
+
+.not-active {
+  background-color: #3B82F6;
+}

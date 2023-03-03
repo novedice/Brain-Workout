@@ -1,0 +1,103 @@
+.number-game__wrap {
+  display: grid;
+  justify-content: center;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  align-items: center;
+  gap: 5px;
+  padding: 50px 0;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 5px;
+  border-radius: 10px;
+}
+
+.number-game__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 10px;
+}
+
+.number-game__start {
+  align-self: center;
+  justify-self: center;
+
+}
+
+.number-game__title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.number-game__description {
+  font-style: italic;
+  padding-bottom: 10px;
+}
+
+.number-game__best-result {
+  text-align: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.number-game__score {
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.number-game__remember {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+}
+
+.number-game__number {
+  font-size: 28px;
+  border-bottom: 2px solid rgb(7 89 133);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.number-game__inner {
+  width: 100%;
+}
+
+.number-game__input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.number-game__input input {
+  border-bottom: 2px solid rgb(7 89 133);
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  outline: transparent;
+}
+
+.number-game__input button {
+  border: 2px solid rgb(7 89 133);
+  border-top: none;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.number-game__container-inner {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
